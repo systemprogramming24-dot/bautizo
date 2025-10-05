@@ -19,7 +19,7 @@ guestNameDisplay.textContent = guestName || 'Invitado';
 nameInput.value = guestName;
 
 // Verificar si está en la lista
-fetch('https://script.google.com/macros/s/AKfycbx_Ty9mbwv7564q55dLCFcm68QuIbxZv6jaKqa773oqm3QxiO5ip8WLvnYOmI7U4HupTQ/exec', {
+fetch('https://script.google.com/macros/s/AKfycbxo5ART8l3_0Zc_AfNLhb8rrb_4ud50V4JftzRrawuax-afIc-hFvNGCMffGwjcG_-Gqw/exec', {
   method: 'POST',
   body: JSON.stringify({ name: guestName, validateOnly: true }),
   headers: { 'Content-Type': 'text/plain' }
@@ -63,7 +63,7 @@ function sendConfirmation(response) {
     guests: response === "Sí" ? document.getElementById('guests').value || 1 : 0
   };
 
-  fetch('https://script.google.com/macros/s/AKfycbx_Ty9mbwv7564q55dLCFcm68QuIbxZv6jaKqa773oqm3QxiO5ip8WLvnYOmI7U4HupTQ/exec', {
+  fetch('https://script.google.com/macros/s/AKfycbxo5ART8l3_0Zc_AfNLhb8rrb_4ud50V4JftzRrawuax-afIc-hFvNGCMffGwjcG_-Gqw/exec', {
     method: 'POST',
     body: JSON.stringify(data),
     headers: { 'Content-Type': 'text/plain' } 
@@ -75,6 +75,7 @@ function sendConfirmation(response) {
   })
   .catch(err => alert('Error al enviar confirmación.'));
 }
+
 
 
 
