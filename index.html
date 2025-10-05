@@ -1,37 +1,19 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Confirmación de Invitación</title>
-  <style>
-    body { font-family: Arial; padding: 20px; }
-    #rsvpForm { display: none; }
-    #thanksMsg { display: none; color: green; }
-  </style>
+  <meta charset="UTF-8">
+  <title>Confirmación de Asistencia</title>
 </head>
 <body>
-
-  <h1>Bienvenido, <span id="guestName">Invitado</span></h1>
+  <h1>Hola, <span id="guestName">Invitado</span></h1>
 
   <div class="confirm"></div>
 
-  <form id="rsvpForm">
-    <input type="hidden" id="name" />
-    <p>¿Confirmas tu asistencia?</p>
-    <button type="button" id="yesBtn">Sí</button>
-    <button type="button" id="noBtn">No</button>
+  <form id="rsvpForm" style="display: none;">
+    <input type="hidden" id="name">
+    <button type="button" id="yesBtn">Sí, asistiré</button>
+    <button type="button" id="noBtn">No podré asistir</button>
 
     <div id="guestCountWrapper" style="display:none;">
-      <label for="guests">¿Cuántos acompañantes (incluyéndote)?</label>
-      <input type="number" id="guests" min="1" />
-    </div>
-  </form>
-
-  <div id="thanksMsg">
-    <p>🎉 ¡Gracias por confirmar!</p>
-  </div>
-
-  <script src="script.js"></script>
-</body>
-</html>
+      <label for="guests">Acompañantes:</label>
+      <input type="number" id=
