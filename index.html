@@ -11,9 +11,21 @@
 
   <form id="rsvpForm" style="display: none;">
     <input type="hidden" id="name">
-    <button type="button" id="yesBtn">Sí, asistiré</button>
-    <button type="button" id="noBtn">No podré asistir</button>
 
-    <div id="guestCountWrapper" style="display:none;">
-      <label for="guests">Acompañantes:</label>
-      <input type="number" id=
+    <button type="button" id="yesBtn">✅ Sí, asistiré</button>
+    <button type="button" id="noBtn">❌ No podré asistir</button>
+
+    <div id="guestCountWrapper" style="display:none; margin-top: 10px;">
+      <label for="guests">¿Cuántos te acompañan?</label>
+      <input type="number" id="guests" min="1" placeholder="Ej. 1">
+    </div>
+  </form>
+
+  <div id="thanksMsg" style="display: none; margin-top: 20px;">
+    🎉 ¡Gracias por confirmar tu asistencia!
+  </div>
+
+  <!-- 🔗 Aquí está el enlace al archivo JS -->
+  <script src="script.js"></script>
+</body>
+</html>
