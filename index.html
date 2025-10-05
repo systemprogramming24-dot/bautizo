@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Invitación al Bautizo</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="container">
+    <h1 class="fade-in">¡Te invitamos al Bautizo de Martina!</h1>
+
+    <div class="details fade-in">
+      <p><strong>Invitado:</strong> <span id="guestName"></span></p>
+      <p><strong>Fecha:</strong> 25 de Noviembre de 2025</p>
+      <p><strong>Hora:</strong> 11:00 AM</p>
+      <p><strong>Parroquia:</strong> Iglesia San Gabriel, Calle 123, Ciudad</p>
+      <p><strong>Recepción:</strong> Salón Las Estrellas</p>
+      <p><strong>Padrinos:</strong> Ana López y Carlos Ruiz</p>
+    </div>
+
+    <div class="confirm fade-in">
+      <h2>¿Confirmas tu asistencia?</h2>
+
+      <form id="rsvpForm" style="display:none;">
+        <input type="hidden" id="name" name="name">
+
+        <div class="button-options">
+          <button type="button" id="yesBtn">✅ Sí, asistiré</button>
+          <button type="button" id="noBtn">❌ No podré asistir</button>
+        </div>
+
+        <div id="guestCountWrapper" style="display:none;">
+          <label for="guests">¿Cuántos asistirán en total (incluyéndote)?</label>
+          <input type="number" id="guests" name="guests" min="1">
+        </div>
+      </form>
+
+      <p id="thanksMsg" style="display:none;">¡Gracias por confirmar! 🎉</p>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
