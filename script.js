@@ -29,17 +29,25 @@ fetch(endpoint, {
   body: JSON.stringify({ name: guestName, validateOnly: true }),
   headers: { 'Content-Type': 'application/json' }
 })
-.then(res => res.json())
+.then(res => {
+  console.log("Respuesta del servidor:", res);
+  return res.json();
+})
 .then(data => {
+  console.log("Datos recibidos:", data);
+
   if (data.result === "notFound") {
     confirmSection.innerHTML = `<p style="color:red;">❌ Lo sentimos, no estás en la lista de invitados.</p>`;
   } else if (data.result === "alreadyConfirmed") {
     confirmSection.innerHTML = `<p style="color:green;">✅ Ya has confirmado tu asistencia. ¡Gracias!</p>`;
-  } else {
+  } else if (data.result === "valid") {
     form.style.display = 'block';
+  } else {
+    confirmSection.innerHTML = `<p style="color:red;">⚠️ Respuesta inesperada del servidor.</p>`;
   }
 })
-.catch(() => {
+.catch(error => {
+  console.error('Error al verificar:', error);
   confirmSection.innerHTML = `<p style="color:red;">⚠️ Error al verificar tu invitación.</p>`;
 });
 
@@ -73,9 +81,13 @@ function sendConfirmation(response) {
     body: JSON.stringify(data)
   })
   .then(res => res.json())
-  .then(() => {
+  .then(data => {
+    console.log("Confirmación enviada. Respuesta:", data);
     form.style.display = 'none';
     thanksMsg.style.display = 'block';
   })
-  .catch(() => alert('Error al enviar confirmación.'));
+  .catch(error => {
+    console.error('Error al enviar confirmación:', error);
+    alert('Error al enviar confirmación.');
+  });
 }
