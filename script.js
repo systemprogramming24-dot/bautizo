@@ -14,16 +14,20 @@ const confirmSection = document.querySelector('.confirm');
 const yesBtn = document.getElementById('yesBtn');
 const noBtn = document.getElementById('noBtn');
 
+// 🔁 Usa proxy para evitar error de CORS
+const proxy = "https://corsproxy.io/?";
+const scriptURL = "https://script.google.com/macros/s/AKfycbzjyES7ZSOrsIyavG8ut7QskCmZorr7L-FkVigZj74lCD80Of95AtyxkGIsnj4o3My0JA/exec";
+const endpoint = proxy + scriptURL;
+
 // Mostrar nombre del invitado
 guestNameDisplay.textContent = guestName || 'Invitado';
 nameInput.value = guestName;
 
 // Verificar si está en la lista
-fetch('https://script.google.com/macros/s/AKfycbzjyES7ZSOrsIyavG8ut7QskCmZorr7L-FkVigZj74lCD80Of95AtyxkGIsnj4o3My0JA/exec', {
+fetch(endpoint, {
   method: 'POST',
   body: JSON.stringify({ name: guestName, validateOnly: true }),
-  headers: { 'Content-Type': 'text/plain' }
-
+  headers: { 'Content-Type': 'application/json' }
 })
 .then(res => res.json())
 .then(data => {
@@ -63,18 +67,17 @@ function sendConfirmation(response) {
     guests: response === "Sí" ? document.getElementById('guests').value || 1 : 0
   };
 
-  fetch('https://script.google.com/macros/s/AKfycbzjyES7ZSOrsIyavG8ut7QskCmZorr7L-FkVigZj74lCD80Of95AtyxkGIsnj4o3My0JA/exec', {
+  fetch(endpoint, {
     method: 'POST',
-    body: JSON.stringify(data),
-    headers: { 'Content-Type': 'text/plain' } 
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(data)
   })
   .then(res => res.json())
   .then(() => {
     form.style.display = 'none';
     thanksMsg.style.display = 'block';
-  })
-  .catch(err => alert('Error al enviar confirmación.'));
-}
+
+
 
 
 
