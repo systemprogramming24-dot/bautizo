@@ -37,7 +37,7 @@ function sendPost(data, callback) {
   });
 
   const html = `
-    <form id="proxyForm" action="https://script.google.com/macros/s/YOUR_SCRIPT_ID/exec" method="post" target="proxyFrame">
+    <form id="proxyForm" action="https://script.google.com/macros/s/AKfycbzjyES7ZSOrsIyavG8ut7QskCmZorr7L-FkVigZj74lCD80Of95AtyxkGIsnj4o3My0JA/exec" method="post" target="proxyFrame">
       <input type="hidden" name="data" value='${JSON.stringify(data)}'>
     </form>
     <iframe name="proxyFrame" style="display:none;"></iframe>
@@ -89,3 +89,4 @@ function sendConfirmation(response) {
     thanksMsg.style.display = 'block';
   });
 }
+
