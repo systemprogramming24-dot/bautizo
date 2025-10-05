@@ -14,41 +14,50 @@ const confirmSection = document.querySelector('.confirm');
 const yesBtn = document.getElementById('yesBtn');
 const noBtn = document.getElementById('noBtn');
 
-// 🔁 Usa proxy para evitar error de CORS
-const proxy = "https://corsproxy.io/?";
-const scriptURL = "https://script.google.com/macros/s/AKfycbzjyES7ZSOrsIyavG8ut7QskCmZorr7L-FkVigZj74lCD80Of95AtyxkGIsnj4o3My0JA/exec";
-const endpoint = proxy + scriptURL;
-
-// Mostrar nombre del invitado
 guestNameDisplay.textContent = guestName || 'Invitado';
 nameInput.value = guestName;
 
-// Verificar si está en la lista
-fetch(endpoint, {
-  method: 'POST',
-  body: JSON.stringify({ name: guestName, validateOnly: true }),
-  headers: { 'Content-Type': 'application/json' }
-})
-.then(res => {
-  console.log("Respuesta del servidor:", res);
-  return res.json();
-})
-.then(data => {
-  console.log("Datos recibidos:", data);
+// Enviar datos con iframe para evitar CORS
+function sendPost(data, callback) {
+  const iframe = document.createElement('iframe');
+  iframe.style.display = 'none';
+  iframe.src = 'about:blank';
 
+  document.body.appendChild(iframe);
+
+  window.addEventListener('message', function handler(event) {
+    try {
+      const response = typeof event.data === 'string' ? JSON.parse(event.data) : event.data;
+      callback(response);
+      window.removeEventListener('message', handler);
+      document.body.removeChild(iframe);
+    } catch {
+      // ignorar errores de parseo
+    }
+  });
+
+  const html = `
+    <form id="proxyForm" action="https://script.google.com/macros/s/YOUR_SCRIPT_ID/exec" method="post" target="proxyFrame">
+      <input type="hidden" name="data" value='${JSON.stringify(data)}'>
+    </form>
+    <iframe name="proxyFrame" style="display:none;"></iframe>
+    <script>
+      document.getElementById('proxyForm').submit();
+    </script>
+  `;
+
+  iframe.srcdoc = html;
+}
+
+// Verificar si está en la lista
+sendPost({ name: guestName, validateOnly: true }, (data) => {
   if (data.result === "notFound") {
     confirmSection.innerHTML = `<p style="color:red;">❌ Lo sentimos, no estás en la lista de invitados.</p>`;
   } else if (data.result === "alreadyConfirmed") {
     confirmSection.innerHTML = `<p style="color:green;">✅ Ya has confirmado tu asistencia. ¡Gracias!</p>`;
-  } else if (data.result === "valid") {
-    form.style.display = 'block';
   } else {
-    confirmSection.innerHTML = `<p style="color:red;">⚠️ Respuesta inesperada del servidor.</p>`;
+    form.style.display = 'block';
   }
-})
-.catch(error => {
-  console.error('Error al verificar:', error);
-  confirmSection.innerHTML = `<p style="color:red;">⚠️ Error al verificar tu invitación.</p>`;
 });
 
 yesBtn.addEventListener('click', () => {
@@ -75,19 +84,8 @@ function sendConfirmation(response) {
     guests: response === "Sí" ? document.getElementById('guests').value || 1 : 0
   };
 
-  fetch(endpoint, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(data)
-  })
-  .then(res => res.json())
-  .then(data => {
-    console.log("Confirmación enviada. Respuesta:", data);
+  sendPost(data, () => {
     form.style.display = 'none';
     thanksMsg.style.display = 'block';
-  })
-  .catch(error => {
-    console.error('Error al enviar confirmación:', error);
-    alert('Error al enviar confirmación.');
   });
 }
