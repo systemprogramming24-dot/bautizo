@@ -22,7 +22,8 @@ nameInput.value = guestName;
 fetch('https://script.google.com/macros/s/AKfycbx_Ty9mbwv7564q55dLCFcm68QuIbxZv6jaKqa773oqm3QxiO5ip8WLvnYOmI7U4HupTQ/exec', {
   method: 'POST',
   body: JSON.stringify({ name: guestName, validateOnly: true }),
-  headers: { 'Content-Type': 'application/json' }
+  headers: { 'Content-Type': 'text/plain' }
+
 })
 .then(res => res.json())
 .then(data => {
@@ -74,4 +75,5 @@ function sendConfirmation(response) {
   })
   .catch(err => alert('Error al enviar confirmación.'));
 }
+
 
