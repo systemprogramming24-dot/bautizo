@@ -1,31 +1,44 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <title>Confirmación de Asistencia</title>
+  <meta charset="UTF-8" />
+  <title>Demo JS ↔ Google Apps Script</title>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 20px; }
+    input, button { padding: 8px; margin: 5px; }
+    pre { background: #f5f5f5; padding: 10px; border-radius: 6px; }
+  </style>
 </head>
 <body>
-  <h1>Hola, <span id="guestName">Invitado</span></h1>
+  <h2>Comunicación JavaScript ↔ Google Apps Script</h2>
 
-  <div class="confirm"></div>
+  <input id="nombre" placeholder="Escribe tu nombre" />
+  <button id="enviar">Enviar al servidor</button>
 
-  <form id="rsvpForm" style="display: none;">
-    <input type="hidden" id="name">
+  <h3>Respuesta del servidor:</h3>
+  <pre id="respuesta">(sin datos aún)</pre>
 
-    <button type="button" id="yesBtn">✅ Sí, asistiré</button>
-    <button type="button" id="noBtn">❌ No podré asistir</button>
+  <script>
+    const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbzjyES7ZSOrsIyavG8ut7QskCmZorr7L-FkVigZj74lCD80Of95AtyxkGIsnj4o3My0JA/exec";
 
-    <div id="guestCountWrapper" style="display:none; margin-top: 10px;">
-      <label for="guests">¿Cuántos te acompañan?</label>
-      <input type="number" id="guests" min="1" placeholder="Ej. 1">
-    </div>
-  </form>
+    document.getElementById("enviar").addEventListener("click", async () => {
+      const nombre = document.getElementById("nombre").value || "anónimo";
+      const data = { nombre };
 
-  <div id="thanksMsg" style="display: none; margin-top: 20px;">
-    🎉 ¡Gracias por confirmar tu asistencia!
-  </div>
+      try {
+        const response = await fetch(WEB_APP_URL, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(data)
+        });
 
-  <!-- 🔗 Aquí está el enlace al archivo JS -->
-  <script src="script.js"></script>
+        const result = await response.json(); // ← lee el JSON devuelto por Apps Script
+        document.getElementById("respuesta").textContent = JSON.stringify(result, null, 2);
+
+      } catch (error) {
+        document.getElementById("respuesta").textContent = "❌ Error: " + error;
+      }
+    });
+  </script>
 </body>
 </html>
