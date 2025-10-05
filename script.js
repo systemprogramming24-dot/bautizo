@@ -76,11 +76,6 @@ function sendConfirmation(response) {
   .then(() => {
     form.style.display = 'none';
     thanksMsg.style.display = 'block';
-
-
-
-
-
-
-
-
+  })
+  .catch(() => alert('Error al enviar confirmación.'));
+}
