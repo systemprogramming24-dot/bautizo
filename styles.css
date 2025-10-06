@@ -1,6 +1,6 @@
 body {
   margin: 0;
-  background: #fff7fa;
+  background: #fff8fc;
   font-family: 'Poppins', sans-serif;
   color: #444;
   text-align: center;
@@ -8,31 +8,54 @@ body {
 }
 
 h1, h2, h3 {
-  font-family: 'Great Vibes', cursive;
-  color: #d175a7;
+  font-family: 'Parisienne', cursive;
+  color: #cf5b9b;
+}
+
+h1 {
+  font-size: 3em;
+  margin-bottom: 0.2em;
+}
+
+h2 {
+  font-size: 2em;
+  color: #d178aa;
+}
+
+h3 {
+  font-size: 2em;
+  margin-bottom: 0.3em;
+}
+
+p {
+  font-size: 1.2em;
+  line-height: 1.6em;
+  color: #555;
 }
 
 .hero {
-  padding: 50px 20px;
+  padding: 60px 20px;
   background: linear-gradient(to bottom, #fce4ec, #fff7fa);
 }
 
 .hero-img {
-  width: 200px;
+  width: 220px;
   border-radius: 50%;
-  margin-bottom: 15px;
+  margin-bottom: 20px;
   animation: float 4s ease-in-out infinite;
 }
 
-@keyframes float {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-10px); }
+.fecha {
+  font-family: 'Parisienne', cursive;
+  font-size: 1.8em;
+  color: #b94a8c;
+  margin-top: 10px;
 }
 
 section {
   margin: 40px auto;
-  max-width: 600px;
-  padding: 10px;
+  max-width: 650px;
+  padding: 15px;
 }
 
 a {
@@ -82,30 +105,34 @@ a:hover {
 
 .overlay-content {
   text-align: center;
-  font-family: 'Great Vibes', cursive;
-  font-size: 2em;
+  font-family: 'Parisienne', cursive;
+  font-size: 2.3em;
   color: #d175a7;
   animation: fadeIn 1.5s ease-in-out infinite alternate;
 }
 
 @keyframes fadeIn {
-  from { opacity: 0.5; transform: scale(0.95); }
+  from { opacity: 0.6; transform: scale(0.95); }
   to { opacity: 1; transform: scale(1.05); }
 }
 
-/* Frase final */
 blockquote {
   font-style: italic;
-  font-size: 1.3em;
+  font-size: 1.5em;
   color: #aa5a8c;
   border-left: 4px solid #f1c2d3;
-  padding-left: 10px;
-  margin: 20px;
+  padding-left: 15px;
+  margin: 30px;
 }
 
-footer {
-  background: #fce4ec;
-  padding: 15px;
-  font-size: 0.9em;
-  color: #a35f82;
+.firma {
+  font-family: 'Parisienne', cursive;
+  font-size: 1.8em;
+  color: #c85a8e;
+  margin-bottom: 50px;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
 }
