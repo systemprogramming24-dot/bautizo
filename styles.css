@@ -2,58 +2,59 @@ body {
   margin: 0;
   background: #fff8fc;
   font-family: 'Poppins', sans-serif;
-  color: #444;
+  color: #333;
   text-align: center;
   overflow-x: hidden;
 }
 
-h1, h2, h3 {
-  font-family: 'Parisienne', cursive;
-  color: #cf5b9b;
+h1, h2, h3, .firma {
+  font-family: 'Cormorant Garamond', serif;
+  color: #b44a8c;
 }
 
 h1 {
-  font-size: 3em;
+  font-size: 3.2em;
   margin-bottom: 0.2em;
 }
 
 h2 {
-  font-size: 2em;
-  color: #d178aa;
+  font-size: 2.3em;
+  color: #c9669e;
+  margin-top: 0.1em;
 }
 
 h3 {
-  font-size: 2em;
-  margin-bottom: 0.3em;
+  font-size: 1.9em;
+  margin-bottom: 0.4em;
 }
 
 p {
-  font-size: 1.2em;
-  line-height: 1.6em;
-  color: #555;
+  font-size: 1.15em;
+  line-height: 1.7em;
 }
 
 .hero {
-  padding: 60px 20px;
-  background: linear-gradient(to bottom, #fce4ec, #fff7fa);
+  padding: 50px 20px 20px;
+  background: linear-gradient(to bottom, #ffe5f1, #fff7fa);
 }
 
 .hero-img {
-  width: 220px;
+  width: 230px;
   border-radius: 50%;
-  margin-bottom: 20px;
+  margin-bottom: 15px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
   animation: float 4s ease-in-out infinite;
 }
 
 .fecha {
-  font-family: 'Parisienne', cursive;
-  font-size: 1.8em;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.6em;
   color: #b94a8c;
-  margin-top: 10px;
+  margin-top: 0.2em;
 }
 
 section {
-  margin: 40px auto;
+  margin: 35px auto;
   max-width: 650px;
   padding: 15px;
 }
@@ -84,7 +85,6 @@ a:hover {
   transition: 0.3s ease;
   z-index: 100;
 }
-
 .music-btn:hover {
   background: #e79ab6;
   transform: scale(1.1);
@@ -94,28 +94,72 @@ a:hover {
 .overlay {
   position: fixed;
   inset: 0;
-  background: rgba(255, 240, 245, 0.95);
-  backdrop-filter: blur(6px);
+  background: rgba(255, 240, 245, 0.96);
   display: flex;
   align-items: center;
   justify-content: center;
   z-index: 999;
   cursor: pointer;
 }
-
 .overlay-content {
   text-align: center;
-  font-family: 'Parisienne', cursive;
-  font-size: 2.3em;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 2.2em;
   color: #d175a7;
   animation: fadeIn 1.5s ease-in-out infinite alternate;
 }
-
 @keyframes fadeIn {
   from { opacity: 0.6; transform: scale(0.95); }
   to { opacity: 1; transform: scale(1.05); }
 }
 
+/* Confirmación */
+.confirmation {
+  margin-top: 40px;
+}
+#formConfirmar label {
+  display: block;
+  margin-bottom: 10px;
+  font-weight: 500;
+  font-size: 1.1em;
+}
+#cantidad {
+  width: 80%;
+  padding: 10px;
+  border: 2px solid #e1a9c2;
+  border-radius: 10px;
+  font-size: 1em;
+  margin-bottom: 15px;
+  transition: 0.3s;
+}
+#cantidad:focus {
+  outline: none;
+  border-color: #c1588c;
+  box-shadow: 0 0 8px #f1bdd4;
+}
+.btn-confirmar, .btn-secundario {
+  padding: 12px 20px;
+  border: none;
+  border-radius: 30px;
+  font-size: 1.1em;
+  cursor: pointer;
+  color: white;
+  background: linear-gradient(to right, #cf7bb2, #b94a8c);
+  transition: 0.3s;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+}
+.btn-confirmar:hover {
+  transform: scale(1.05);
+  background: linear-gradient(to right, #d88abc, #b44a8c);
+}
+.btn-secundario {
+  background: #b9a2b4;
+}
+.btn-secundario:hover {
+  background: #a68da5;
+}
+
+/* Frase final */
 blockquote {
   font-style: italic;
   font-size: 1.5em;
@@ -124,12 +168,10 @@ blockquote {
   padding-left: 15px;
   margin: 30px;
 }
-
 .firma {
-  font-family: 'Parisienne', cursive;
-  font-size: 1.8em;
+  font-size: 1.9em;
   color: #c85a8e;
-  margin-bottom: 50px;
+  margin-bottom: 60px;
 }
 
 @keyframes float {
