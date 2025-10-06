@@ -1,8 +1,8 @@
 // =============================
 // 🔧 CONFIGURA TUS CLAVES AQUÍ
 // =============================
-const SUPABASE_URL = "https://rsjyfchiynskjddpjupt.supabase.co";  // tu URL
-const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJzanlmY2hpeW5za2pkZHBqdXB0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTk3MTkzMzEsImV4cCI6MjA3NTI5NTMzMX0.pxnbFP03pSWra1zOrCsR8ADyWF3wpGN88BQlameVRWM";  // tu anon key de Supabase
+const SUPABASE_URL = "https://rsjyfchiynskjddpjupt.supabase.co";
+const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJzanlmY2hpeW5za2pkZHBqdXB0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTk3MTkzMzEsImV4cCI6MjA3NTI5NTMzMX0.pxnbFP03pSWra1zOrCsR8ADyWF3wpGN88BQlameVRWM";
 
 const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
@@ -83,25 +83,23 @@ btnCambiar.addEventListener('click', async () => {
   }
 });
 
-// 🎵 Control de música compatible con móviles y PC
+// 🎵 Control de música
 const musica = document.getElementById('musica');
 const btnMusica = document.getElementById('btnMusica');
 const overlayMusica = document.getElementById('overlayMusica');
 
 let sonidoActivado = false;
 
-// Intenta cargar el audio en silencio
 window.addEventListener('load', () => {
   musica.volume = 0.4;
   musica.muted = true;
-  musica.pause(); // Asegura que no empiece solo
+  musica.pause();
 });
 
-// ✅ Al tocar el overlay
 overlayMusica.addEventListener('click', async () => {
   try {
     musica.muted = false;
-    musica.currentTime = 0; // Reinicia desde el inicio
+    musica.currentTime = 0;
     await musica.play();
     overlayMusica.style.display = 'none';
     btnMusica.textContent = '🔊';
@@ -111,7 +109,6 @@ overlayMusica.addEventListener('click', async () => {
   }
 });
 
-// ✅ Al hacer scroll (solo si no ha activado antes)
 window.addEventListener('scroll', async () => {
   if (!sonidoActivado) {
     try {
@@ -127,7 +124,6 @@ window.addEventListener('scroll', async () => {
   }
 });
 
-// ✅ Botón flotante
 btnMusica.addEventListener('click', async () => {
   if (musica.paused) {
     try {
@@ -169,3 +165,20 @@ if (countdownEl) {
     document.getElementById("seconds").textContent = seconds.toString().padStart(2, "0");
   }, 1000);
 }
+
+// =============================
+// ✨ EFECTO DE BRILLOS DORADOS
+// =============================
+function crearBrillosDorado(cantidad = 15) {
+  for (let i = 0; i < cantidad; i++) {
+    const brillo = document.createElement('div');
+    brillo.classList.add('brillo-dorado');
+    brillo.style.left = `${Math.random() * 100}%`;
+    brillo.style.top = `${Math.random() * 100}%`;
+    brillo.style.animationDelay = `${Math.random() * 5}s`;
+    brillo.style.width = `${5 + Math.random() * 10}px`;
+    brillo.style.height = brillo.style.width;
+    document.body.appendChild(brillo);
+  }
+}
+crearBrillosDorado();
