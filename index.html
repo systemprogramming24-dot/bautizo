@@ -1,44 +1,16 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <title>Demo JS ↔ Google Apps Script</title>
-  <style>
-    body { font-family: Arial, sans-serif; padding: 20px; }
-    input, button { padding: 8px; margin: 5px; }
-    pre { background: #f5f5f5; padding: 10px; border-radius: 6px; }
-  </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Invitación al Bautizo</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <h2>Comunicación JavaScript ↔ Google Apps Script</h2>
-
-  <input id="nombre" placeholder="Escribe tu nombre" />
-  <button id="enviar">Enviar al servidor</button>
-
-  <h3>Respuesta del servidor:</h3>
-  <pre id="respuesta">(sin datos aún)</pre>
-
-  <script>
-    const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbzjyES7ZSOrsIyavG8ut7QskCmZorr7L-FkVigZj74lCD80Of95AtyxkGIsnj4o3My0JA/exec";
-
-    document.getElementById("enviar").addEventListener("click", async () => {
-      const nombre = document.getElementById("nombre").value || "anónimo";
-      const data = { nombre };
-
-      try {
-        const response = await fetch(WEB_APP_URL, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(data)
-        });
-
-        const result = await response.json(); // ← lee el JSON devuelto por Apps Script
-        document.getElementById("respuesta").textContent = JSON.stringify(result, null, 2);
-
-      } catch (error) {
-        document.getElementById("respuesta").textContent = "❌ Error: " + error;
-      }
-    });
-  </script>
+  <main class="container">
+    <h1>✨ Bautizo de Sofía ✨</h1>
+    <p>Nos encantaría contar contigo en este día tan especial.</p>
+    <p>Si recibiste una invitación personalizada, entra con tu enlace único.</p>
+  </main>
 </body>
 </html>
