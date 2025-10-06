@@ -83,40 +83,67 @@
 
 
 <script>
-  // ⚙️ CONFIGURACIÓN
-  const SUPABASE_URL = "https://rsjyfchiynskjddpjupt.supabase.co";
+ const SUPABASE_URL = "https://rsjyfchiynskjddpjupt.supabase.co";  // tu URL
   const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJzanlmY2hpeW5za2pkZHBqdXB0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTk3MTkzMzEsImV4cCI6MjA3NTI5NTMzMX0.pxnbFP03pSWra1zOrCsR8ADyWF3wpGN88BQlameVRWM"; // anon key
-  const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+    const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
-  // 🔎 Obtener el nombre desde la URL (ejemplo: ?Juan)
-  const params = new URLSearchParams(window.location.search);
-  const guestName = Array.from(params.keys())[0]; // obtiene "Juan"
+    // 🔍 Obtener el valor de "key" desde la URL (ejemplo: ?abc123)
+    const params = new URLSearchParams(window.location.search);
+    const guestKey = Array.from(params.keys())[0]; // obtiene el valor después del ?
 
-  async function buscarInvitado() {
-    const { data, error } = await supabase
-      .from('guests')
-      .select('*')
-      .eq('guest', guestName)
-      .single(); // porque esperas un único registro
+    const nombreEl = document.getElementById('nombre');
+    const mensajeEl = document.getElementById('mensaje');
+    const form = document.getElementById('formConfirmar');
 
-    if (error) {
-      console.error('Error buscando invitado:', error);
-      document.body.innerHTML += "<p>No se encontró la invitación 😕</p>";
-      return;
+    if (!guestKey) {
+      nombreEl.textContent = "Invitación no válida.";
+    } else {
+      cargarInvitado();
     }
 
-    if (data) {
-      document.body.innerHTML += `<h2>Hola ${data.guest} 👋</h2>`;
-      document.body.innerHTML += `<p>¿Confirmas tu asistencia?</p>`;
+    async function cargarInvitado() {
+      const { data, error } = await supabase
+        .from('guests')
+        .select('guest, confirm, persons')
+        .eq('key', guestKey)
+        .single();
+
+      if (error || !data) {
+        nombreEl.textContent = "Invitación no encontrada 😕";
+        return;
+      }
+
+      nombreEl.textContent = `Hola ${data.guest} 👋`;
+
+      if (data.confirm) {
+        mensajeEl.textContent = `✅ Ya confirmaste tu asistencia (${data.persons} personas).`;
+      } else {
+        form.style.display = 'block';
+      }
     }
-  }
 
-  buscarInvitado();
-</script>
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const persons = parseInt(document.getElementById('cantidad').value);
 
+      const { error } = await supabase
+        .from('guests')
+        .update({ confirm: true, persons })
+        .eq('key', guestKey);
+
+      if (error) {
+        mensajeEl.textContent = "❌ Error al confirmar asistencia.";
+        console.error(error);
+      } else {
+        form.style.display = 'none';
+        mensajeEl.textContent = "✅ ¡Gracias por confirmar tu asistencia!";
+      }
+    });
+  
   </script>
 </body>
 </html>
+
 
 
 
