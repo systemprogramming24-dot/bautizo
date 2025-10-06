@@ -5,21 +5,32 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Invitación al Bautizo ✨</title>
 
-  <!-- 🧩 Estilos -->
-  <link rel="stylesheet" href="styles.css" />
-
-  <!-- 🧩 Supabase JS -->
+  <link rel="stylesheet" href="stylea.css" />
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
-  <!-- 🧩 Fuente -->
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+  <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet" />
 </head>
 
 <body>
-  <main class="container">
-    <h1>✨ Invitación al Bautizo ✨</h1>
-    <p id="nombre">Cargando invitación...</p>
+  <section class="hero" data-aos="fade-down">
+    <img src="assets/baby.png" alt="Bebé" class="hero-img" />
+    <h1>✨ Mi Bautizo ✨</h1>
+    <h2 id="nombre">Cargando invitación...</h2>
+  </section>
 
+  <section class="details" data-aos="fade-up">
+    <p>Con gran alegría te invitamos a celebrar el bautizo de nuestro hijo</p>
+    <h3>💙 Santiago 💙</h3>
+    <p>El día <strong>Domingo 27 de Octubre de 2025</strong></p>
+    <p>A las <strong>11:00 a.m.</strong> en la <strong>Iglesia San José</strong></p>
+    <img src="assets/church.png" alt="Iglesia" class="church-img" />
+
+    <p class="map-link">
+      📍 <a href="https://maps.google.com?q=Iglesia+San+Jose" target="_blank">Ver ubicación</a>
+    </p>
+  </section>
+
+  <section class="confirmation" data-aos="zoom-in">
     <form id="formConfirmar" style="display:none;">
       <label for="cantidad">¿Cuántas personas asistirán?</label>
       <input type="number" id="cantidad" min="1" max="10" required />
@@ -28,10 +39,14 @@
 
     <p id="mensaje"></p>
     <button id="cambiar" style="display:none;">🔄 Cambiar respuesta</button>
-  </main>
+  </section>
 
-  <!-- 🧩 Script principal -->
+  <footer>
+    <p>Con cariño, <strong>Familia Ramírez</strong></p>
+  </footer>
+
   <script src="script.js"></script>
+  <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+  <script>AOS.init();</script>
 </body>
 </html>
-
