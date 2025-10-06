@@ -105,9 +105,9 @@
 
     async function cargarInvitado() {
       const { data, error } = await supabase
-        .from('invitados')
+        .from('guests')
         .select('*')
-        .eq('uri_personalizada', uri)
+        .eq('guest', 'Juan')
         .single();
 
       if (error || !data) {
@@ -143,4 +143,5 @@
   </script>
 </body>
 </html>
+
 
