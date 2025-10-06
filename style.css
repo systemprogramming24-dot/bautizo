@@ -1,0 +1,93 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Poppins', sans-serif;
+  overflow-x: hidden;
+  background-color: #fff9f9;
+}
+
+.panel {
+  height: 100vh;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 2rem;
+  border: 12px solid rgba(212, 175, 55, 0.5);
+  background-size: cover;
+  background-position: center;
+  position: relative;
+}
+
+.panel::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(255, 255, 255, 0.8);
+  z-index: 0;
+}
+
+.panel h2, .panel p, .panel label {
+  position: relative;
+  z-index: 1;
+}
+
+.portada {
+  background-image: url('https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1000&q=80');
+}
+
+.ceremonia { background-image: url('https://images.unsplash.com/photo-1504198458649-3128b932f49b?auto=format&fit=crop&w=1000&q=80'); }
+.recepcion { background-image: url('https://images.unsplash.com/photo-1527529482837-4698179dc6ce?auto=format&fit=crop&w=1000&q=80'); }
+.padrinos { background-image: url('https://images.unsplash.com/photo-1519681393784-d120267933ba?auto=format&fit=crop&w=1000&q=80'); }
+.padres { background-image: url('https://images.unsplash.com/photo-1549887534-3db1bd59dcca?auto=format&fit=crop&w=1000&q=80'); }
+.confirmacion { background-image: url('https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1000&q=80'); }
+
+.titulo {
+  font-family: 'Playfair Display', serif;
+  font-size: 2rem;
+  color: #d4af37;
+}
+
+.nombre {
+  font-family: 'Great Vibes', cursive;
+  font-size: 3rem;
+  color: #b65c83;
+  margin-bottom: 1rem;
+}
+
+.btn {
+  background-color: #d4af37;
+  color: white;
+  border: none;
+  padding: 1rem 2rem;
+  border-radius: 30px;
+  font-size: 1.2rem;
+  margin-top: 1rem;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+  position: relative;
+  z-index: 1;
+}
+
+.btn:hover {
+  transform: scale(1.05);
+}
+
+.contador {
+  font-size: 1.5rem;
+  color: #b65c83;
+  margin-top: 1rem;
+  font-weight: bold;
+}
+
+.icono {
+  width: 100px;
+  margin-bottom: 1rem;
+  filter: drop-shadow(0 0 8px rgba(212, 175, 55, 0.4));
+}
