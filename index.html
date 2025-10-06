@@ -1,58 +1,149 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Bautizo de Samantha Sayuri</title>
-  <link rel="stylesheet" href="style.css" />
-  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Playfair+Display:wght@500&family=Poppins:wght@300&display=swap" rel="stylesheet">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Invitación - Bautizo Samantha Sayuri</title>
+
+  <!-- Fuentes -->
+  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Playfair+Display:wght@400;600;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="styles.css" />
+
+  <!-- Supabase client -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 <body>
-  <audio id="bgMusic" src="musica.mp3" loop></audio>
 
-  <section id="portada" class="panel portada">
-    <div class="overlay"></div>
-    <div class="contenido">
-      <h1 class="titulo">Bautizo de</h1>
-      <h2 class="nombre">Samantha Sayuri</h2>
-      <div id="contador" class="contador"></div>
-      <button id="btnComenzar" class="btn">✨ Toca para comenzar ✨</button>
+  <!-- Audio (tu musica.mp3 debe estar en la carpeta) -->
+  <audio id="musica" preload="auto" loop>
+    <source src="musica.mp3" type="audio/mpeg" />
+    Tu navegador no soporta audio.
+  </audio>
+
+  <!-- GOLD FLASH -->
+  <div id="gold-flash" aria-hidden="true"></div>
+
+  <!-- PETALS container -->
+  <div id="petals" aria-hidden="true"></div>
+
+  <!-- COVER (first screen - story style) -->
+  <div id="cover" class="cover" role="region" aria-label="Portada - Desliza a la izquierda para comenzar">
+    <div class="cover-inner">
+      <img src="img/portrait.svg" alt="Samantha" class="cover-photo" />
+      <h1 class="cover-title">Samantha Sayuri</h1>
+      <p class="cover-sub">Te invito a mi bautizo</p>
+
+      <div class="cover-date">22 de Noviembre de 2025 — 08:00 p.m.</div>
+
+      <div class="cover-countdown" aria-live="polite">
+        <div class="count-box"><span id="cover-days">00</span><small>Días</small></div>
+        <div class="count-box"><span id="cover-hours">00</span><small>Horas</small></div>
+        <div class="count-box"><span id="cover-minutes">00</span><small>Min</small></div>
+        <div class="count-box"><span id="cover-seconds">00</span><small>Segs</small></div>
+      </div>
+
+      <div class="cover-hint">Desliza a la izquierda para continuar ▸</div>
     </div>
-  </section>
+  </div>
 
-  <section class="panel ceremonia">
-    <h2>💒 Ceremonia</h2>
-    <img src="https://cdn-icons-png.flaticon.com/512/857/857681.png" class="icono" />
-    <p>Iglesia San Pedro Apóstol<br>12 de octubre, 1:00 PM</p>
-  </section>
+  <!-- CONTENT (revealed after sliding cover) -->
+  <main id="content" class="content" tabindex="-1" role="main" aria-label="Contenido de la invitación">
 
-  <section class="panel recepcion">
-    <h2>🎉 Recepción</h2>
-    <img src="https://cdn-icons-png.flaticon.com/512/2917/2917999.png" class="icono" />
-    <p>Salón Los Ángeles<br>Dirección: Av. Primavera 456</p>
-  </section>
+    <!-- Panel: Ceremonia -->
+    <section class="panel panel-1 framed" id="panel-1" data-bg="img/floral-1.svg" aria-label="Ceremonia">
+      <div class="panel-inner">
+        <img src="img/icon-church.svg" alt="" class="panel-illustration" />
+        <h2>🌿 Ceremonia</h2>
+        <p class="muted large">La misa se celebrará en:</p>
+        <p class="strong xlarge">Parroquia Virgen de Fátima – Calupe</p>
+        <p class="muted large">Sábado 22 de Noviembre de 2025 - 08:00 p.m.</p>
+      </div>
+    </section>
 
-  <section class="panel padrinos">
-    <h2>👼 Padrinos</h2>
-    <p>Juan Pérez & Ana García</p>
-  </section>
+    <!-- Panel: Recepción -->
+    <section class="panel panel-2 framed" id="panel-2" data-bg="img/floral-2.svg" aria-label="Recepción">
+      <div class="panel-inner">
+        <img src="img/icon-party.svg" alt="" class="panel-illustration" />
+        <h2>🎉 Recepción</h2>
+        <p class="large">Después de la ceremonia te esperamos para celebrar juntos en:</p>
+        <p class="strong xlarge">Coliseo Calupe</p>
+        <p class="large">🎶 Amenizada por la orquesta <strong>Son Diluvio</strong></p>
+        <p class="large">👗 Asiste con ropa de vestir elegante</p>
+      </div>
+    </section>
 
-  <section class="panel padres">
-    <h2>👨‍👩‍👧 Padres</h2>
-    <p>Carlos Rodríguez & María López</p>
-  </section>
+    <!-- Panel: Padrinos -->
+    <section class="panel panel-3 framed" id="panel-3" data-bg="img/floral-3.svg" aria-label="Padrinos">
+      <div class="panel-inner">
+        <img src="img/icon-heart.svg" alt="" class="panel-illustration" />
+        <h2>💖 Mis Padrinos</h2>
+        <p class="strong xlarge">🌸 Rosa Elena Maza Moscol</p>
+        <p class="strong xlarge">🌸 Danny William Adanaqué Santos</p>
+      </div>
+    </section>
 
-  <section class="panel confirmacion">
-    <h2>💌 Confirmar asistencia</h2>
-    <form id="formConfirmar">
-      <label for="cantidad">¿Cuántas personas asistirán?</label>
-      <input type="number" id="cantidad" min="1" max="10" required />
-      <button type="submit" class="btn">Confirmar asistencia</button>
-    </form>
-    <p id="mensaje"></p>
-    <button id="cambiar" style="display:none;" class="btn">🔄 Cambiar respuesta</button>
-  </section>
+    <!-- Panel: Padres -->
+    <section class="panel panel-4 framed" id="panel-4" data-bg="img/floral-4.svg" aria-label="Padres">
+      <div class="panel-inner">
+        <img src="img/icon-family.svg" alt="" class="panel-illustration" />
+        <h2>👨‍👩‍👧 Mis Papás</h2>
+        <p class="strong xlarge">Adrián Bernardo Adanaqué Santos</p>
+        <p class="strong xlarge">Tania Maza Moscol</p>
+      </div>
+    </section>
 
+    <!-- Panel: Confirmación -->
+    <section class="panel panel-5 framed" id="panel-5" data-bg="img/floral-5.svg" aria-label="Confirmación">
+      <div class="panel-inner confirmation">
+        <img src="img/icon-check.svg" alt="" class="panel-illustration" />
+        <h2>✅ Confirmar asistencia</h2>
+
+        <form id="formConfirmar" style="display:none;">
+          <label for="cantidad" class="label-large">¿Cuántas personas asistirán?</label>
+          <input type="number" id="cantidad" min="1" max="10" required />
+          <div class="form-actions">
+            <button type="submit" class="btn primary btn-confirmar">Confirmar asistencia</button>
+          </div>
+        </form>
+
+        <p id="mensaje" class="mensaje-estado" aria-live="polite"></p>
+        <button id="cambiar" class="btn ghost" style="display:none;">🔄 Cambiar respuesta</button>
+      </div>
+    </section>
+
+    <!-- Panel: Frase y firma -->
+    <section class="panel panel-6 framed" id="panel-6" data-bg="img/floral-6.svg" aria-label="Frase">
+      <div class="panel-inner frase">
+        <img src="img/icon-quote.svg" alt="" class="panel-illustration" />
+        <blockquote>“Que la luz de Dios guíe mi vida y llene mi corazón de amor y alegría.”</blockquote>
+        <p class="firma xlarge">💖 Con cariño, <strong>Samantha Sayuri</strong></p>
+      </div>
+    </section>
+
+    <!-- Panel: Contador final -->
+    <section class="panel panel-7 framed" id="panel-7" data-bg="img/floral-7.svg" aria-label="Contador">
+      <div class="panel-inner contador">
+        <img src="img/icon-clock.svg" alt="" class="panel-illustration" />
+        <h2>⏳ Falta muy poco</h2>
+        <div id="countdown" class="countdown-vertical">
+          <div class="time"><span id="days">00</span><small>Días</small></div>
+          <div class="time"><span id="hours">00</span><small>Horas</small></div>
+          <div class="time"><span id="minutes">00</span><small>Minutos</small></div>
+          <div class="time"><span id="seconds">00</span><small>Segundos</small></div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="site-footer" role="contentinfo">✨ Con cariño, la familia Adanaqué Maza ✨</footer>
+
+  <!-- Floating music button -->
+  <button id="btnMusica" class="music-btn" title="Activar / pausar música">🎶</button>
+
+  <!-- Script -->
   <script src="script.js"></script>
 </body>
 </html>
