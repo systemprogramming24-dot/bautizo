@@ -68,4 +68,40 @@
   <!-- Padres -->
   <section class="padres" data-aos="zoom-in">
     <h3>👨‍👩‍👧 Mis Papás</h3>
-    <p><strong>Adrián Bernardo Adanaqué Santos<
+    <p><strong>Adrián Bernardo Adanaqué Santos</strong></p>
+    <p><strong>Tania Maza Moscol</strong></p>
+  </section>
+
+  <!-- Confirmación -->
+  <section class="confirmation" data-aos="flip-up">
+    <form id="formConfirmar" style="display:none;">
+      <label for="cantidad">¿Cuántas personas asistirán?</label>
+      <input type="number" id="cantidad" min="1" max="10" required />
+      <button type="submit" class="btn-confirmar">Confirmar asistencia</button>
+    </form>
+    <p id="mensaje"></p>
+    <button id="cambiar" style="display:none;" class="btn-cambiar">🔄 Cambiar respuesta</button>
+  </section>
+
+  <!-- Frase final -->
+  <section class="frase" data-aos="fade-in">
+    <blockquote>
+      “Que la luz de Dios guíe mi vida y llene mi corazón de amor y alegría.”
+    </blockquote>
+    <p class="firma">💖 Con cariño, <strong>Samantha Sayuri</strong></p>
+  </section>
+
+  <footer data-aos="fade-up"></footer>
+
+  <!-- Scripts -->
+  <script src="script.js"></script>
+  <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+  <script>
+    AOS.init({
+      duration: 1200,
+      once: true,
+      easing: 'ease-in-out'
+    });
+  </script>
+</body>
+</html>
