@@ -83,3 +83,41 @@ btnCambiar.addEventListener('click', async () => {
   }
 });
 
+// 🎵 Control de música
+const btnMusica = document.getElementById('btnMusica');
+const musica = document.getElementById('musica');
+let sonando = false;
+
+// Intento de reproducir inmediatamente (por si el navegador lo permite)
+window.addEventListener('load', () => {
+  musica.volume = 0.4;
+  const playPromise = musica.play();
+  if (playPromise !== undefined) {
+    playPromise.catch(() => {
+      // Silenciado hasta interacción
+      musica.muted = true;
+    });
+  }
+});
+
+// Activar sonido en el primer toque
+document.addEventListener('click', () => {
+  if (musica.muted) {
+    musica.muted = false;
+    musica.volume = 0.4;
+  }
+});
+
+// Botón de control
+btnMusica.addEventListener('click', () => {
+  if (musica.paused) {
+    musica.play();
+    sonando = true;
+    btnMusica.textContent = "🔊";
+  } else {
+    musica.pause();
+    sonando = false;
+    btnMusica.textContent = "🎵";
+  }
+});
+
