@@ -5,16 +5,29 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Invitación - Bautizo Samantha Sayuri</title>
 
-  <!-- Fonts -->
+  <!-- Fuentes -->
   <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Playfair+Display:wght@400;600;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
 
-  <!-- Styles -->
-  <link rel="stylesheet" href="styles.css" />
+  <!-- Estilos -->
+  <link rel="stylesheet" href="style.css" />
 
-  <!-- Supabase (client) -->
+  <!-- Supabase client -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 <body>
+
+  <!-- Fondo floral sincronizado (bg-wrapper se mueve horizontalmente) -->
+  <div id="bg-wrapper" aria-hidden="true">
+    <!-- cada slide background; use imágenes locales: floral-0.jpg ... floral-7.jpg -->
+    <div class="bg bg-0"></div>
+    <div class="bg bg-1"></div>
+    <div class="bg bg-2"></div>
+    <div class="bg bg-3"></div>
+    <div class="bg bg-4"></div>
+    <div class="bg bg-5"></div>
+    <div class="bg bg-6"></div>
+    <div class="bg bg-7"></div>
+  </div>
 
   <!-- Audio (no autoplay) -->
   <audio id="musica" loop>
@@ -24,7 +37,7 @@
 
   <!-- Overlay "Toca para comenzar" -->
   <div id="overlayMusica" class="overlay" role="button" aria-label="Iniciar música">
-    <div class="overlay-card" id="btnStart">
+    <div class="overlay-card" id="btnStart" tabindex="0">
       <div class="overlay-title">✨ Toca para comenzar ✨</div>
       <div class="overlay-sub">Pulsa para activar la música y la experiencia</div>
     </div>
@@ -33,89 +46,87 @@
   <!-- Botón musical flotante -->
   <button id="btnMusica" class="music-btn" title="Activar / pausar música">🎶</button>
 
-  <!-- Brillos decorativos (JS generará varios .brillo-dorado) -->
-
-  <!-- Secciones (cada sección es full-screen slide) -->
-  <main id="slideshow">
-    <!-- 1 - Portada -->
-    <section class="slide active" data-index="0" id="slide-0">
-      <div class="slide-inner">
+  <!-- Contenedor slideshow (horizontally sliding) -->
+  <main id="slideshow" aria-live="polite">
+    <!-- Slide 0 - Portada -->
+    <section class="slide active" data-index="0" id="slide-0" role="group" aria-roledescription="slide" aria-label="Portada">
+      <div class="slide-inner hero">
         <img src="girl.jpg" alt="Samantha" class="hero-img" />
         <h1 class="title">✨ Mi Bautizo ✨</h1>
         <h2 id="nombre" class="subtitle">Samantha Sayuri Adanaqué Maza</h2>
-        <p class="date">22 de Noviembre de 2025 — 08:00 p.m.</p>
+        <p class="date large">22 de Noviembre de 2025 — 08:00 p.m.</p>
       </div>
     </section>
 
-    <!-- 2 - Ceremonia -->
-    <section class="slide" data-index="1" id="slide-1">
+    <!-- Slide 1 - Ceremonia -->
+    <section class="slide" data-index="1" id="slide-1" role="group" aria-label="Ceremonia">
       <div class="slide-inner card">
         <h3>🌿 Ceremonia</h3>
-        <p class="muted">La misa se celebrará en:</p>
-        <p class="strong">Parroquia Virgen de Fátima – Calupe</p>
+        <p class="muted large">La misa se celebrará en:</p>
+        <p class="strong xlarge">Parroquia Virgen de Fátima – Calupe</p>
         <p class="link"><a href="https://maps.google.com?q=Parroquia+Virgen+de+Fátima+Calupe" target="_blank" rel="noopener">Ver ubicación</a></p>
-        <p class="muted">Sábado 22 de Noviembre de 2025 - 08:00 p.m.</p>
+        <p class="muted large">Sábado 22 de Noviembre de 2025 - 08:00 p.m.</p>
       </div>
     </section>
 
-    <!-- 3 - Recepción -->
-    <section class="slide" data-index="2" id="slide-2">
+    <!-- Slide 2 - Recepción -->
+    <section class="slide" data-index="2" id="slide-2" role="group" aria-label="Recepción">
       <div class="slide-inner card">
         <h3>🎉 Recepción</h3>
-        <p>Después de la ceremonia celebraremos en:</p>
-        <p class="strong">Coliseo Calupe</p>
-        <p>🎶 Amenizada por la orquesta <strong>"Son Diluvio"</strong></p>
-        <p>👗 Ropa: vestir elegante</p>
+        <p class="large">Después de la ceremonia te esperamos para celebrar juntos en:</p>
+        <p class="strong xlarge">Coliseo Calupe</p>
+        <p class="large">🎶 Amenizada por la orquesta <strong>"Son Diluvio"</strong></p>
+        <p class="large">👗 Asiste con ropa de vestir elegante</p>
       </div>
     </section>
 
-    <!-- 4 - Padrinos -->
-    <section class="slide" data-index="3" id="slide-3">
+    <!-- Slide 3 - Padrinos -->
+    <section class="slide" data-index="3" id="slide-3" role="group" aria-label="Padrinos">
       <div class="slide-inner card">
         <h3>💖 Mis Padrinos</h3>
-        <p class="strong">🌸 Rosa Elena Maza Moscol</p>
-        <p class="strong">🌸 Danny William Adanaqué Santos</p>
+        <p class="strong xlarge">🌸 Rosa Elena Maza Moscol</p>
+        <p class="strong xlarge">🌸 Danny William Adanaqué Santos</p>
       </div>
     </section>
 
-    <!-- 5 - Padres -->
-    <section class="slide" data-index="4" id="slide-4">
+    <!-- Slide 4 - Padres -->
+    <section class="slide" data-index="4" id="slide-4" role="group" aria-label="Padres">
       <div class="slide-inner card">
         <h3>👨‍👩‍👧 Mis Papás</h3>
-        <p class="strong">Adrián Bernardo Adanaqué Santos</p>
-        <p class="strong">Tania Maza Moscol</p>
+        <p class="strong xlarge">Adrián Bernardo Adanaqué Santos</p>
+        <p class="strong xlarge">Tania Maza Moscol</p>
       </div>
     </section>
 
-    <!-- 6 - Confirmación -->
-    <section class="slide" data-index="5" id="slide-5">
+    <!-- Slide 5 - Confirmación -->
+    <section class="slide" data-index="5" id="slide-5" role="group" aria-label="Confirmación">
       <div class="slide-inner card confirmation">
         <h3>✅ Confirma tu asistencia</h3>
         <form id="formConfirmar" style="display:none;">
-          <label for="cantidad">¿Cuántas personas asistirán?</label>
+          <label for="cantidad" class="large">¿Cuántas personas asistirán?</label>
           <input type="number" id="cantidad" min="1" max="10" required />
           <div class="form-actions">
             <button type="submit" class="btn primary btn-confirmar">💫 Confirmar asistencia</button>
           </div>
         </form>
-        <p id="mensaje" class="mensaje-estado" aria-live="polite"></p>
-        <button id="cambiar" class="btn ghost" style="display:none;">🔄 Cambiar respuesta</button>
+        <p id="mensaje" class="mensaje-estado large" aria-live="polite"></p>
+        <button id="cambiar" class="btn ghost large" style="display:none;">🔄 Cambiar respuesta</button>
       </div>
     </section>
 
-    <!-- 7 - Frase -->
-    <section class="slide" data-index="6" id="slide-6">
+    <!-- Slide 6 - Frase -->
+    <section class="slide" data-index="6" id="slide-6" role="group" aria-label="Frase">
       <div class="slide-inner card frase">
         <blockquote>“Que la luz de Dios guíe mi vida y llene mi corazón de amor y alegría.”</blockquote>
-        <p class="firma">💖 Con cariño, <strong>Samantha Sayuri</strong></p>
+        <p class="firma xlarge">💖 Con cariño, <strong>Samantha Sayuri</strong></p>
       </div>
     </section>
 
-    <!-- 8 - Contador -->
-    <section class="slide" data-index="7" id="slide-7">
+    <!-- Slide 7 - Contador -->
+    <section class="slide" data-index="7" id="slide-7" role="group" aria-label="Contador">
       <div class="slide-inner card contador">
         <h3>⏳ Falta muy poco</h3>
-        <div id="countdown" class="countdown">
+        <div id="countdown" class="countdown large">
           <div class="time"><span id="days">00</span><small>Días</small></div>
           <div class="time"><span id="hours">00</span><small>Horas</small></div>
           <div class="time"><span id="minutes">00</span><small>Minutos</small></div>
@@ -123,7 +134,6 @@
         </div>
       </div>
     </section>
-
   </main>
 
   <footer class="site-footer">✨ Con amor, la familia Adanaqué Maza ✨</footer>
