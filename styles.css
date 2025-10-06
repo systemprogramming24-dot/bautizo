@@ -1,281 +1,182 @@
-/* ============ RESET & BASE ============ */
-* {
+/* 🌸 Estilo base */
+body {
   margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-html, body {
   font-family: 'Poppins', sans-serif;
-  color: #4a3c2d;
-  background: linear-gradient(180deg, #fff8f1 0%, #fff1e1 100%);
-  overflow-x: hidden;
-  scroll-behavior: smooth;
-}
-
-/* ============ HERO / PORTADA ============ */
-.hero {
-  position: relative;
+  background: radial-gradient(circle at top, #fffdf4 0%, #fff8e1 40%, #f5deb3 100%);
+  color: #444;
   text-align: center;
-  padding: 5rem 1.5rem 4rem;
-  background: linear-gradient(135deg, #ffe9d6, #fff3e4);
-  border-bottom: 2px solid rgba(255, 222, 173, 0.5);
-  box-shadow: inset 0 0 60px rgba(255, 204, 153, 0.3);
+  overflow-x: hidden;
+  position: relative;
 }
 
+h1, h2, h3 {
+  font-family: 'Playfair Display', serif;
+  color: #a67c00;
+}
+
+h1 {
+  font-size: 3rem;
+  background: linear-gradient(90deg, #d4af37, #f9d976, #e6b980);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+h2 {
+  font-size: 1.9rem;
+  color: #8b6b22;
+}
+
+h3 {
+  font-size: 1.6rem;
+  background: linear-gradient(90deg, #d4af37, #f9d976);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+p {
+  font-size: 1.1rem;
+  color: #5a4a1f;
+}
+
+/* 🌸 Imagen principal */
 .hero-img {
-  width: 180px;
-  height: 180px;
-  object-fit: cover;
+  width: 230px;
+  height: 230px;
   border-radius: 50%;
-  border: 5px solid #f8dcbf;
-  box-shadow: 0 0 25px rgba(255, 204, 153, 0.6);
-  margin-bottom: 1.5rem;
-  animation: float 6s ease-in-out infinite;
+  object-fit: cover;
+  margin-top: 30px;
+  border: 6px solid white;
+  box-shadow: 0 0 25px rgba(255, 220, 130, 0.6);
+  animation: float 4s ease-in-out infinite;
 }
 
 @keyframes float {
   0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-8px); }
+  50% { transform: translateY(-10px); }
 }
 
-.hero h1 {
-  font-family: 'Great Vibes', cursive;
-  font-size: 2.8rem;
-  color: #b48b57;
-  margin-bottom: 0.5rem;
-  text-shadow: 0 0 6px rgba(255, 255, 255, 0.7);
-}
-
-.hero h2 {
-  font-family: 'Playfair Display', serif;
-  font-weight: 700;
-  color: #5b4636;
-  font-size: 1.5rem;
-  margin-bottom: 0.6rem;
-}
-
-.hero .fecha {
-  font-weight: 500;
-  font-size: 1.1rem;
-  color: #a37b5b;
-}
-
-/* ============ SECCIONES GENERALES ============ */
+/* 🕊️ Secciones */
 section {
-  margin: 3rem auto;
-  padding: 2rem;
-  width: 90%;
-  max-width: 700px;
-  background: rgba(255, 255, 255, 0.6);
-  backdrop-filter: blur(12px);
+  padding: 40px 20px;
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(8px);
+  margin: 20px;
   border-radius: 20px;
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.07);
-  text-align: center;
-  animation: fadeIn 1s ease-in-out;
+  box-shadow: 0 4px 15px rgba(212, 175, 55, 0.15);
 }
 
-section h3 {
-  font-family: 'Playfair Display', serif;
-  color: #b48b57;
-  font-size: 1.6rem;
-  margin-bottom: 1rem;
-  letter-spacing: 0.5px;
-}
-
-/* ============ ENLACES ============ */
-a {
-  color: #b48b57;
-  text-decoration: none;
-  font-weight: 600;
-  transition: color 0.3s ease;
-}
-a:hover {
-  color: #d3a55e;
-}
-
-/* ============ PARRAFOS Y TEXTO ============ */
-p {
-  margin-bottom: 0.8rem;
-  line-height: 1.6;
-  font-size: 1rem;
-}
-
-/* ============ BOTONES ============ */
-button, .btn-confirmar, .btn-cambiar {
-  background: linear-gradient(135deg, #f8dcbf, #eecb9c);
+/* ✨ Botones */
+button {
   border: none;
-  padding: 0.8rem 1.5rem;
   border-radius: 25px;
-  font-weight: 600;
-  color: #5a4635;
+  padding: 12px 24px;
   cursor: pointer;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
   transition: all 0.3s ease;
 }
 
-button:hover, .btn-confirmar:hover, .btn-cambiar:hover {
-  transform: scale(1.05);
-  background: linear-gradient(135deg, #ffe2b9, #f6d7a7);
-}
-
-/* ============ FORMULARIO DE CONFIRMACIÓN ============ */
-.confirmation {
-  text-align: center;
-}
-
-.confirmation label {
-  display: block;
-  margin-bottom: 0.8rem;
-  font-weight: 500;
-  color: #6d4e33;
-}
-
-.confirmation input[type="number"] {
-  width: 80px;
-  padding: 0.5rem;
-  border-radius: 8px;
-  border: 1px solid #d8b48a;
-  text-align: center;
-  margin-bottom: 1rem;
-  font-size: 1rem;
-}
-
-/* ============ CONTADOR ============ */
-.countdown {
-  display: flex;
-  justify-content: center;
-  gap: 1rem;
-  margin-top: 1.2rem;
-}
-
-.countdown div {
-  background: rgba(255, 250, 240, 0.6);
-  border-radius: 10px;
-  padding: 0.8rem;
-  box-shadow: inset 0 0 10px rgba(180, 139, 87, 0.2);
-  min-width: 60px;
-}
-
-.countdown span {
-  display: block;
-  font-size: 1.4rem;
-  font-weight: 700;
-  color: #b48b57;
-}
-
-.countdown small {
-  font-size: 0.8rem;
-  color: #6f5a45;
-}
-
-/* ============ FRASE FINAL ============ */
-.frase blockquote {
-  font-style: italic;
-  color: #6f5a45;
-  margin-bottom: 1rem;
-  font-size: 1.1rem;
-  line-height: 1.7;
-}
-
-.frase .firma {
-  font-family: 'Great Vibes', cursive;
-  font-size: 1.4rem;
-  color: #b48b57;
-}
-
-/* ============ FOOTER ============ */
-footer {
-  text-align: center;
-  padding: 1.5rem;
-  background: linear-gradient(180deg, #fff3e4, #ffe9d6);
-  color: #876b4a;
-  font-size: 0.9rem;
-  border-top: 2px solid rgba(255, 222, 173, 0.5);
-}
-
-/* ============ OVERLAY DE MÚSICA ============ */
-.overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(255, 246, 230, 0.9);
-  backdrop-filter: blur(8px);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 10;
-  cursor: pointer;
-}
-
-.overlay-content p {
-  font-size: 1.2rem;
-  background: #fff;
-  padding: 1rem 2rem;
-  border-radius: 30px;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
-  color: #b48b57;
-  animation: pulse 2s infinite;
-}
-
-@keyframes pulse {
-  0%, 100% { transform: scale(1); opacity: 1; }
-  50% { transform: scale(1.05); opacity: 0.8; }
-}
-
-/* ============ BOTÓN FLOTANTE DE MÚSICA ============ */
+/* 🎶 Botón flotante */
 .music-btn {
   position: fixed;
   bottom: 20px;
   right: 20px;
-  background: radial-gradient(circle, #f8dcbf 20%, #eecb9c 100%);
+  font-size: 1.6rem;
+  background: linear-gradient(135deg, #f9d976, #e6b980);
+  color: white;
   border-radius: 50%;
-  width: 55px;
-  height: 55px;
-  font-size: 1.5rem;
-  color: #5a4635;
+  padding: 16px;
+  box-shadow: 0 0 20px rgba(212, 175, 55, 0.5);
+  z-index: 50;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.music-btn:hover {
+  transform: scale(1.1);
+  box-shadow: 0 0 25px rgba(212, 175, 55, 0.7);
+}
+
+/* 🎵 Overlay */
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: linear-gradient(135deg, #fff8e1 0%, #f9d976 40%, #e6b980 100%);
   display: flex;
-  justify-content: center;
   align-items: center;
-  box-shadow: 0 0 20px rgba(255, 204, 153, 0.7);
-  animation: glow 3s infinite;
-  z-index: 20;
+  justify-content: center;
+  z-index: 100;
+  flex-direction: column;
 }
 
-@keyframes glow {
-  0%, 100% { box-shadow: 0 0 15px rgba(255, 204, 153, 0.7); }
-  50% { box-shadow: 0 0 30px rgba(255, 204, 153, 1); }
+.overlay-content p {
+  font-family: 'Great Vibes', cursive;
+  font-size: 2.6rem;
+  background: linear-gradient(90deg, #b8860b, #ffd700);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 10px;
 }
 
-/* ============ BRILLOS DORADOS FLOTANTES ============ */
+/* 🔊 Ondas animadas */
+.ondas {
+  display: flex;
+  gap: 6px;
+}
+
+.ondas span {
+  display: block;
+  width: 6px;
+  height: 20px;
+  background: #d4af37;
+  border-radius: 3px;
+  animation: ondas 1s ease-in-out infinite;
+}
+
+.ondas span:nth-child(1) { animation-delay: 0s; }
+.ondas span:nth-child(2) { animation-delay: 0.2s; }
+.ondas span:nth-child(3) { animation-delay: 0.4s; }
+
+@keyframes ondas {
+  0%, 100% { transform: scaleY(1); opacity: 0.7; }
+  50% { transform: scaleY(1.8); opacity: 1; }
+}
+
+/* 🎵 Efecto fade-out */
+.fade-out {
+  animation: fadeOut 0.6s ease forwards;
+}
+
+@keyframes fadeOut {
+  from { opacity: 1; }
+  to { opacity: 0; visibility: hidden; }
+}
+
+/* ✨ Frase final */
+.frase blockquote {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.6rem;
+  color: #4b3b0a;
+  font-style: italic;
+}
+
+.firma {
+  font-family: 'Great Vibes', cursive;
+  font-size: 2.4rem;
+  background: linear-gradient(90deg, #d4af37, #f9d976);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* ✨ Brillos dorados flotantes */
 .brillo-dorado {
   position: fixed;
+  background: radial-gradient(circle, rgba(255,223,119,0.9) 0%, rgba(255,255,255,0) 70%);
   border-radius: 50%;
-  background: radial-gradient(circle, rgba(255, 224, 178, 0.9), rgba(255, 200, 140, 0));
-  opacity: 0.8;
   pointer-events: none;
-  animation: flotar 6s linear infinite;
-  z-index: 0;
+  opacity: 0.7;
+  animation: flotarBrillo 8s ease-in-out infinite;
+  z-index: 1;
 }
 
-@keyframes flotar {
-  0% { transform: translateY(0) scale(1); opacity: 0.8; }
-  50% { transform: translateY(-20px) scale(1.2); opacity: 1; }
-  100% { transform: translateY(0) scale(1); opacity: 0.8; }
-}
-
-/* ============ ANIMACIONES ============ */
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(20px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-/* ============ RESPONSIVE ============ */
-@media (max-width: 600px) {
-  .hero h1 { font-size: 2.2rem; }
-  .hero h2 { font-size: 1.2rem; }
-  section { padding: 1.5rem; }
-  .countdown div { min-width: 50px; }
+@keyframes flotarBrillo {
+  0%, 100% { transform: translateY(0) scale(1); opacity: 0.8; }
+  50% { transform: translateY(-40px) scale(1.2); opacity: 0.4; }
 }
