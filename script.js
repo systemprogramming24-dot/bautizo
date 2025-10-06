@@ -3,9 +3,9 @@
 // =============================
 const SUPABASE_URL = "https://rsjyfchiynskjddpjupt.supabase.co";  // tu URL
 const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJzanlmY2hpeW5za2pkZHBqdXB0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTk3MTkzMzEsImV4cCI6MjA3NTI5NTMzMX0.pxnbFP03pSWra1zOrCsR8ADyWF3wpGN88BQlameVRWM";  // tu anon key de Supabase
+
 const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
-// 🔍 Obtener el valor de "key" desde la URL (ejemplo: ?abc123)
 const params = new URLSearchParams(window.location.search);
 const guestKey = Array.from(params.keys())[0];
 
@@ -59,24 +59,22 @@ form.addEventListener('submit', async (e) => {
     console.error(error);
   } else {
     form.style.display = 'none';
-    mensajeEl.textContent = "✅ ¡Gracias por confirmar tu asistencia!";
+    mensajeEl.textContent = "🎉 ¡Gracias por confirmar tu asistencia! Nos vemos pronto 💛";
     btnCambiar.style.display = 'inline';
   }
 });
 
-// 🔄 Permitir cambiar respuesta
 btnCambiar.addEventListener('click', async () => {
-  const confirmar = confirm("¿Quieres cambiar tu respuesta?");
+  const confirmar = confirm("¿Deseas cambiar tu respuesta?");
   if (!confirmar) return;
 
-  // Actualizamos en la base de datos para permitir edición
   const { error } = await supabase
     .from('guests')
     .update({ confirm: false, persons: null })
     .eq('key', guestKey);
 
   if (error) {
-    mensajeEl.textContent = "❌ No se pudo reabrir la invitación.";
+    mensajeEl.textContent = "❌ No se pudo modificar tu confirmación.";
   } else {
     mensajeEl.textContent = "";
     btnCambiar.style.display = 'none';
@@ -84,3 +82,4 @@ btnCambiar.addEventListener('click', async () => {
     document.getElementById('cantidad').value = invitadoActual.persons || '';
   }
 });
+
