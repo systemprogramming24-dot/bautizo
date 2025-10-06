@@ -1,31 +1,197 @@
-/* 🎵 Overlay con degradado */
+/* 🌸 Estilo base */
+body {
+  margin: 0;
+  font-family: 'Poppins', sans-serif;
+  background: linear-gradient(180deg, #fff 0%, #f9f0ff 100%);
+  color: #444;
+  text-align: center;
+  overflow-x: hidden;
+}
+
+h1, h2, h3 {
+  font-family: 'Playfair Display', serif;
+  color: #b14ab1;
+  margin: 10px 0;
+}
+
+h1 {
+  font-size: 2.8rem;
+  background: linear-gradient(90deg, #b14ab1, #e2a0f7);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+h2 {
+  font-size: 1.8rem;
+  color: #5a2a78;
+}
+
+h3 {
+  font-size: 1.5rem;
+  background: linear-gradient(90deg, #b14ab1, #e2a0f7);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+p {
+  font-size: 1.1rem;
+  line-height: 1.6;
+}
+
+/* 🌸 Imagen principal */
+.hero-img {
+  width: 220px;
+  height: 220px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-top: 30px;
+  border: 6px solid white;
+  box-shadow: 0 0 25px rgba(255, 192, 252, 0.6);
+  animation: float 4s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+/* 🕊️ Secciones */
+section {
+  padding: 40px 20px;
+  background: rgba(255, 255, 255, 0.8);
+  margin: 20px;
+  border-radius: 20px;
+  box-shadow: 0 4px 15px rgba(200, 100, 220, 0.1);
+}
+
+/* 💖 Botones */
+button {
+  font-family: 'Poppins', sans-serif;
+  border: none;
+  border-radius: 25px;
+  padding: 12px 24px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.btn-confirmar {
+  background: linear-gradient(90deg, #d86bff, #f5a8ff);
+  color: white;
+  font-weight: 600;
+  box-shadow: 0 4px 10px rgba(184, 92, 216, 0.4);
+}
+
+.btn-confirmar:hover {
+  transform: scale(1.05);
+  box-shadow: 0 6px 14px rgba(184, 92, 216, 0.6);
+}
+
+.btn-cambiar {
+  background: #fff;
+  border: 2px solid #b14ab1;
+  color: #b14ab1;
+}
+
+.btn-cambiar:hover {
+  background: #f5e6ff;
+}
+
+/* 🎵 Música */
+.music-btn {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  font-size: 1.5rem;
+  background: linear-gradient(135deg, #e0a7ff, #b14ab1);
+  color: white;
+  border-radius: 50%;
+  padding: 14px;
+  box-shadow: 0 0 20px rgba(177, 74, 177, 0.4);
+  z-index: 50;
+}
+
+/* 🎵 Overlay */
 .overlay {
   position: fixed;
   inset: 0;
-  background: linear-gradient(135deg, #f6d5f7, #fbeaff, #e3b2ff);
-  background-size: 400% 400%;
-  animation: fondoDegradado 6s ease infinite;
+  background: rgba(255, 255, 255, 0.9);
   display: flex;
   align-items: center;
   justify-content: center;
   z-index: 100;
 }
 
-@keyframes fondoDegradado {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
-}
-
 .overlay-content p {
   font-family: 'Great Vibes', cursive;
-  font-size: 2.5rem;
+  font-size: 2rem;
   color: #b14ab1;
-  text-shadow: 2px 2px 8px rgba(255,255,255,0.8);
-  animation: pulse 2s infinite;
 }
 
-@keyframes pulse {
-  0%, 100% { transform: scale(1); opacity: 1; }
-  50% { transform: scale(1.05); opacity: 0.8; }
+/* ✨ Frase final */
+.frase blockquote {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.6rem;
+  color: #4b2765;
+  font-style: italic;
+  line-height: 1.7;
+  margin-bottom: 15px;
 }
+
+.firma {
+  font-family: 'Great Vibes', cursive;
+  font-size: 2.4rem;
+  color: #b14ab1;
+}
+
+/* ===== CONTADOR REGRESIVO ===== */
+.contador {
+  text-align: center;
+  padding: 50px 20px;
+  background: radial-gradient(circle at top, #fff8fb 0%, #ffe6f9 100%);
+  color: #5a2d82;
+  font-family: 'Poppins', sans-serif;
+  border-top: 2px solid #f3d9f6;
+  border-bottom: 2px solid #f3d9f6;
+}
+
+.contador h3 {
+  font-family: 'Great Vibes', cursive;
+  font-size: 2rem;
+  margin-bottom: 20px;
+  color: #b85cb8;
+  text-shadow: 1px 1px 3px rgba(0,0,0,0.1);
+}
+
+.countdown {
+  display: flex;
+  justify-content: center;
+  gap: 25px;
+  flex-wrap: wrap;
+}
+
+.countdown div {
+  background: linear-gradient(135deg, #b85cb8, #f9c7f8);
+  border-radius: 15px;
+  padding: 15px 20px;
+  box-shadow: 0 4px 10px rgba(184, 92, 184, 0.3);
+  color: white;
+  min-width: 90px;
+  transition: transform 0.3s ease;
+}
+
+.countdown div:hover {
+  transform: scale(1.08);
+}
+
+.countdown span {
+  display: block;
+  font-size: 2rem;
+  font-weight: 700;
+}
+
+.countdown small {
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  opacity: 0.9;
+}
+
