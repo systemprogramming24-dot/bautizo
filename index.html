@@ -7,7 +7,7 @@
 
   <link rel="stylesheet" href="styles.css" />
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Parisienne&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600&family=Poppins:wght@300;500;600&display=swap" rel="stylesheet">
   <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet" />
 </head>
 
@@ -18,22 +18,22 @@
     Tu navegador no soporta audio HTML5.
   </audio>
 
-  <!-- Overlay para móvil -->
+  <!-- Overlay móvil -->
   <div id="overlayMusica" class="overlay">
     <div class="overlay-content">
       <p>🎵 Toca para comenzar</p>
     </div>
   </div>
 
-  <!-- Botón flotante de música -->
+  <!-- Botón flotante música -->
   <button id="btnMusica" class="music-btn" title="Activar / Pausar música">🎵</button>
 
   <!-- Portada -->
   <section class="hero" data-aos="fade-down">
-    <img src="girl.jpg" alt="Niña" class="hero-img" />
+    <img src="girl.jpg" alt="Samantha" class="hero-img" />
     <h1 data-aos="zoom-in">✨ Mi Bautizo ✨</h1>
     <h2 id="nombre" data-aos="fade-up">Samantha Sayuri Adanaqué Maza</h2>
-    <p data-aos="fade-up" data-aos-delay="300" class="fecha">22 de Noviembre de 2025</p>
+    <p class="fecha" data-aos="fade-up" data-aos-delay="200">22 de Noviembre de 2025</p>
   </section>
 
   <!-- Ceremonia -->
@@ -42,7 +42,7 @@
     <p>La misa de mi bautizo se celebrará en:</p>
     <p><strong>Parroquia Virgen de Fátima – Calupe</strong></p>
     <p>📍 <a href="https://maps.google.com?q=Parroquia+Virgen+de+Fátima+Calupe" target="_blank">Ver ubicación</a></p>
-    <p>🕊️ Sábado 22 de Noviembre de 2025 - 11:00 a.m.</p>
+    <p>🕊️ Sábado 22 de Noviembre de 2025 - 8:00 p.m.</p>
   </section>
 
   <!-- Recepción -->
@@ -51,16 +51,16 @@
     <p>Después de la ceremonia te esperamos para celebrar juntos en:</p>
     <p><strong>Coliseo Calupe</strong></p>
     <p>📍 Calupe</p>
-    <p>🕓 A partir de las 2:00 p.m.</p>
+    <p>🕓 A partir de las 8:30 p.m.</p>
     <p data-aos="fade-in" data-aos-delay="300">🎶 Amenizada por la orquesta <strong>"Son Diluvio"</strong></p>
     <p data-aos="fade-in" data-aos-delay="600">👗 Asiste con ropa de vestir elegante</p>
   </section>
 
   <!-- Padrinos -->
   <section class="padrinos" data-aos="zoom-in" data-aos-duration="1200">
-    <h3>👩‍❤️‍👨 Mis Padrinos</h3>
+    <h3>👩‍🧑 Mis Padrinos</h3>
     <p><strong>Rosa Elena Maza Moscol</strong></p>
-    <p><strong>Danny Williams Adanaqué Santos</strong></p>
+    <p><strong>Danny William Adanaqué Santos</strong></p>
   </section>
 
   <!-- Padres -->
@@ -74,11 +74,11 @@
   <section class="confirmation" data-aos="flip-up" data-aos-duration="1200">
     <form id="formConfirmar" style="display:none;">
       <label for="cantidad">¿Cuántas personas asistirán?</label>
-      <input type="number" id="cantidad" min="1" max="10" required />
-      <button type="submit">Confirmar asistencia</button>
+      <input type="number" id="cantidad" min="1" max="10" required placeholder="Ejemplo: 3" />
+      <button type="submit" class="btn-confirmar">Confirmar asistencia</button>
     </form>
     <p id="mensaje"></p>
-    <button id="cambiar" style="display:none;">🔄 Cambiar respuesta</button>
+    <button id="cambiar" class="btn-secundario" style="display:none;">🔄 Cambiar respuesta</button>
   </section>
 
   <!-- Frase final -->
@@ -89,8 +89,4 @@
     <p class="firma">💖 Con cariño, <strong>Samantha Sayuri</strong></p>
   </section>
 
-  <script src="script.js"></script>
-  <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
-  <script>AOS.init({ duration: 1300, once: true, easing: 'ease-in-out' });</script>
-</body>
-</html>
+  <script s
