@@ -1,65 +1,69 @@
 body {
-  font-family: 'Segoe UI', sans-serif;
-  background-color: #fdf6f0;
+  font-family: 'Poppins', sans-serif;
+  background: linear-gradient(135deg, #fceabb, #f8b500);
   color: #333;
-  padding: 20px;
+  text-align: center;
   margin: 0;
+  padding: 0;
 }
 
 .container {
-  max-width: 600px;
-  margin: auto;
+  max-width: 500px;
+  margin: 5vh auto;
   background: white;
-  border-radius: 12px;
-  padding: 30px;
-  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+  padding: 2em;
+  border-radius: 20px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
 }
 
-.fade-in {
-  animation: fadeIn 1s ease forwards;
-  opacity: 0;
+h1 {
+  color: #d18b00;
 }
 
-@keyframes fadeIn {
-  to { opacity: 1; }
+label {
+  display: block;
+  margin-top: 1em;
+  font-weight: 600;
 }
 
-form {
-  margin-top: 20px;
-  display: flex;
-  flex-direction: column;
-}
-
-input, select, button {
-  margin-top: 10px;
-  padding: 10px;
-  font-size: 16px;
-}
-
-.button-options {
-  display: flex;
-  gap: 10px;
-  margin-top: 10px;
-}
-
-.button-options button {
-  flex: 1;
-  font-size: 16px;
-  padding: 12px;
-  background-color: #f0e5e3;
-  border: 2px solid #ddd;
+input {
+  padding: 8px;
+  width: 80%;
+  margin-top: 0.5em;
+  border: 1px solid #ccc;
   border-radius: 8px;
+}
+
+button {
+  background: #f8b500;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 10px;
   cursor: pointer;
+  color: white;
+  font-size: 1em;
+  margin-top: 1em;
 }
 
-#yesBtn {
-  background-color: #c8e6c9;
+button:hover {
+  background: #e09e00;
 }
 
-#noBtn {
-  background-color: #ffcdd2;
+#mensaje {
+  margin-top: 1.5em;
+  font-weight: 600;
 }
 
-.button-options button:hover {
-  opacity: 0.9;
+#cambiar {
+  background: transparent;
+  border: none;
+  color: #0077cc;
+  text-decoration: underline;
+  cursor: pointer;
+  font-size: 0.9em;
+  margin-top: 0.5em;
+}
+
+#cambiar:hover {
+  color: #004999;
 }
