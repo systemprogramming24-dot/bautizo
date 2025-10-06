@@ -83,43 +83,51 @@ btnCambiar.addEventListener('click', async () => {
   }
 });
 
-// 🎵 Control de música mejorado (funciona en móviles y PC)
+// 🎵 Control de música compatible con móviles y PC
 const musica = document.getElementById('musica');
 const btnMusica = document.getElementById('btnMusica');
 const overlayMusica = document.getElementById('overlayMusica');
 
 let sonidoActivado = false;
-musica.volume = 0.4;
 
-// 🟣 Reproduce al tocar el overlay (móviles)
+// Intenta cargar el audio en silencio
+window.addEventListener('load', () => {
+  musica.volume = 0.4;
+  musica.muted = true;
+  musica.pause(); // Asegura que no empiece solo
+});
+
+// ✅ Al tocar el overlay
 overlayMusica.addEventListener('click', async () => {
   try {
-    await musica.play();
     musica.muted = false;
-    sonidoActivado = true;
-    btnMusica.textContent = '🔊';
+    musica.currentTime = 0; // Reinicia desde el inicio
+    await musica.play();
     overlayMusica.style.display = 'none';
+    btnMusica.textContent = '🔊';
+    sonidoActivado = true;
   } catch (e) {
-    console.warn('No se pudo reproducir el audio:', e);
+    console.error('Error al reproducir música:', e);
   }
 });
 
-// 🟣 Si el usuario hace scroll (en escritorio)
+// ✅ Al hacer scroll (solo si no ha activado antes)
 window.addEventListener('scroll', async () => {
   if (!sonidoActivado) {
     try {
-      await musica.play();
       musica.muted = false;
-      sonidoActivado = true;
-      btnMusica.textContent = '🔊';
+      musica.currentTime = 0;
+      await musica.play();
       overlayMusica.style.display = 'none';
+      btnMusica.textContent = '🔊';
+      sonidoActivado = true;
     } catch (e) {
-      console.warn('Error al iniciar música con scroll:', e);
+      console.error('Error al reproducir con scroll:', e);
     }
   }
 });
 
-// 🟣 Botón flotante para pausar/reanudar
+// ✅ Botón flotante
 btnMusica.addEventListener('click', async () => {
   if (musica.paused) {
     try {
@@ -127,7 +135,7 @@ btnMusica.addEventListener('click', async () => {
       musica.muted = false;
       btnMusica.textContent = '🔊';
     } catch (e) {
-      console.warn('Error al reanudar música:', e);
+      console.error('No se pudo reproducir música:', e);
     }
   } else {
     musica.pause();
