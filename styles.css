@@ -1,247 +1,48 @@
-/* 🌸 Estilo base */
+/* 🌸 Estilo base refinado */
 body {
   margin: 0;
   font-family: 'Poppins', sans-serif;
   background: linear-gradient(180deg, #fff8e1 0%, #fffaf0 50%, #f5deb3 100%);
-  color: #444;
+  color: #4a3a00;
   text-align: center;
   overflow-x: hidden;
   position: relative;
 }
 
+/* 🌤️ Transición de entrada global */
+* {
+  transition: all 0.4s ease;
+}
+
 h1, h2, h3 {
   font-family: 'Playfair Display', serif;
-  color: #a67c00;
   margin: 10px 0;
+  color: #a67c00;
 }
 
 h1 {
-  font-size: 2.8rem;
-  background: linear-gradient(90deg, #d4af37, #f9d976, #e6b980);
+  font-size: 3rem;
+  letter-spacing: 1px;
+  background: linear-gradient(90deg, #f7d774, #f1c45c, #eac45d);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+  animation: textGlow 3s ease-in-out infinite alternate;
 }
 
 h2 {
-  font-size: 1.8rem;
+  font-size: 1.9rem;
   color: #8b6b22;
+  opacity: 0.95;
 }
 
 h3 {
-  font-size: 1.5rem;
-  background: linear-gradient(90deg, #d4af37, #f9d976);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
-p {
-  font-size: 1.1rem;
-  line-height: 1.6;
-  color: #5a4a1f;
-}
-
-/* 🌸 Imagen principal */
-.hero-img {
-  width: 220px;
-  height: 220px;
-  border-radius: 50%;
-  object-fit: cover;
-  margin-top: 30px;
-  border: 6px solid white;
-  box-shadow: 0 0 25px rgba(255, 220, 130, 0.6);
-  animation: float 4s ease-in-out infinite;
-}
-
-@keyframes float {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-10px); }
-}
-
-/* 🕊️ Secciones */
-section {
-  padding: 40px 20px;
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.9), rgba(255, 245, 220, 0.8));
-  margin: 20px;
-  border-radius: 20px;
-  box-shadow: 0 4px 15px rgba(212, 175, 55, 0.15);
-  position: relative;
-  z-index: 5;
-}
-
-/* 💖 Botones */
-button {
-  font-family: 'Poppins', sans-serif;
-  border: none;
-  border-radius: 25px;
-  padding: 12px 24px;
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
-
-.btn-confirmar {
-  background: linear-gradient(90deg, #f5d76e, #e6b980, #f9d976);
-  color: white;
-  font-weight: 600;
-  box-shadow: 0 4px 10px rgba(230, 185, 128, 0.5);
-}
-
-.btn-confirmar:hover {
-  transform: scale(1.05);
-  box-shadow: 0 6px 14px rgba(230, 185, 128, 0.7);
-}
-
-.btn-cambiar {
-  background: #fff;
-  border: 2px solid #d4af37;
-  color: #a67c00;
-}
-
-.btn-cambiar:hover {
-  background: #fff9e6;
-}
-
-/* 🎵 Música */
-.music-btn {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  font-size: 1.5rem;
-  background: linear-gradient(135deg, #f9d976, #e6b980);
-  color: white;
-  border-radius: 50%;
-  padding: 14px;
-  box-shadow: 0 0 20px rgba(212, 175, 55, 0.5);
-  z-index: 50;
-}
-
-/* 🎵 Overlay */
-.overlay {
-  position: fixed;
-  inset: 0;
-  background: linear-gradient(135deg, #fff8e1 0%, #f9d976 40%, #e6b980 100%);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 100;
-  background-size: 200% 200%;
-}
-
-.overlay-content p {
-  font-family: 'Great Vibes', cursive;
-  font-size: 2.4rem;
-  color: #fff;
-  text-shadow: 2px 2px 8px rgba(140, 100, 10, 0.4);
-}
-
-/* ✨ Animación suave del fondo dorado */
-@keyframes overlayBrillo {
-  0% {
-    background-position: 0% 50%;
-  }
-  100% {
-    background-position: 100% 50%;
-  }
-}
-
-/* Clase que activa la animación al hacer clic */
-.overlay.activo {
-  animation: overlayBrillo 6s ease-in-out infinite alternate;
-}
-
-
-
-/* ✨ Frase final */
-.frase blockquote {
-  font-family: 'Playfair Display', serif;
   font-size: 1.6rem;
-  color: #4b3b0a;
-  font-style: italic;
-  line-height: 1.7;
-  margin-bottom: 15px;
-}
-
-.firma {
-  font-family: 'Great Vibes', cursive;
-  font-size: 2.4rem;
-  background: linear-gradient(90deg, #d4af37, #f9d976);
+  background: linear-gradient(90deg, #eac45d, #f5d76e);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
-/* ===== CONTADOR REGRESIVO ===== */
-.contador {
-  text-align: center;
-  padding: 50px 20px;
-  background: radial-gradient(circle at top, #fff8e1 0%, #fceabb 100%);
-  color: #5a4a1f;
-  font-family: 'Poppins', sans-serif;
-  border-top: 2px solid #f3e0a1;
-  border-bottom: 2px solid #f3e0a1;
-}
-
-.contador h3 {
-  font-family: 'Great Vibes', cursive;
-  font-size: 2rem;
-  margin-bottom: 20px;
-  background: linear-gradient(90deg, #d4af37, #f9d976);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  text-shadow: 1px 1px 3px rgba(0,0,0,0.1);
-}
-
-.countdown {
-  display: flex;
-  justify-content: center;
-  gap: 25px;
-  flex-wrap: wrap;
-}
-
-.countdown div {
-  background: linear-gradient(135deg, #f9d976, #e6b980);
-  border-radius: 15px;
-  padding: 15px 20px;
-  box-shadow: 0 4px 10px rgba(212, 175, 55, 0.4);
-  color: white;
-  min-width: 90px;
-  transition: transform 0.3s ease;
-}
-
-.countdown div:hover {
-  transform: scale(1.08);
-}
-
-.countdown span {
-  display: block;
-  font-size: 2rem;
-  font-weight: 700;
-}
-
-.countdown small {
-  font-size: 0.9rem;
-  text-transform: uppercase;
-  opacity: 0.9;
-}
-
-/* ✨ BRILLOS DORADOS FLOTANTES ✨ */
-.brillo-dorado {
-  position: fixed;
-  background: radial-gradient(circle, rgba(255,223,119,0.9) 0%, rgba(255,255,255,0) 70%);
-  border-radius: 50%;
-  pointer-events: none;
-  opacity: 0.7;
-  animation: flotarBrillo 8s ease-in-out infinite;
-  z-index: 1;
-}
-
-@keyframes flotarBrillo {
-  0%, 100% {
-    transform: translateY(0) scale(1);
-    opacity: 0.8;
-  }
-  50% {
-    transform: translateY(-40px) scale(1.2);
-    opacity: 0.4;
-  }
-}
-
-
+/* ✨ Brillo dorado animado */
+@keyframes textGlow {
+  0% { text-shadow: 0 0 8px rgba(250, 220, 100, 0.3); }
+  100% { text-shadow: 0 0 20px rgba(255, 230, 150,
