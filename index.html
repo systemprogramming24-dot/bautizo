@@ -1,91 +1,137 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Invitación Bautizo Samantha Sayuri</title>
-  <link rel="stylesheet" href="styles.css" />
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Invitación - Bautizo Samantha Sayuri</title>
+
+  <!-- Fuentes y AOS -->
   <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Playfair+Display:wght@400;600;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
   <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+
+  <!-- Meta para redes (opcional) -->
+  <meta name="description" content="Invitación al bautizo de Samantha Sayuri — confirma asistencia, mira ubicación y más.">
 </head>
 <body>
+  <!-- Audio (sin autoplay) -->
   <audio id="musica" loop>
-    <source src="musica.mp3" type="audio/mpeg">
+    <source src="musica.mp3" type="audio/mpeg" />
+    Tu navegador no soporta audio.
   </audio>
+
+  <!-- Overlay "Toca para comenzar" -->
   <div id="overlayMusica" class="overlay">
-    <button id="btnStart" class="btn-start">✨ Toca para comenzar</button>
+    <div class="overlay-card" role="button" aria-label="Toca para comenzar" id="btnStart">
+      <div class="overlay-text">✨ Toca para comenzar ✨</div>
+      <div class="overlay-sub">Pulsa para activar la música y ver la invitación</div>
+    </div>
   </div>
-  <button id="btnMusica" class="btn-musica">🎵</button>
 
-  <div class="floral-decor top-left"></div>
-  <div class="floral-decor bottom-right"></div>
+  <!-- Botón musical flotante -->
+  <button id="btnMusica" class="music-btn" title="Activar / pausar música">🎶</button>
 
-  <main>
-    <section class="hero" data-aos="fade-down">
-      <h1>✨ Mi Bautizo ✨</h1>
-      <h2 id="nombre">Samantha Sayuri Adanaqué Maza</h2>
-      <p class="fecha">22 de Noviembre de 2025</p>
+  <!-- Decoración floral (SVG en background) -->
+  <div class="decor decor-top" aria-hidden="true">
+    <!-- SVG simple floral top-left -->
+    <svg viewBox="0 0 200 200" class="decor-svg" xmlns="http://www.w3.org/2000/svg">
+      <defs><linearGradient id="g1" x1="0" x2="1"><stop offset="0" stop-color="#fdeedf"/><stop offset="1" stop-color="#f7e1c7"/></linearGradient></defs>
+      <g fill="none" stroke="url(#g1)" stroke-width="1">
+        <circle cx="30" cy="30" r="18" fill="#fff0e6" opacity="0.8"/>
+        <path d="M30 6 C40 12,50 12,60 6" stroke="#f3d1b1" stroke-width="2" />
+      </g>
+    </svg>
+  </div>
+
+  <main id="page">
+    <!-- HERO / Portada -->
+    <section class="hero" data-aos="fade-down" data-aos-delay="100">
+      <img src="girl.jpg" alt="Samantha Sayuri" class="hero-img" />
+      <h1 class="title">✨ Mi Bautizo ✨</h1>
+      <h2 id="nombre" class="name">Samantha Sayuri Adanaqué Maza</h2>
+      <p class="meta">22 de Noviembre de 2025 — 08:00 p.m.</p>
     </section>
 
-    <section class="info ceremonia" data-aos="fade-up">
+    <!-- CEREMONIA -->
+    <section class="card" data-aos="fade-up">
       <h3>🌿 Ceremonia</h3>
-      <p>Parroquia Virgen de Fátima – Calupe</p>
-      <p>08:00 p.m.</p>
+      <p class="muted">La misa se celebrará en:</p>
+      <p class="strong">Parroquia Virgen de Fátima – Calupe</p>
+      <p class="link"><a href="https://maps.google.com?q=Parroquia+Virgen+de+Fátima+Calupe" target="_blank" rel="noopener">Ver ubicación en Google Maps</a></p>
+      <p class="muted">Sábado 22 de Noviembre de 2025 - 08:00 p.m.</p>
     </section>
 
-    <section class="info recepcion" data-aos="fade-up">
+    <!-- RECEPCIÓN -->
+    <section class="card" data-aos="fade-up" data-aos-delay="80">
       <h3>🎉 Recepción</h3>
-      <p>Coliseo Calupe</p>
-      <p>Orquesta "Son Diluvio"</p>
+      <p>Después de la ceremonia celebraremos en:</p>
+      <p class="strong">Coliseo Calupe</p>
+      <p>🎶 Amenizada por la orquesta <strong>"Son Diluvio"</strong></p>
+      <p>👗 Ropa: vestir elegante</p>
     </section>
 
-    <section class="info padrinos" data-aos="zoom-in">
+    <!-- PADRINOS -->
+    <section class="card" data-aos="zoom-in" data-aos-delay="120">
       <h3>💖 Mis Padrinos</h3>
-      <p>Rosa Elena Maza Moscol</p>
-      <p>Danny William Adanaqué Santos</p>
-    </section>
-
-    <section class="info padres" data-aos="zoom-in">
-      <h3>👪 Mis Papás</h3>
-      <p>Adrián Bernardo Adanaqué Santos</p>
-      <p>Tania Maza Moscol</p>
-    </section>
-
-    <section class="confirmation" data-aos="flip-up">
-      <form id="formConfirmar" style="display:none;">
-        <label for="cantidad">¿Cuántas personas asistirán?</label>
-        <input type="number" id="cantidad" min="1" max="10" required />
-        <button type="submit" class="btn-confirmar">Confirmar asistencia</button>
-      </form>
-      <p id="mensaje"></p>
-      <button id="cambiar" style="display:none;" class="btn-cambiar">🔄 Cambiar respuesta</button>
-    </section>
-
-    <section class="frase" data-aos="fade-in">
-      <blockquote>“Que la luz de Dios guíe mi vida ...”</blockquote>
-      <p class="firma">💖 Con cariño, Samantha Sayuri</p>
-    </section>
-
-    <section class="contador" data-aos="zoom-in">
-      <h3>⏳ Falta muy poco</h3>
-      <div id="countdown" class="countdown">
-        <div><span id="days">00</span><small>Días</small></div>
-        <div><span id="hours">00</span><small>Horas</small></div>
-        <div><span id="minutes">00</span><small>Minutos</small></div>
-        <div><span id="seconds">00</span><small>Segundos</small></div>
+      <div class="list">
+        <p class="strong">Rosa Elena Maza Moscol</p>
+        <p class="strong">Danny William Adanaqué Santos</p>
       </div>
     </section>
+
+    <!-- PADRES -->
+    <section class="card" data-aos="zoom-in" data-aos-delay="140">
+      <h3>👨‍👩‍👧 Mis Papás</h3>
+      <div class="list">
+        <p class="strong">Adrián Bernardo Adanaqué Santos</p>
+        <p class="strong">Tania Maza Moscol</p>
+      </div>
+    </section>
+
+    <!-- CONFIRMACIÓN -->
+    <section class="card confirmation" data-aos="flip-up" data-aos-delay="160">
+      <h3>✅ Confirma tu asistencia</h3>
+      <form id="formConfirmar" style="display:none;">
+        <label for="cantidad">¿Cuántas personas asistirán?</label>
+        <input type="number" id="cantidad" name="cantidad" min="1" max="10" required />
+        <div class="form-actions">
+          <button type="submit" class="btn primary btn-confirmar">💫 Confirmar asistencia</button>
+        </div>
+      </form>
+
+      <p id="mensaje" class="mensaje-estado" aria-live="polite"></p>
+      <button id="cambiar" class="btn ghost" style="display:none;">🔄 Cambiar respuesta</button>
+    </section>
+
+    <!-- FRASE / FIRMA -->
+    <section class="card frase" data-aos="fade-in" data-aos-delay="180">
+      <blockquote>“Que la luz de Dios guíe mi vida y llene mi corazón de amor y alegría.”</blockquote>
+      <p class="firma">💖 Con cariño, <strong>Samantha Sayuri</strong></p>
+    </section>
+
+    <!-- CONTADOR -->
+    <section class="card contador" data-aos="zoom-in" data-aos-delay="200">
+      <h3>⏳ Falta muy poco</h3>
+      <div id="countdown" class="countdown">
+        <div class="time"><span id="days">00</span><small>Días</small></div>
+        <div class="time"><span id="hours">00</span><small>Horas</small></div>
+        <div class="time"><span id="minutes">00</span><small>Minutos</small></div>
+        <div class="time"><span id="seconds">00</span><small>Segundos</small></div>
+      </div>
+    </section>
+
   </main>
 
-  <footer data-aos="fade-up">
-    <p>Con amor, familia Adanaqué Maza</p>
+  <footer class="site-footer" data-aos="fade-up">
+    <p>✨ Con amor, la familia Adanaqué Maza ✨</p>
   </footer>
 
-  <script src="script.js"></script>
+  <!-- Brillos dorados sutiles (generados por JS) -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+  <script src="script.js"></script>
   <script>
-    AOS.init({ duration: 1200, once: true, easing: 'ease-in-out' });
+    AOS.init({ duration: 900, once: true, easing: "ease-out-cubic" });
   </script>
 </body>
 </html>
