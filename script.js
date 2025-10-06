@@ -142,3 +142,30 @@ btnMusica.addEventListener('click', async () => {
     btnMusica.textContent = '🎵';
   }
 });
+
+// ===== CONTADOR REGRESIVO =====
+const countdownDate = new Date("Nov 22, 2025 20:00:00").getTime();
+const countdownEl = document.getElementById("countdown");
+
+if (countdownEl) {
+  const timer = setInterval(() => {
+    const now = new Date().getTime();
+    const distance = countdownDate - now;
+
+    if (distance <= 0) {
+      clearInterval(timer);
+      countdownEl.innerHTML = "<p style='font-size:1.5rem;'>🎉 ¡Hoy es el gran día! 🎉</p>";
+      return;
+    }
+
+    const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+    const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+    document.getElementById("days").textContent = days.toString().padStart(2, "0");
+    document.getElementById("hours").textContent = hours.toString().padStart(2, "0");
+    document.getElementById("minutes").textContent = minutes.toString().padStart(2, "0");
+    document.getElementById("seconds").textContent = seconds.toString().padStart(2, "0");
+  }, 1000);
+}
