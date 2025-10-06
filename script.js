@@ -99,15 +99,24 @@ window.addEventListener('load', () => {
 overlayMusica.addEventListener('click', async () => {
   try {
     musica.muted = false;
-    musica.currentTime = 0;
+    musica.currentTime = 0; // Reinicia desde el inicio
     await musica.play();
-    overlayMusica.style.display = 'none';
+    
+    // ✨ Activa la animación justo al tocar
+    overlayMusica.classList.add('activo');
+    
+    // Oculta el overlay después de 1.2s para que se vea el efecto dorado
+    setTimeout(() => {
+      overlayMusica.style.display = 'none';
+    }, 1200);
+    
     btnMusica.textContent = '🔊';
     sonidoActivado = true;
   } catch (e) {
     console.error('Error al reproducir música:', e);
   }
 });
+
 
 window.addEventListener('scroll', async () => {
   if (!sonidoActivado) {
@@ -182,3 +191,4 @@ function crearBrillosDorado(cantidad = 15) {
   }
 }
 crearBrillosDorado();
+
