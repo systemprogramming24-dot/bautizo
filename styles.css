@@ -118,24 +118,22 @@ button {
 .overlay {
   position: fixed;
   inset: 0;
-  /* Fondo dorado sólido y elegante */
   background: linear-gradient(135deg, #fff8e1 0%, #f9d976 40%, #e6b980 100%);
   display: flex;
   align-items: center;
   justify-content: center;
   z-index: 100;
-  animation: overlayBrillo 6s ease-in-out infinite alternate;
+  background-size: 200% 200%;
 }
 
 .overlay-content p {
   font-family: 'Great Vibes', cursive;
   font-size: 2.4rem;
-  background: linear-gradient(90deg, #b8860b, #ffd700);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+  color: #fff;
+  text-shadow: 2px 2px 8px rgba(140, 100, 10, 0.4);
 }
 
-/* Sutil animación de brillo en el fondo */
+/* ✨ Animación suave del fondo dorado */
 @keyframes overlayBrillo {
   0% {
     background-position: 0% 50%;
@@ -144,6 +142,12 @@ button {
     background-position: 100% 50%;
   }
 }
+
+/* Clase que activa la animación al hacer clic */
+.overlay.activo {
+  animation: overlayBrillo 6s ease-in-out infinite alternate;
+}
+
 
 
 /* ✨ Frase final */
@@ -239,4 +243,5 @@ button {
     opacity: 0.4;
   }
 }
+
 
