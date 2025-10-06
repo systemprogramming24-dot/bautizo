@@ -1,8 +1,8 @@
 // =============================
-// 🔧 CONFIGURA TUS CLAVES AQUÍ
+// 🔧 CONFIGURA SUPABASE AQUÍ
 // =============================
 const SUPABASE_URL = "https://rsjyfchiynskjddpjupt.supabase.co";
-const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJzanlmY2hpeW5za2pkZHBqdXB0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTk3MTkzMzEsImV4cCI6MjA3NTI5NTMzMX0.pxnbFP03pSWra1zOrCsR8ADyWF3wpGN88BQlameVRWM";
+const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...";
 
 const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
@@ -13,9 +13,9 @@ const nombreEl = document.getElementById('nombre');
 const mensajeEl = document.getElementById('mensaje');
 const form = document.getElementById('formConfirmar');
 const btnCambiar = document.getElementById('cambiar');
-
 let invitadoActual = null;
 
+// ============ Invitación ============
 if (!guestKey) {
   nombreEl.textContent = "Invitación no válida.";
 } else {
@@ -56,17 +56,15 @@ form.addEventListener('submit', async (e) => {
 
   if (error) {
     mensajeEl.textContent = "❌ Error al confirmar asistencia.";
-    console.error(error);
   } else {
     form.style.display = 'none';
-    mensajeEl.textContent = "🎉 ¡Gracias por confirmar tu asistencia! Nos vemos pronto 💛";
+    mensajeEl.textContent = "🎉 ¡Gracias por confirmar tu asistencia! 💛";
     btnCambiar.style.display = 'inline';
   }
 });
 
 btnCambiar.addEventListener('click', async () => {
-  const confirmar = confirm("¿Deseas cambiar tu respuesta?");
-  if (!confirmar) return;
+  if (!confirm("¿Deseas cambiar tu respuesta?")) return;
 
   const { error } = await supabase
     .from('guests')
@@ -79,17 +77,15 @@ btnCambiar.addEventListener('click', async () => {
     mensajeEl.textContent = "";
     btnCambiar.style.display = 'none';
     form.style.display = 'block';
-    document.getElementById('cantidad').value = invitadoActual.persons || '';
   }
 });
 
-// 🎵 Control de música
+// ============ 🎵 Música ============
 const musica = document.getElementById('musica');
 const btnMusica = document.getElementById('btnMusica');
 const overlayMusica = document.getElementById('overlayMusica');
 
 let sonidoActivado = false;
-
 window.addEventListener('load', () => {
   musica.volume = 0.4;
   musica.muted = true;
@@ -97,58 +93,38 @@ window.addEventListener('load', () => {
 });
 
 overlayMusica.addEventListener('click', async () => {
-  try {
-    musica.muted = false;
-    musica.currentTime = 0; // Reinicia desde el inicio
-    await musica.play();
-    
-    // ✨ Activa la animación justo al tocar
-    overlayMusica.classList.add('activo');
-    
-    // Oculta el overlay después de 1.2s para que se vea el efecto dorado
-    setTimeout(() => {
-      overlayMusica.style.display = 'none';
-    }, 1200);
-    
-    btnMusica.textContent = '🔊';
-    sonidoActivado = true;
-  } catch (e) {
-    console.error('Error al reproducir música:', e);
-  }
+  await activarMusica();
 });
 
-
 window.addEventListener('scroll', async () => {
-  if (!sonidoActivado) {
-    try {
-      musica.muted = false;
-      musica.currentTime = 0;
-      await musica.play();
-      overlayMusica.style.display = 'none';
-      btnMusica.textContent = '🔊';
-      sonidoActivado = true;
-    } catch (e) {
-      console.error('Error al reproducir con scroll:', e);
-    }
-  }
+  if (!sonidoActivado) await activarMusica();
 });
 
 btnMusica.addEventListener('click', async () => {
   if (musica.paused) {
-    try {
-      await musica.play();
-      musica.muted = false;
-      btnMusica.textContent = '🔊';
-    } catch (e) {
-      console.error('No se pudo reproducir música:', e);
-    }
+    await musica.play();
+    musica.muted = false;
+    btnMusica.textContent = '🔊';
   } else {
     musica.pause();
     btnMusica.textContent = '🎵';
   }
 });
 
-// ===== CONTADOR REGRESIVO =====
+async function activarMusica() {
+  try {
+    musica.muted = false;
+    musica.currentTime = 0;
+    await musica.play();
+    overlayMusica.style.display = 'none';
+    btnMusica.textContent = '🔊';
+    sonidoActivado = true;
+  } catch (e) {
+    console.error('Error al reproducir música:', e);
+  }
+}
+
+// ============ ⏳ Contador ============
 const countdownDate = new Date("Nov 22, 2025 20:00:00").getTime();
 const countdownEl = document.getElementById("countdown");
 
@@ -163,32 +139,29 @@ if (countdownEl) {
       return;
     }
 
-    const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-    const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-    const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-    const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+    const d = Math.floor(distance / (1000 * 60 * 60 * 24));
+    const h = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const m = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+    const s = Math.floor((distance % (1000 * 60)) / 1000);
 
-    document.getElementById("days").textContent = days.toString().padStart(2, "0");
-    document.getElementById("hours").textContent = hours.toString().padStart(2, "0");
-    document.getElementById("minutes").textContent = minutes.toString().padStart(2, "0");
-    document.getElementById("seconds").textContent = seconds.toString().padStart(2, "0");
+    document.getElementById("days").textContent = d.toString().padStart(2, "0");
+    document.getElementById("hours").textContent = h.toString().padStart(2, "0");
+    document.getElementById("minutes").textContent = m.toString().padStart(2, "0");
+    document.getElementById("seconds").textContent = s.toString().padStart(2, "0");
   }, 1000);
 }
 
-// =============================
-// ✨ EFECTO DE BRILLOS DORADOS
-// =============================
-function crearBrillosDorado(cantidad = 15) {
+// ✨ Brillos dorados flotantes
+function crearBrillosDorado(cantidad = 20) {
   for (let i = 0; i < cantidad; i++) {
     const brillo = document.createElement('div');
     brillo.classList.add('brillo-dorado');
     brillo.style.left = `${Math.random() * 100}%`;
     brillo.style.top = `${Math.random() * 100}%`;
     brillo.style.animationDelay = `${Math.random() * 5}s`;
-    brillo.style.width = `${5 + Math.random() * 10}px`;
+    brillo.style.width = `${5 + Math.random() * 12}px`;
     brillo.style.height = brillo.style.width;
     document.body.appendChild(brillo);
   }
 }
 crearBrillosDorado();
-
