@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Invitación al Bautizo 💖</title>
+  <title>Invitación al Bautizo de Sofía 💖</title>
 
   <link rel="stylesheet" href="styles.css" />
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -12,53 +12,80 @@
 </head>
 
 <body>
-  <!-- 🎶 Audio -->
+  <!-- 🎵 Música -->
   <audio id="musica" autoplay loop muted>
     <source src="musica.mp3" type="audio/mpeg">
     Tu navegador no soporta audio HTML5.
   </audio>
 
-  <!-- 🎵 Botón flotante -->
+  <!-- Overlay para móvil -->
+  <div id="overlayMusica" class="overlay">
+    <div class="overlay-content">
+      <p>🎵 Toca para comenzar</p>
+    </div>
+  </div>
+
+  <!-- Botón flotante de música -->
   <button id="btnMusica" class="music-btn" title="Activar / Pausar música">🎵</button>
 
-  <!-- Pantalla de bienvenida (solo móvil) -->
-<div id="overlayMusica" class="overlay">
-  <div class="overlay-content">
-    <p>🎵 Toca para comenzar</p>
-  </div>
-</div>
-
+  <!-- Portada -->
   <section class="hero" data-aos="fade-down">
-    <img src="girl.jpg" alt="Niña" class="hero-img" />
+    <img src="girl.png" alt="Niña" class="hero-img" />
     <h1>✨ Mi Bautizo ✨</h1>
     <h2 id="nombre">Cargando invitación...</h2>
   </section>
 
-  <section class="details" data-aos="fade-up">
-    <p>Con mucha alegría te invitamos a compartir un día muy especial</p>
-    <h3>💗 El Bautizo de <strong>Sofía</strong> 💗</h3>
-    <p>El día <strong>Domingo 27 de Octubre de 2025</strong></p>
-    <p>A las <strong>11:00 a.m.</strong> en la <strong>Iglesia Santa María</strong></p>
-    <img src="church.jpg" alt="Iglesia" class="church-img" />
-
-    <p class="map-link">
-      📍 <a href="https://maps.google.com?q=Iglesia+Santa+Maria" target="_blank">Ver ubicación</a>
-    </p>
+  <!-- Ceremonia -->
+  <section class="ceremonia" data-aos="fade-up">
+    <h3>🙏 Ceremonia</h3>
+    <p>La misa de mi bautizo se celebrará en:</p>
+    <p><strong>Iglesia Santa María de los Ángeles</strong></p>
+    <p>📍 <a href="https://maps.google.com?q=Iglesia+Santa+Maria+de+los+Angeles" target="_blank">Ver ubicación</a></p>
+    <p>🕊️ Domingo 27 de Octubre de 2025 - 11:00 a.m.</p>
   </section>
 
+  <!-- Recepción -->
+  <section class="recepcion" data-aos="fade-up">
+    <h3>🎉 Recepción</h3>
+    <p>Después de la ceremonia te esperamos para celebrar juntos en:</p>
+    <p><strong>Salón Jardín “La Campiña”</strong></p>
+    <p>📍 Av. Los Rosales 456, San Miguel</p>
+    <p>🕓 A partir de las 2:00 p.m.</p>
+  </section>
+
+  <!-- Padrinos -->
+  <section class="padrinos" data-aos="zoom-in">
+    <h3>👩‍❤️‍👨 Mis Padrinos</h3>
+    <p><strong>María López & Carlos Ramírez</strong></p>
+  </section>
+
+  <!-- Padres -->
+  <section class="padres" data-aos="zoom-in">
+    <h3>👨‍👩‍👧 Mis Papás</h3>
+    <p><strong>Ana Rodríguez & José Ramírez</strong></p>
+  </section>
+
+  <!-- Confirmación -->
   <section class="confirmation" data-aos="zoom-in">
     <form id="formConfirmar" style="display:none;">
       <label for="cantidad">¿Cuántas personas asistirán?</label>
       <input type="number" id="cantidad" min="1" max="10" required />
       <button type="submit">Confirmar asistencia</button>
     </form>
-
     <p id="mensaje"></p>
     <button id="cambiar" style="display:none;">🔄 Cambiar respuesta</button>
   </section>
 
+  <!-- Frase final -->
+  <section class="frase" data-aos="fade-in">
+    <blockquote>
+      “Que la luz de Dios guíe mi vida y llene mi corazón de amor y alegría.”
+    </blockquote>
+    <p>💖 Con cariño, <strong>Sofía</strong></p>
+  </section>
+
   <footer>
-    <p>Con cariño, <strong>Familia Ramírez</strong></p>
+    <p>Con amor, <strong>Familia Ramírez Rodríguez</strong></p>
   </footer>
 
   <script src="script.js"></script>
@@ -66,7 +93,3 @@
   <script>AOS.init();</script>
 </body>
 </html>
-
-
-
-
