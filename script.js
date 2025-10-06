@@ -113,16 +113,34 @@ btnMusica.addEventListener('click', async () => {
 
 async function activarMusica() {
   try {
-    musica.muted = false;
-    musica.currentTime = 0;
-    await musica.play();
     overlayMusica.style.display = 'none';
-    btnMusica.textContent = '🔊';
-    sonidoActivado = true;
-  } catch (e) {
-    console.error('Error al reproducir música:', e);
+
+    // Nos aseguramos de que el audio no esté muteado
+    musica.muted = false;
+    musica.volume = 0.4;
+
+    // Intentar reproducir inmediatamente
+    const playPromise = musica.play();
+
+    if (playPromise !== undefined) {
+      playPromise
+        .then(() => {
+          sonidoActivado = true;
+          btnMusica.textContent = '🔊';
+          console.log("✅ Música iniciada correctamente.");
+        })
+        .catch((error) => {
+          console.warn("⚠️ El navegador bloqueó la reproducción:", error);
+          // Mostramos nuevamente el overlay si falla
+          overlayMusica.style.display = 'flex';
+          btnMusica.textContent = '🎵';
+        });
+    }
+  } catch (error) {
+    console.error("Error al reproducir música:", error);
   }
 }
+
 
 // ============ ⏳ Contador ============
 const countdownDate = new Date("Nov 22, 2025 20:00:00").getTime();
@@ -165,3 +183,4 @@ function crearBrillosDorado(cantidad = 20) {
   }
 }
 crearBrillosDorado();
+
