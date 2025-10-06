@@ -3,32 +3,108 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Bautizo de Samantha Sayuri 💖</title>
+  <title>Invitación al Bautizo de Samantha Sayuri 💖</title>
 
-  <!-- Fuentes y librerías -->
+  <!-- Estilos y fuentes -->
+  <link rel="stylesheet" href="styles.css" />
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@300;500;700&family=Playfair+Display:wght@500;700&display=swap" rel="stylesheet">
   <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet" />
-  <link rel="stylesheet" href="styles.css" />
 </head>
 
 <body>
   <!-- 🎵 Música -->
-  <audio id="musica" autoplay loop muted>
+  <audio id="musica" loop>
     <source src="musica.mp3" type="audio/mpeg">
     Tu navegador no soporta audio HTML5.
   </audio>
 
-  <!-- Overlay -->
+  <!-- Overlay para iniciar música -->
   <div id="overlayMusica" class="overlay">
     <div class="overlay-content">
       <p>🎵 Toca para comenzar</p>
+      <div class="ondas">
+        <span></span><span></span><span></span>
+      </div>
     </div>
   </div>
 
-  <!-- Botón flotante -->
+  <!-- Botón flotante de música -->
   <button id="btnMusica" class="music-btn" title="Activar / Pausar música">🎶</button>
 
   <!-- Portada -->
   <section class="hero" data-aos="fade-down">
     <img src="girl.jpg" alt="Niña" class="hero-img" />
-    <h1>✨ Mi Bauti
+    <h1>✨ Mi Bautizo ✨</h1>
+    <h2 id="nombre">Samantha Sayuri Adanaqué Maza</h2>
+    <p class="fecha">22 de Noviembre de 2025</p>
+  </section>
+
+  <!-- Ceremonia -->
+  <section class="ceremonia" data-aos="fade-up">
+    <h3>🌿 Ceremonia</h3>
+    <p>La misa de mi bautizo se celebrará en:</p>
+    <p><strong>Parroquia Virgen de Fátima – Calupe</strong></p>
+    <p>📍 <a href="https://maps.google.com?q=Parroquia+Virgen+de+Fátima+Calupe" target="_blank">Ver ubicación</a></p>
+    <p>🕊️ Sábado 22 de Noviembre de 2025 - 08:00 p.m.</p>
+  </section>
+
+  <!-- Recepción -->
+  <section class="recepcion" data-aos="fade-up">
+    <h3>🎉 Recepción</h3>
+    <p>Después de la ceremonia te esperamos para celebrar juntos en:</p>
+    <p><strong>Coliseo Calupe</strong></p>
+    <p>📍 Calupe</p>
+    <p>🎶 Amenizada por la orquesta <strong>"Son Diluvio"</strong></p>
+    <p>👗 Asiste con ropa de vestir elegante</p>
+  </section>
+
+  <!-- Padrinos -->
+  <section class="padrinos" data-aos="zoom-in">
+    <h3>💖 Mis Padrinos</h3>
+    <div class="padrinos-lista">
+      <p><strong>🌸 Rosa Elena Maza Moscol</strong></p>
+      <p><strong>🌸 Danny William Adanaqué Santos</strong></p>
+    </div>
+  </section>
+
+  <!-- Padres -->
+  <section class="padres" data-aos="zoom-in">
+    <h3>👨‍👩‍👧 Mis Papás</h3>
+    <p><strong>Adrián Bernardo Adanaqué Santos</strong></p>
+    <p><strong>Tania Maza Moscol</strong></p>
+  </section>
+
+  <!-- Frase final -->
+  <section class="frase" data-aos="fade-in">
+    <blockquote>
+      “Que la luz de Dios guíe mi vida y llene mi corazón de amor y alegría.”
+    </blockquote>
+    <p class="firma">💖 Con cariño, <strong>Samantha Sayuri</strong></p>
+  </section>
+
+  <!-- Contador -->
+  <section class="contador" data-aos="zoom-in">
+    <h3>⏳ Falta muy poco para mi bautizo</h3>
+    <div id="countdown" class="countdown">
+      <div><span id="days">00</span><small>Días</small></div>
+      <div><span id="hours">00</span><small>Horas</small></div>
+      <div><span id="minutes">00</span><small>Minutos</small></div>
+      <div><span id="seconds">00</span><small>Segundos</small></div>
+    </div>
+  </section>
+
+  <footer data-aos="fade-up"></footer>
+
+  <!-- Scripts -->
+  <script src="script.js"></script>
+  <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+  <script>
+    AOS.init({
+      duration: 1200,
+      once: true,
+      easing: 'ease-in-out'
+    });
+  </script>
+</body>
+</html>
