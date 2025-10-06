@@ -108,4 +108,122 @@ async function cargarInvitado() {
     nombreEl.textContent = `Hola ${data.guest} 👋`;
 
     if (data.confirm) {
-      mensajeEl.textContent = `✅ Ya confirmaste tu asistenci
+      mensajeEl.textContent = `✅ Ya confirmaste tu asistencia (${data.persons} persona${data.persons > 1 ? "s" : ""}).`;
+      btnCambiar.style.display = "inline-block";
+    } else {
+      form.style.display = "block";
+    }
+
+  } catch (err) {
+    console.error("Error al cargar invitado:", err);
+    nombreEl.textContent = "Invitación no válida";
+  }
+}
+
+// formulario: confirmar asistencia
+form && form.addEventListener("submit", async (e) => {
+  e.preventDefault();
+  const persons = parseInt(document.getElementById("cantidad").value);
+  if (!guestKey) return;
+
+  try {
+    const { error } = await supabase
+      .from("guests")
+      .update({ confirm: true, persons })
+      .eq("key", guestKey);
+
+    if (error) {
+      mensajeEl.textContent = "❌ Error al confirmar asistencia.";
+      console.error(error);
+      return;
+    }
+
+    form.style.display = "none";
+    mensajeEl.textContent = "🎉 ¡Gracias por confirmar tu asistencia! Nos vemos pronto 💛";
+    btnCambiar.style.display = "inline-block";
+  } catch (err) {
+    console.error(err);
+    mensajeEl.textContent = "❌ Error inesperado, intenta de nuevo.";
+  }
+});
+
+// cambiar respuesta
+btnCambiar && btnCambiar.addEventListener("click", async () => {
+  if (!confirm("¿Deseas cambiar tu respuesta?")) return;
+  if (!guestKey) return;
+
+  try {
+    const { error } = await supabase
+      .from("guests")
+      .update({ confirm: false, persons: null })
+      .eq("key", guestKey);
+
+    if (error) {
+      mensajeEl.textContent = "❌ No se pudo modificar tu confirmación.";
+      console.error(error);
+      return;
+    }
+
+    mensajeEl.textContent = "";
+    btnCambiar.style.display = "none";
+    form.style.display = "block";
+    document.getElementById("cantidad").value = invitadoActual?.persons || "";
+  } catch (err) {
+    console.error(err);
+    mensajeEl.textContent = "❌ Error al intentar cambiar respuesta.";
+  }
+});
+
+// ---------- Contador regresivo ----------
+const countdownDate = new Date("Nov 22, 2025 20:00:00").getTime();
+
+function actualizarContador() {
+  const now = Date.now();
+  const distance = countdownDate - now;
+
+  if (distance <= 0) {
+    const countdown = document.getElementById("countdown");
+    if (countdown) countdown.innerHTML = "<p style='font-size:1.1rem;'>🎉 ¡Hoy es el gran día! 🎉</p>";
+    clearInterval(window._invCountdown);
+    return;
+  }
+
+  const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+  const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+  const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+  const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+  daysEl && (daysEl.textContent = String(days).padStart(2, "0"));
+  hoursEl && (hoursEl.textContent = String(hours).padStart(2, "0"));
+  minutesEl && (minutesEl.textContent = String(minutes).padStart(2, "0"));
+  secondsEl && (secondsEl.textContent = String(seconds).padStart(2, "0"));
+}
+
+window._invCountdown = setInterval(actualizarContador, 1000);
+actualizarContador();
+
+// ---------- Brillos dorados decorativos ----------
+function crearBrillosDorado(cantidad = 12) {
+  for (let i=0;i<cantidad;i++){
+    const d = document.createElement("div");
+    d.className = "brillo-dorado";
+    const size = 8 + Math.random()*36;
+    d.style.width = `${size}px`;
+    d.style.height = `${size}px`;
+    d.style.left = `${Math.random()*100}%`;
+    d.style.top = `${Math.random()*100}%`;
+    d.style.animationDelay = `${Math.random()*6}s`;
+    d.style.opacity = 0.6 + Math.random()*0.4;
+    document.body.appendChild(d);
+  }
+}
+crearBrillosDorado(14);
+
+// ---------- Inicialización ----------
+document.addEventListener("DOMContentLoaded", () => {
+  // cargar invitado desde supabase
+  cargarInvitado();
+
+  // intentar auto activar musica si usuario ya interactuó (some browsers)
+  // not forced: requires user interaction per browser policy
+});
