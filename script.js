@@ -1,92 +1,86 @@
-/* Horizontal-slideshow synchronized backgrounds + Supabase + music + confirm + countdown */
+/* script.js
+  - Portada (cover) deslizable a la izquierda para revelar contenido vertical
+  - Al deslizar la portada se inicia la música y aparece un destello dorado
+  - Confirmación con Supabase (usa tu tabla "guests")
+  - Contadores (en portada y en sección final)
+  - Brillos decorativos
+*/
 
-// ---------- Supabase ----------
+/* ---------------- Supabase ---------------- */
 const SUPABASE_URL = "https://rsjyfchiynskjddpjupt.supabase.co";
 const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJzanlmY2hpeW5za2pkZHBqdXB0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTk3MTkzMzEsImV4cCI6MjA3NTI5NTMzMX0.pxnbFP03pSWra1zOrCsR8ADyWF3wpGN88BQlameVRWM";
 const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
-// ---------- DOM ----------
-const slides = Array.from(document.querySelectorAll('.slide'));
-const total = slides.length;
-let current = slides.findIndex(s => s.classList.contains('active'));
-if (current < 0) current = 0;
-
-const bgWrapper = document.getElementById('bg-wrapper');
+/* ---------------- DOM ---------------- */
+const cover = document.getElementById('cover');
+const content = document.getElementById('content');
+const btnStart = document.getElementById('btnStart'); // not present now (cover clickable area), but keep for compatibility
 const musica = document.getElementById('musica');
-const overlay = document.getElementById('overlayMusica');
-const btnStart = document.getElementById('btnStart');
 const btnMusica = document.getElementById('btnMusica');
+const goldFlash = document.getElementById('gold-flash');
 
-const nombreEl = document.getElementById('nombre');
+const nombreCover = document.querySelector('.cover-title');
+
 const form = document.getElementById('formConfirmar');
 const mensajeEl = document.getElementById('mensaje');
 const btnCambiar = document.getElementById('cambiar');
+
+const coverDays = document.getElementById('cover-days');
+const coverHours = document.getElementById('cover-hours');
+const coverMinutes = document.getElementById('cover-minutes');
 
 const daysEl = document.getElementById('days');
 const hoursEl = document.getElementById('hours');
 const minutesEl = document.getElementById('minutes');
 const secondsEl = document.getElementById('seconds');
 
-// guest key from querystring
+/* guestKey: first key present in querystring (same logic you used) */
 const params = new URLSearchParams(window.location.search);
 const guestKey = Array.from(params.keys())[0] || null;
 
 let invitadoActual = null;
-let animating = false;
 let sonidoActivado = false;
 
-// helper: set active slide and move bgWrapper
-function goTo(index) {
-  if (animating) return;
-  index = Math.max(0, Math.min(index, total - 1));
-  if (index === current) return;
-  animating = true;
-
-  // update slides
-  slides[current].classList.remove('active');
-  slides[index].classList.add('active');
-
-  // move bg-wrapper (translateX = -index * 100vw)
-  bgWrapper.style.transform = `translateX(-${index * 100}vw)`;
-
-  current = index;
-  setTimeout(() => animating = false, 820);
+/* ---------------- Helper: slide cover left to reveal content ---------------- */
+function revealContent() {
+  if (cover.classList.contains('slid')) return;
+  // slide cover left
+  cover.classList.add('slid');
+  // reveal content (translateX -> 0)
+  content.classList.add('revealed');
+  // start music
+  activarMusica();
+  // golden flash
+  goldFlash.style.opacity = '1';
+  setTimeout(()=> { goldFlash.style.opacity = '0'; }, 650);
+  // focus content for keyboard/scroll
+  setTimeout(()=> content.focus(), 900);
 }
 
-// navigation: wheel (throttle)
-let wheelTimeout = null;
-window.addEventListener('wheel', (e) => {
-  if (animating) return;
-  if (wheelTimeout) return;
-  wheelTimeout = setTimeout(()=> wheelTimeout = null, 700);
-
-  const d = e.deltaY;
-  if (d > 0) goTo(current + 1);
-  else if (d < 0) goTo(current - 1);
+/* ---------------- Detect swipe left / wheel / key on cover ---------------- */
+let startX = null;
+cover.addEventListener('touchstart', (e) => { startX = e.touches[0].clientX; }, { passive: true });
+cover.addEventListener('touchend', (e) => {
+  if (startX === null) return;
+  const dx = e.changedTouches[0].clientX - startX;
+  if (dx < -50) revealContent(); // swipe left
+  startX = null;
 }, { passive: true });
 
-// keyboard
+// wheel: if user scrolls right (deltaX) or vertical scroll while on cover => reveal
+cover.addEventListener('wheel', (e) => {
+  // if horizontal wheel or vertical down significant
+  if (e.deltaY > 30 || e.deltaX > 30) revealContent();
+}, { passive: true });
+
+// keyboard: right arrow to reveal
 window.addEventListener('keydown', (e) => {
-  if (animating) return;
-  if (e.key === 'ArrowRight' || e.key === 'PageDown') goTo(current + 1);
-  if (e.key === 'ArrowLeft' || e.key === 'PageUp') goTo(current - 1);
-  if (e.key === 'Home') goTo(0);
-  if (e.key === 'End') goTo(total - 1);
+  if ((e.key === 'ArrowRight' || e.key === 'PageDown') && !cover.classList.contains('slid')) {
+    revealContent();
+  }
 });
 
-// touch (swipe)
-let touchStartX = null;
-window.addEventListener('touchstart', e => { touchStartX = e.touches[0].clientX; }, { passive: true });
-window.addEventListener('touchend', e => {
-  if (touchStartX === null) return;
-  const dx = e.changedTouches[0].clientX - touchStartX;
-  if (Math.abs(dx) > 50) {
-    if (dx < 0) goTo(current + 1); else goTo(current - 1);
-  }
-  touchStartX = null;
-}, { passive: true });
-
-// ---------- Music activation ----------
+/* ---------------- Music control ---------------- */
 window.addEventListener('load', () => {
   musica.volume = 0.35;
   musica.muted = true;
@@ -94,6 +88,7 @@ window.addEventListener('load', () => {
 });
 
 async function activarMusica() {
+  if (sonidoActivado) return;
   try {
     musica.muted = false;
     musica.currentTime = 0;
@@ -101,14 +96,10 @@ async function activarMusica() {
     if (p !== undefined) await p;
     sonidoActivado = true;
     btnMusica.textContent = '🔊';
-    overlay.classList.add('fade-out');
-    setTimeout(()=> overlay.style.display = 'none', 650);
   } catch (err) {
     console.warn('No se pudo iniciar la música:', err);
   }
 }
-btnStart && btnStart.addEventListener('click', activarMusica);
-overlay && overlay.addEventListener('click', activarMusica);
 
 btnMusica.addEventListener('click', async () => {
   if (!sonidoActivado) { await activarMusica(); return; }
@@ -116,10 +107,59 @@ btnMusica.addEventListener('click', async () => {
   else { musica.pause(); btnMusica.textContent = '🎶'; }
 });
 
-// ---------- Supabase: cargar invitado, mostrar form, confirmar ----------
+/* ---------------- Countdown (cover + final) ---------------- */
+const countdownDate = new Date('Nov 22, 2025 20:00:00').getTime();
+
+function actualizarContador() {
+  const now = Date.now();
+  const distance = countdownDate - now;
+  if (distance <= 0) {
+    if (coverDays) coverDays.textContent = '00';
+    if (daysEl) document.getElementById('countdown').innerHTML = "<p>🎉 ¡Hoy es el gran día!</p>";
+    clearInterval(window._invCountdown);
+    return;
+  }
+  const days = Math.floor(distance / (1000*60*60*24));
+  const hours = Math.floor((distance % (1000*60*60*24)) / (1000*60*60));
+  const minutes = Math.floor((distance % (1000*60*60)) / (1000*60));
+  const seconds = Math.floor((distance % (1000*60)) / 1000);
+
+  // cover compact
+  coverDays && (coverDays.textContent = String(days).padStart(2,'0'));
+  coverHours && (coverHours.textContent = String(hours).padStart(2,'0'));
+  coverMinutes && (coverMinutes.textContent = String(minutes).padStart(2,'0'));
+
+  // full countdown
+  daysEl && (daysEl.textContent = String(days).padStart(2,'0'));
+  hoursEl && (hoursEl.textContent = String(hours).padStart(2,'0'));
+  minutesEl && (minutesEl.textContent = String(minutes).padStart(2,'0'));
+  secondsEl && (secondsEl.textContent = String(seconds).padStart(2,'0'));
+}
+window._invCountdown = setInterval(actualizarContador, 1000);
+actualizarContador();
+
+/* ---------------- Decorative golden glows ---------------- */
+function crearBrillosDorado(cantidad = 10) {
+  for (let i=0;i<cantidad;i++){
+    const d = document.createElement('div');
+    d.className = 'brillo-dorado';
+    const size = 8 + Math.random()*60;
+    d.style.width = `${size}px`;
+    d.style.height = `${size}px`;
+    d.style.left = `${Math.random()*100}%`;
+    d.style.top = `${Math.random()*100}%`;
+    d.style.animationDelay = `${Math.random()*7}s`;
+    d.style.opacity = 0.2 + Math.random()*0.6;
+    document.body.appendChild(d);
+  }
+}
+crearBrillosDorado(12);
+
+/* ---------------- Supabase: cargar invitado, mostrar formulario, confirmar ---------------- */
 async function cargarInvitado() {
+  const nombreTitle = document.querySelector('.cover-title');
   if (!guestKey) {
-    nombreEl.textContent = 'Querido invitado';
+    nombreTitle && (nombreTitle.textContent = 'Querido invitado');
     return;
   }
 
@@ -131,23 +171,23 @@ async function cargarInvitado() {
       .single();
 
     if (error || !data) {
-      console.warn('Invitación no encontrada', error);
-      nombreEl.textContent = 'Invitación no encontrada 😕';
+      console.warn('Invitacion no encontrada', error);
+      nombreTitle && (nombreTitle.textContent = 'Invitación no encontrada 😕');
       return;
     }
 
     invitadoActual = data;
-    nombreEl.textContent = `Hola ${data.guest} 👋`;
+    nombreTitle && (nombreTitle.textContent = `Hola ${data.guest} 👋`);
 
     if (data.confirm) {
-      mensajeEl.textContent = `✅ Ya confirmaste tu asistencia (${data.persons} persona${data.persons > 1 ? 's' : ''}).`;
-      btnCambiar.style.display = 'inline-block';
+      mensajeEl && (mensajeEl.textContent = `✅ Ya confirmaste tu asistencia (${data.persons} persona${data.persons > 1 ? 's' : ''}).`);
+      btnCambiar && (btnCambiar.style.display = 'inline-block');
     } else {
-      form.style.display = 'block';
+      form && (form.style.display = 'block');
     }
   } catch (err) {
     console.error('Error cargando invitado', err);
-    nombreEl.textContent = 'Invitación no válida';
+    nombreTitle && (nombreTitle.textContent = 'Invitación no válida');
   }
 }
 
@@ -197,53 +237,9 @@ btnCambiar && btnCambiar.addEventListener('click', async () => {
   }
 });
 
-// ---------- Countdown ----------
-const countdownDate = new Date('Nov 22, 2025 20:00:00').getTime();
-
-function actualizarContador() {
-  const now = Date.now();
-  const distance = countdownDate - now;
-  if (distance <= 0) {
-    const countdown = document.getElementById('countdown');
-    if (countdown) countdown.innerHTML = "<p style='font-size:1.2rem;'>🎉 ¡Hoy es el gran día! 🎉</p>";
-    clearInterval(window._invCountdown);
-    return;
-  }
-  const days = Math.floor(distance / (1000*60*60*24));
-  const hours = Math.floor((distance % (1000*60*60*24)) / (1000*60*60));
-  const minutes = Math.floor((distance % (1000*60*60)) / (1000*60));
-  const seconds = Math.floor((distance % (1000*60)) / 1000);
-  daysEl && (daysEl.textContent = String(days).padStart(2,'0'));
-  hoursEl && (hoursEl.textContent = String(hours).padStart(2,'0'));
-  minutesEl && (minutesEl.textContent = String(minutes).padStart(2,'0'));
-  secondsEl && (secondsEl.textContent = String(seconds).padStart(2,'0'));
-}
-window._invCountdown = setInterval(actualizarContador, 1000);
-actualizarContador();
-
-// ---------- Decorative golden glows ----------
-function crearBrillosDorado(cantidad = 12) {
-  for (let i=0;i<cantidad;i++){
-    const el = document.createElement('div');
-    el.className = 'brillo-dorado';
-    const size = 10 + Math.random()*60;
-    el.style.width = `${size}px`;
-    el.style.height = `${size}px`;
-    el.style.left = `${Math.random()*100}%`;
-    el.style.top = `${Math.random()*100}%`;
-    el.style.animationDelay = `${Math.random()*6}s`;
-    el.style.opacity = 0.25 + Math.random()*0.7;
-    document.body.appendChild(el);
-  }
-}
-crearBrillosDorado(14);
-
-// ---------- Init ----------
+/* ---------------- Init ---------------- */
 document.addEventListener('DOMContentLoaded', () => {
-  // position bgWrapper to current slide at start
-  bgWrapper.style.transform = `translateX(-${current * 100}vw)`;
-  // ensure slides active class
-  slides.forEach((s,i)=> s.classList.toggle('active', i===current));
-  // load guest data
+  // prepare content backgrounds (already set by CSS using filenames)
+  // load guest
   cargarInvitado();
 });
