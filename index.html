@@ -14,12 +14,12 @@
 
 <body>
   <!-- 🎵 Música -->
-  <audio id="musica" loop muted>
+  <audio id="musica" autoplay loop muted>
     <source src="musica.mp3" type="audio/mpeg">
     Tu navegador no soporta audio HTML5.
   </audio>
 
-  <!-- 🌸 Overlay de inicio -->
+  <!-- Overlay para móvil -->
   <div id="overlayMusica" class="overlay">
     <div class="overlay-content">
       <p>🎵 Toca para comenzar</p>
@@ -27,7 +27,7 @@
   </div>
 
   <!-- Botón flotante de música -->
-  <button id="btnMusica" class="music-btn" title="Activar / Pausar música" style="display:none;">🎶</button>
+  <button id="btnMusica" class="music-btn" title="Activar / Pausar música">🎶</button>
 
   <!-- Portada -->
   <section class="hero" data-aos="fade-down">
@@ -35,17 +35,6 @@
     <h1>✨ Mi Bautizo ✨</h1>
     <h2 id="nombre">Samantha Sayuri Adanaqué Maza</h2>
     <p class="fecha">22 de Noviembre de 2025</p>
-  </section>
-
-  <!-- Contador regresivo -->
-  <section class="contador" data-aos="zoom-in">
-    <h3>⏳ Falta muy poco para mi bautizo</h3>
-    <div id="countdown" class="countdown">
-      <div><span id="days">00</span><small>Días</small></div>
-      <div><span id="hours">00</span><small>Horas</small></div>
-      <div><span id="minutes">00</span><small>Minutos</small></div>
-      <div><span id="seconds">00</span><small>Segundos</small></div>
-    </div>
   </section>
 
   <!-- Ceremonia -->
@@ -101,11 +90,28 @@
     </blockquote>
     <p class="firma">💖 Con cariño, <strong>Samantha Sayuri</strong></p>
   </section>
+<!-- Contador regresivo -->
+<section class="contador" data-aos="zoom-in">
+  <h3>⏳ Falta muy poco para mi bautizo</h3>
+  <div id="countdown" class="countdown">
+    <div><span id="days">00</span><small>Días</small></div>
+    <div><span id="hours">00</span><small>Horas</small></div>
+    <div><span id="minutes">00</span><small>Minutos</small></div>
+    <div><span id="seconds">00</span><small>Segundos</small></div>
+  </div>
+</section>
 
   <footer data-aos="fade-up"></footer>
 
   <!-- Scripts -->
-  <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
   <script src="script.js"></script>
+  <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+  <script>
+    AOS.init({
+      duration: 1200,
+      once: true,
+      easing: 'ease-in-out'
+    });
+  </script>
 </body>
 </html>
