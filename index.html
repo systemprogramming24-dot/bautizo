@@ -1,16 +1,78 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Invitación al Bautizo</title>
-  <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Invitación al Bautizo ✨</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #fceabb, #f8b500);
+      color: #333;
+      text-align: center;
+      margin: 0;
+      padding: 0;
+    }
+
+    .container {
+      max-width: 500px;
+      margin: 5vh auto;
+      background: white;
+      padding: 2em;
+      border-radius: 20px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    }
+
+    h1 {
+      color: #d18b00;
+    }
+
+    label {
+      display: block;
+      margin-top: 1em;
+      font-weight: 600;
+    }
+
+    input {
+      padding: 8px;
+      width: 80%;
+      margin-top: 0.5em;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+    }
+
+    button {
+      background: #f8b500;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 10px;
+      cursor: pointer;
+      color: white;
+      font-size: 1em;
+      margin-top: 1em;
+    }
+
+    button:hover {
+      background: #e09e00;
+    }
+
+    #mensaje {
+      margin-top: 1.5em;
+      font-weight: 600;
+    }
+  </style>
 </head>
+
 <body>
   <main class="container">
-    <h1>✨ Bautizo de Sofía ✨</h1>
-    <p>Nos encantaría contar contigo en este día tan especial.</p>
-    <p>Si recibiste una invitación personalizada, entra con tu enlace único.</p>
-  </main>
-</body>
-</html>
+    <h1>✨ Invitación al Bautizo ✨</h1>
+    <p id="nombre">Cargando invitación...</p>
+
+    <form id="formConfirmar" style="display:none;">
+      <label for="cantidad">¿Cuántas personas asistirán?</label>
+      <input type="number" id="cantidad" min="1" max="10" required />
+      <button type="submit">Confirmar asistenci
