@@ -142,3 +142,57 @@ button {
   font-size: 2.4rem;
   color: #b14ab1;
 }
+
+/* ===== CONTADOR REGRESIVO ===== */
+.contador {
+  text-align: center;
+  padding: 50px 20px;
+  background: radial-gradient(circle at top, #fff8fb 0%, #ffe6f9 100%);
+  color: #5a2d82;
+  font-family: 'Poppins', sans-serif;
+  border-top: 2px solid #f3d9f6;
+  border-bottom: 2px solid #f3d9f6;
+}
+
+.contador h3 {
+  font-family: 'Great Vibes', cursive;
+  font-size: 2rem;
+  margin-bottom: 20px;
+  color: #b85cb8;
+  text-shadow: 1px 1px 3px rgba(0,0,0,0.1);
+}
+
+.countdown {
+  display: flex;
+  justify-content: center;
+  gap: 25px;
+  flex-wrap: wrap;
+}
+
+.countdown div {
+  background: linear-gradient(135deg, #b85cb8, #f9c7f8);
+  border-radius: 15px;
+  padding: 15px 20px;
+  box-shadow: 0 4px 10px rgba(184, 92, 184, 0.3);
+  color: white;
+  min-width: 90px;
+  transition: transform 0.3s ease;
+}
+
+.countdown div:hover {
+  transform: scale(1.08);
+}
+
+.countdown span {
+  display: block;
+  font-size: 2rem;
+  font-weight: 700;
+}
+
+.countdown small {
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  opacity: 0.9;
+}
+
+
