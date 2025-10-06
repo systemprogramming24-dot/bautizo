@@ -83,59 +83,54 @@ btnCambiar.addEventListener('click', async () => {
   }
 });
 
-const btnMusica = document.getElementById('btnMusica');
+// 🎵 Control de música mejorado (funciona en móviles y PC)
 const musica = document.getElementById('musica');
-const overlay = document.getElementById('overlayMusica');
-let sonando = false;
+const btnMusica = document.getElementById('btnMusica');
+const overlayMusica = document.getElementById('overlayMusica');
+
 let sonidoActivado = false;
+musica.volume = 0.4;
 
-// Intento de precargar
-window.addEventListener('load', () => {
-  musica.volume = 0.4;
-  musica.muted = true;
-  musica.play().catch(() => {});
-});
-
-// Desktop: activa al hacer scroll
-window.addEventListener('scroll', () => {
-  if (!sonidoActivado && !esMobile()) {
-    activarMusica();
+// 🟣 Reproduce al tocar el overlay (móviles)
+overlayMusica.addEventListener('click', async () => {
+  try {
+    await musica.play();
+    musica.muted = false;
+    sonidoActivado = true;
+    btnMusica.textContent = '🔊';
+    overlayMusica.style.display = 'none';
+  } catch (e) {
+    console.warn('No se pudo reproducir el audio:', e);
   }
 });
 
-// Móvil: activa al tocar el overlay
-overlay.addEventListener('click', () => {
-  activarMusica();
-  overlay.style.opacity = '0';
-  setTimeout(() => overlay.style.display = 'none', 600);
+// 🟣 Si el usuario hace scroll (en escritorio)
+window.addEventListener('scroll', async () => {
+  if (!sonidoActivado) {
+    try {
+      await musica.play();
+      musica.muted = false;
+      sonidoActivado = true;
+      btnMusica.textContent = '🔊';
+      overlayMusica.style.display = 'none';
+    } catch (e) {
+      console.warn('Error al iniciar música con scroll:', e);
+    }
+  }
 });
 
-// Botón flotante
-btnMusica.addEventListener('click', () => {
+// 🟣 Botón flotante para pausar/reanudar
+btnMusica.addEventListener('click', async () => {
   if (musica.paused) {
-    musica.play();
-    sonando = true;
-    btnMusica.textContent = "🔊";
+    try {
+      await musica.play();
+      musica.muted = false;
+      btnMusica.textContent = '🔊';
+    } catch (e) {
+      console.warn('Error al reanudar música:', e);
+    }
   } else {
     musica.pause();
-    sonando = false;
-    btnMusica.textContent = "🎵";
+    btnMusica.textContent = '🎵';
   }
 });
-
-// Función para activar música
-function activarMusica() {
-  musica.muted = false;
-  musica.play().then(() => {
-    musica.volume = 0.4;
-    btnMusica.textContent = "🔊";
-    sonidoActivado = true;
-    sonando = true;
-  }).catch(err => console.warn("No se pudo reproducir:", err));
-}
-
-// Detección básica de móvil
-function esMobile() {
-  return /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
-}
-
