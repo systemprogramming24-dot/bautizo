@@ -88,29 +88,32 @@ const btnMusica = document.getElementById('btnMusica');
 const musica = document.getElementById('musica');
 let sonando = false;
 
-// Intenta reproducir al cargar (silenciado)
+// Intenta reproducir al cargar (en silencio)
 window.addEventListener('load', () => {
   musica.volume = 0.4;
-  const playPromise = musica.play();
-  if (playPromise !== undefined) {
-    playPromise.catch(() => {
-      musica.muted = true; // Queda silenciada hasta que haya interacción
-    });
-  }
+  musica.muted = true;
+  musica.play().catch(() => {
+    // No pasa nada: se reproducirá en scroll
+  });
 });
 
-// 🔊 Activa el sonido la primera vez que el usuario hace scroll
+// 🔊 Activa el sonido y reproduce cuando el usuario hace scroll por primera vez
 let sonidoActivado = false;
 window.addEventListener('scroll', () => {
   if (!sonidoActivado) {
     musica.muted = false;
-    musica.volume = 0.4;
-    sonidoActivado = true;
-    btnMusica.textContent = "🔊";
+    musica.play().then(() => {
+      musica.volume = 0.4;
+      btnMusica.textContent = "🔊";
+      sonidoActivado = true;
+      sonando = true;
+    }).catch(err => {
+      console.warn("Error al reproducir música:", err);
+    });
   }
 });
 
-// 🎛 Botón flotante para pausar/reanudar
+// 🎛 Botón flotante para pausar/reanudar manualmente
 btnMusica.addEventListener('click', () => {
   if (musica.paused) {
     musica.play();
@@ -122,6 +125,8 @@ btnMusica.addEventListener('click', () => {
     btnMusica.textContent = "🎵";
   }
 });
+
+
 
 
 
