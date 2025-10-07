@@ -107,7 +107,7 @@ body{
 @keyframes brilloFloat{ 0%,100%{ transform:translateY(0) scale(1) } 50%{ transform:translateY(-30px) scale(1.25) } }
 
 /* petal style via CSS class (SVG image) */
-.petal{ position:fixed; top:-120px; pointer-events:none; z-index:2700; width:28px; height:28px; background-image: url('img/petal.svg'); background-size:contain; background-repeat:no-repeat; transition: transform 7s linear, opacity 6.5s linear; filter: drop-shadow(0 6px 12px rgba(180,140,150,0.08)); }
+.petal{ position:fixed; top:-120px; pointer-events:none; z-index:2700; width:28px; height:28px; background-image: url('img/petalo.png'); background-size:contain; background-repeat:no-repeat; transition: transform 7s linear, opacity 6.5s linear; filter: drop-shadow(0 6px 12px rgba(180,140,150,0.08)); }
 
 /* responsive */
 @media (max-width:900px){
