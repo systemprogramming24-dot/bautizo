@@ -10,7 +10,7 @@
 
   <!-- Styles -->
   <link rel="stylesheet" href="styles.css" />
-
+e
   <!-- Supabase client -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
@@ -31,7 +31,7 @@
   <!-- COVER (first screen - story style) -->
   <div id="cover" class="cover" role="region" aria-label="Portada - Desliza a la izquierda para comenzar">
     <div class="cover-inner">
-      <img src="img/portrait.svg" alt="Samantha" class="cover-photo" />
+      <img src="img/flores.gif" alt="Samantha" class="cover-photo" />
       <h1 class="cover-title">Samantha Sayuri</h1>
       <p class="cover-sub">Te invito a mi bautizo</p>
 
@@ -146,4 +146,45 @@
   <!-- Script -->
   <script src="script.js"></script>
 </body>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const petalsContainer = document.getElementById('petals');
+
+  function createPetal() {
+    const petal = document.createElement('div');
+    petal.classList.add('petal');
+
+    // Tamaño y posición aleatoria
+    const size = Math.random() * 20 + 20; // 20px–40px
+    petal.style.width = `${size}px`;
+    petal.style.height = `${size}px`;
+    petal.style.left = `${Math.random() * 100}vw`;
+    petal.style.animationDuration = `${Math.random() * 5 + 5}s`; // 5–10s
+    petal.style.opacity = (Math.random() * 0.5 + 0.5).toFixed(2);
+
+    // Movimiento lateral aleatorio
+    const moveX = Math.random() * 200 - 100; // -100 a 100px
+    petal.animate(
+      [
+        { transform: `translate(0, -50px) rotate(0deg)` },
+        { transform: `translate(${moveX}px, 110vh) rotate(${360 + Math.random() * 360}deg)` }
+      ],
+      {
+        duration: (Math.random() * 5 + 5) * 1000,
+        iterations: 1,
+        easing: "linear",
+        fill: "forwards"
+      }
+    );
+
+    petalsContainer.appendChild(petal);
+    setTimeout(() => petal.remove(), 10000);
+  }
+
+  // Genera pétalos constantemente
+  setInterval(createPetal, 200);
+});
+</script>
+
 </html>
