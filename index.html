@@ -12,12 +12,14 @@
       padding: 0;
       min-height: 100vh;
       display: flex;
+      flex-direction: column;
       align-items: center;
-      justify-content: center;
+      justify-content: flex-start;
       background-color: #fffdfa;
       font-family: 'Playfair Display', serif;
       position: relative;
-      overflow: hidden;
+      overflow-x: hidden;
+      overflow-y: auto;
     }
 
     body::before {
@@ -28,7 +30,7 @@
       width: 100%;
       height: 100%;
       background: url('https://i.pinimg.com/736x/1b/ee/76/1bee76edd115d3726463467cf6bf8373.jpg') no-repeat center center;
-      background-size: 100% 100%;
+      background-size: cover;
       z-index: -1000;
       opacity: 0.95;
     }
@@ -37,7 +39,7 @@
       position: relative;
       width: 90%;
       max-width: 460px;
-      padding: 20px;
+      padding: 20px 0 80px;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -48,10 +50,10 @@
 
     .save-text {
       position: relative;
-      margin-top: 10px;
+      margin-top: 40px;
       width: 100%;
       max-width: 360px;
-      height: 80px;
+      height: 100px; /* ⬆️ más alto para el texto grande */
       text-align: center;
       z-index: 20;
     }
@@ -59,7 +61,7 @@
     .save-text svg { width: 100%; height: 100%; overflow: visible; }
     .save-text text {
       font-family: 'Parisienne', cursive;
-      font-size: clamp(2.5rem, 5vw, 4rem);
+      font-size: clamp(3.5rem, 7vw, 5rem); /* ⬆️ tamaño aumentado */
       fill: #f6e6a8;
       stroke: #e8cf76;
       stroke-width: 0.4px;
@@ -78,6 +80,7 @@
       display: flex;
       justify-content: center;
       align-items: center;
+      margin-top: 10px;
     }
 
     .photo img {
@@ -87,11 +90,31 @@
       border-radius: 50%;
     }
 
+    .start-button {
+      margin-top: 20px;
+      background: linear-gradient(135deg, #f6e6a8, #e8cf76);
+      color: #4b2570;
+      border: none;
+      border-radius: 25px;
+      padding: 12px 24px;
+      font-family: 'Poppins', sans-serif;
+      font-weight: 600;
+      font-size: 1rem;
+      cursor: pointer;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+      transition: all 0.3s ease;
+    }
+
+    .start-button:hover {
+      transform: scale(1.05);
+      box-shadow: 0 6px 14px rgba(0,0,0,0.25);
+    }
+
     .content {
       text-align: center;
       color: #3f3f3f;
       z-index: 15;
-      margin-top: 10px;
+      margin-top: 20px;
     }
 
     h1, h2 { font-family: 'Parisienne', cursive; color: #b25f67; margin: 0; }
@@ -101,7 +124,7 @@
     .details { font-family: 'Poppins', sans-serif; font-size: 1.1rem; color: #6b4f55; }
 
     .quote {
-      margin-top: 10px;
+      margin-top: 30px;
       width: 85%;
       text-align: center;
       font-style: italic;
@@ -112,7 +135,7 @@
     }
 
     .countdown {
-      margin-top: 15px;
+      margin-top: 30px;
       width: 95%;
       display: flex;
       justify-content: space-around;
@@ -135,7 +158,6 @@
     .countdown span { display: flex; flex-direction: column; align-items: center; font-size: 1rem; }
     .countdown strong { font-size: clamp(1.6rem, 5vw, 2.4rem); color: #3d1460; }
 
-    /* 🌸 Efecto pétalos usando imagen local */
     .petal {
       position: fixed;
       top: -10px;
@@ -150,21 +172,27 @@
     }
 
     @keyframes fall {
-      0% {
-        transform: translateY(0) rotate(0deg);
-        opacity: 1;
-      }
-      100% {
-        transform: translateY(110vh) rotate(720deg);
-        opacity: 0.7;
-      }
+      0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+      100% { transform: translateY(110vh) rotate(720deg); opacity: 0.7; }
     }
 
     @media (max-width: 600px) {
-      .card-wrapper { max-width: 95%; }
-      .quote { font-size: 1rem; }
-      .save-text text { font-size: clamp(2.2rem, 7vw, 3rem); }
-      .countdown { font-size: 0.9rem; padding: 12px; }
+      html, body { height: 100%; overflow: hidden; }
+
+      .card-wrapper { max-width: 100%; padding: 0; height: 100vh; justify-content: center; }
+
+      .save-text { margin-top: 0; height: 70px; }
+      .save-text text { font-size: 3rem; } /* ⬆️ más grande también en móvil */
+
+      .photo { width: 160px; height: 160px; margin-top: 5px; }
+      .start-button { margin-top: 10px; padding: 10px 20px; font-size: 0.9rem; }
+      .content { margin-top: 10px; }
+      h1 { font-size: 1.8rem; }
+      h2 { font-size: 1.3rem; }
+      .details p { margin: 2px 0; font-size: 0.9rem; }
+      .quote { font-size: 0.9rem; margin-top: 10px; width: 80%; }
+      .countdown { margin-top: 10px; padding: 8px; font-size: 0.8rem; }
+      .countdown strong { font-size: 1.2rem; }
     }
   </style>
 </head>
@@ -183,7 +211,9 @@
       <img src="https://images.unsplash.com/photo-1503454537195-1dcabb73ffb9?auto=format&fit=crop&w=800&q=80" alt="Foto de niña bautizo elegante">
     </div>
 
-    <div class="content">
+    <button class="start-button" onclick="scrollToContent()">Toca para comenzar</button>
+
+    <div class="content" id="content">
       <h1>Carolus</h1>
       <h2>& Lovely</h2>
       <div class="details">
@@ -226,7 +256,6 @@
     updateCountdown();
     setInterval(updateCountdown, 1000);
 
-    // 🌸 Lluvia de pétalos 🌸
     const numPetals = 25;
     for (let i = 0; i < numPetals; i++) {
       const petal = document.createElement('div');
@@ -240,6 +269,10 @@
       petal.style.animationDuration = Math.random() * 6 + 6 + 's';
       petal.style.animationDelay = Math.random() * 5 + 's';
       petal.style.opacity = Math.random() * 0.5 + 0.5;
+    }
+
+    function scrollToContent() {
+      document.getElementById('content').scrollIntoView({ behavior: 'smooth' });
     }
   </script>
 </body>
