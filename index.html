@@ -7,7 +7,7 @@
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Parisienne&family=Playfair+Display:wght@400;600&family=Poppins:wght@400;600&display=swap');
 
-html, body { margin: 0; padding: 0; }
+html, body { margin: 0; padding: 0; scroll-behavior: smooth; }
 body {
   background-color: #fffdfa;
   font-family: 'Playfair Display', serif;
@@ -34,15 +34,11 @@ body::before {
   flex-direction: column;
   opacity: 0;
   visibility: hidden;
-  position: absolute;
-  top: 0;
-  left: 0;
   transition: opacity 0.4s ease;
 }
 .section.active {
   opacity: 1;
   visibility: visible;
-  position: relative;
 }
 
 /* ==== CONTENEDOR ==== */
@@ -54,7 +50,7 @@ body::before {
   align-items: center;
   justify-content: space-evenly;
   text-align: center;
-  height: 100svh;
+  min-height: 100svh;
   box-sizing: border-box;
   padding: 10px 0;
 }
@@ -207,13 +203,25 @@ h2 { font-size: clamp(1.3rem, 4vw, 2rem); }
   </div>
 </section>
 
-<!-- OTRAS SECCIONES -->
-<section class="section" id="section2">
-  <div class="card-wrapper">
-    <h1>Sección 2</h1>
-    <p>Contenido siguiente...</p>
-  </div>
-</section>
+<!-- CONTENEDOR DE SECCIONES DESPUÉS -->
+<div id="mainContent" style="display:none;">
+  <section class="section active" id="section2">
+    <div class="card-wrapper">
+      <h1>Bienvenidos</h1>
+      <p>Gracias por acompañarnos en este día tan especial. 🌷</p>
+      <p>Desliza hacia abajo para conocer más detalles.</p>
+    </div>
+  </section>
+
+  <section class="section active" id="section3">
+    <div class="card-wrapper">
+      <h1>Detalles del Evento</h1>
+      <p><strong>Ceremonia:</strong> Parroquia San José - 4:00 PM</p>
+      <p><strong>Recepción:</strong> Salón Lovely Garden - 6:00 PM</p>
+      <p class="quote">“Compartamos juntos este día lleno de fe, amor y alegría.”</p>
+    </div>
+  </section>
+</div>
 
 <script>
 (function(){
@@ -241,10 +249,14 @@ h2 { font-size: clamp(1.3rem, 4vw, 2rem); }
 
   const btn = document.getElementById('startBtn');
   const music = document.getElementById('bgMusic');
+  const section1 = document.getElementById('section1');
+  const mainContent = document.getElementById('mainContent');
+
   if(btn){
     btn.addEventListener('click', ()=>{
-      document.querySelector('#section1').classList.remove('active');
-      document.querySelector('#section2').classList.add('active');
+      section1.style.display = 'none';
+      mainContent.style.display = 'block';
+      window.scrollTo({ top: 0, behavior: 'smooth' });
       music.volume = 0.8;
       music.play().catch(()=>{});
     });
