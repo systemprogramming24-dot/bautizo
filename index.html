@@ -20,7 +20,6 @@
       overflow: hidden;
     }
 
-    /* Marco visible completo */
     body::before {
       content: "";
       position: fixed;
@@ -131,11 +130,35 @@
       flex-wrap: wrap;
       gap: 10px;
       position: relative;
-      bottom: 0;
     }
 
     .countdown span { display: flex; flex-direction: column; align-items: center; font-size: 1rem; }
     .countdown strong { font-size: clamp(1.6rem, 5vw, 2.4rem); color: #3d1460; }
+
+    /* 🌸 Efecto pétalos usando imagen local */
+    .petal {
+      position: fixed;
+      top: -10px;
+      background-image: url('img/petalo.png');
+      background-size: cover;
+      width: 30px;
+      height: 30px;
+      opacity: 0.8;
+      animation: fall linear infinite;
+      pointer-events: none;
+      z-index: 5;
+    }
+
+    @keyframes fall {
+      0% {
+        transform: translateY(0) rotate(0deg);
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(110vh) rotate(720deg);
+        opacity: 0.7;
+      }
+    }
 
     @media (max-width: 600px) {
       .card-wrapper { max-width: 95%; }
@@ -202,6 +225,22 @@
 
     updateCountdown();
     setInterval(updateCountdown, 1000);
+
+    // 🌸 Lluvia de pétalos 🌸
+    const numPetals = 25;
+    for (let i = 0; i < numPetals; i++) {
+      const petal = document.createElement('div');
+      petal.classList.add('petal');
+      document.body.appendChild(petal);
+
+      const size = Math.random() * 20 + 15;
+      petal.style.width = `${size}px`;
+      petal.style.height = `${size}px`;
+      petal.style.left = Math.random() * 100 + 'vw';
+      petal.style.animationDuration = Math.random() * 6 + 6 + 's';
+      petal.style.animationDelay = Math.random() * 5 + 's';
+      petal.style.opacity = Math.random() * 0.5 + 0.5;
+    }
   </script>
 </body>
 </html>
