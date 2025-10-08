@@ -7,24 +7,17 @@
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Parisienne&family=Playfair+Display:wght@400;600&family=Poppins:wght@400;600&display=swap');
 
-    html, body { height: 100%; }
+    html, body { height: 100%; margin: 0; padding: 0; }
     body {
-      margin: 0;
-      padding: 0;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: flex-start;
       background-color: #fffdfa;
       font-family: 'Playfair Display', serif;
-      position: relative;
       overflow-x: hidden;
-      overflow-y: hidden;
+      overflow-y: auto;
       transition: opacity 0.6s ease;
+      position: relative;
     }
-    body.scroll-enabled { overflow-y: auto; }
 
+    /* Fondo */
     body::before {
       content: "";
       position: fixed;
@@ -39,6 +32,7 @@
       box-shadow: inset 0 0 60px rgba(0, 0, 0, 0.15);
     }
 
+    /* ==== SECCIONES ==== */
     .section {
       width: 100%;
       min-height: 100vh;
@@ -48,10 +42,18 @@
       flex-direction: column;
       opacity: 0;
       visibility: hidden;
+      position: absolute;
+      top: 0;
+      left: 0;
       transition: opacity 0.5s ease, visibility 0.5s ease;
     }
-    .section.active { opacity: 1; visibility: visible; }
+    .section.active {
+      opacity: 1;
+      visibility: visible;
+      position: relative;
+    }
 
+    /* ==== CONTENIDO ==== */
     .card-wrapper {
       position: relative;
       width: 90%;
@@ -65,22 +67,17 @@
       z-index: 10;
     }
 
-    .save-text { position: relative; margin-top: 40px; width: 100%; max-width: 360px; height: 100px; text-align: center; z-index: 20; }
+    .save-text { margin-top: 40px; width: 100%; max-width: 360px; height: 100px; text-align: center; z-index: 20; }
     .save-text svg { width: 100%; height: 100%; overflow: visible; }
     .save-text text { font-family: 'Parisienne', cursive; font-size: clamp(3.5rem, 7vw, 5rem); fill: #f6e6a8; stroke: #e8cf76; stroke-width: 0.4px; filter: drop-shadow(0 2px 5px rgba(0,0,0,0.3)); }
 
     .photo {
-      position: relative;
       width: clamp(180px, 55vw, 260px);
       height: clamp(180px, 55vw, 260px);
       border-radius: 50%;
       overflow: hidden;
-      box-shadow: 0 0 25px rgba(0,0,0,0.25);
       border: 5px solid #f8e7b3;
-      z-index: 15;
-      display: flex;
-      justify-content: center;
-      align-items: center;
+      box-shadow: 0 0 25px rgba(0,0,0,0.25);
       margin-top: 10px;
     }
     .photo img { width: 100%; height: 100%; object-fit: cover; border-radius: 50%; }
@@ -94,43 +91,65 @@
       padding: 12px 24px;
       font-family: 'Poppins', sans-serif;
       font-weight: 600;
-      font-size: 1rem;
       cursor: pointer;
       box-shadow: 0 4px 10px rgba(0,0,0,0.2);
       transition: all 0.25s ease;
     }
     .start-button:hover { transform: scale(1.04); box-shadow: 0 6px 14px rgba(0,0,0,0.25); }
 
-    .content { text-align: center; color: #3f3f3f; z-index: 15; margin-top: 20px; }
+    .content { text-align: center; color: #3f3f3f; margin-top: 20px; }
     h1, h2 { font-family: 'Parisienne', cursive; color: #b25f67; margin: 0; }
     h1 { font-size: clamp(2.2rem, 6vw, 3rem); }
     h2 { font-size: clamp(1.8rem, 5vw, 2.3rem); }
+
     .details { font-family: 'Poppins', sans-serif; font-size: 1.1rem; color: #6b4f55; }
-    .quote { margin-top: 30px; width: 85%; text-align: center; font-style: italic; font-size: 1.1rem; color: #7a5d68; font-family: 'Playfair Display', serif; z-index: 15; }
+    .quote { margin-top: 30px; width: 85%; font-style: italic; font-size: 1.1rem; color: #7a5d68; font-family: 'Playfair Display', serif; }
 
+    /* ==== CONTADOR ELEGANTE ==== */
     .countdown {
-      margin-top: 30px;
-      width: 95%;
+      margin-top: 40px;
       display: flex;
-      justify-content: space-around;
-      align-items: center;
-      background: rgba(200,150,250,0.28);
-      border: 1px solid rgba(190,120,240,0.35);
-      border-radius: 16px;
-      padding: 14px 12px;
-      box-shadow: 0 6px 18px rgba(0,0,0,0.12);
-      font-family: 'Poppins', sans-serif;
+      justify-content: center;
+      gap: 14px;
+      backdrop-filter: blur(10px);
+      background: rgba(255,255,255,0.35);
+      border-radius: 20px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+      padding: 14px 20px;
       color: #4b2570;
-      font-weight: 700;
-      backdrop-filter: blur(6px);
-      z-index: 20;
-      gap: 8px;
-      flex-wrap: wrap;
-      position: relative;
+      font-family: 'Poppins', sans-serif;
     }
-    .countdown span { display:flex; flex-direction: column; align-items:center; font-size: 0.95rem; }
-    .countdown strong { font-size: clamp(1.6rem, 5vw, 2.2rem); color: #3d1460; }
 
+    .countdown span {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-width: 70px;
+      padding: 10px 0;
+      background: rgba(255, 255, 255, 0.6);
+      border-radius: 12px;
+      box-shadow: inset 0 0 8px rgba(255,255,255,0.6),
+                  0 2px 8px rgba(0,0,0,0.1);
+      transition: transform 0.3s ease;
+    }
+
+    .countdown span:hover { transform: scale(1.06); }
+
+    .countdown strong {
+      font-size: clamp(2rem, 6vw, 2.6rem);
+      font-weight: 700;
+      color: #3a1d52;
+    }
+
+    .countdown small {
+      font-size: 0.85rem;
+      color: #654d7a;
+      margin-top: 3px;
+      letter-spacing: 0.5px;
+    }
+
+    /* ==== PÉTALOS ==== */
     .petal {
       position: fixed;
       top: -10px;
@@ -147,89 +166,81 @@
       0% { transform: translateY(0) rotate(0deg); opacity: 1; }
       100% { transform: translateY(110vh) rotate(720deg); opacity: 0.7; }
     }
-
-    @media (max-width:600px) {
-      .card-wrapper { max-width:100%; padding:0; height:100vh; justify-content:center; }
-      .save-text { margin-top:0; height:70px; }
-      .save-text text { font-size:3rem; }
-      .photo { width:160px; height:160px; margin-top:5px; }
-      .start-button { margin-top:10px; padding:10px 20px; font-size:0.9rem; }
-      .content { margin-top:10px; }
-      h1 { font-size:1.8rem; } h2 { font-size:1.3rem; }
-      .quote { font-size:0.9rem; margin-top:10px; width:80%; }
-      .countdown { margin-top:10px; padding:8px; font-size:0.8rem; }
-      .countdown strong { font-size:1.2rem; }
-    }
   </style>
 </head>
 <body>
-  <!-- AUDIO oculto -->
   <audio id="bgMusic" src="sake.mp3" preload="auto"></audio>
 
   <!-- SECCIÓN 1 -->
-  <section class="section active" id="section1" aria-label="Inicio - Mi bautizo">
+  <section class="section active" id="section1">
     <div class="card-wrapper">
       <div class="save-text">
-        <svg viewBox="0 0 300 100" preserveAspectRatio="xMidYMid meet">
+        <svg viewBox="0 0 300 100">
           <path id="curve1" d="M 40 90 A 130 130 0 0 1 260 90" fill="transparent"/>
-          <text width="500"><textPath href="#curve1" startOffset="50%" text-anchor="middle">Mi bautizo</textPath></text>
+          <text><textPath href="#curve1" startOffset="50%" text-anchor="middle">Mi bautizo</textPath></text>
         </svg>
       </div>
       <div class="photo">
-        <img src="https://images.unsplash.com/photo-1503454537195-1dcabb73ffb9?auto=format&fit=crop&w=800&q=80" alt="Foto de niña bautizo elegante">
+        <img src="https://images.unsplash.com/photo-1503454537195-1dcabb73ffb9?auto=format&fit=crop&w=800&q=80">
       </div>
       <button class="start-button" id="startBtn">Toca para comenzar</button>
       <div class="content">
         <h1>Carolus</h1>
         <h2>&amp; Lovely</h2>
         <div class="details">
-          <p><strong>Sábado, 31 de Agosto</strong></p>
-          <p>4:00 PM</p>
+          <p><strong>Sábado, 31 de Agosto</strong></p><p>4:00 PM</p>
         </div>
       </div>
-      <div class="quote"><p>“Un día lleno de luz y bendiciones para celebrar el amor y la fe.”</p></div>
-      <div class="countdown" id="countdown1" aria-live="polite"></div>
+      <div class="quote">“Un día lleno de luz y bendiciones para celebrar el amor y la fe.”</div>
+      <div class="countdown" id="countdown1"></div>
     </div>
   </section>
 
   <!-- SECCIÓN 2 -->
-  <section class="section" id="section2" aria-label="Saludo">
+  <section class="section" id="section2">
     <div class="card-wrapper">
       <div class="save-text">
-        <svg viewBox="0 0 300 100"><path id="curve2" d="M 40 90 A 130 130 0 0 1 260 90" fill="transparent" /><text><textPath href="#curve2" startOffset="50%" text-anchor="middle">Bienvenido</textPath></text></svg>
+        <svg viewBox="0 0 300 100">
+          <path id="curve2" d="M 40 90 A 130 130 0 0 1 260 90" fill="transparent"/>
+          <text><textPath href="#curve2" startOffset="50%" text-anchor="middle">Bienvenido</textPath></text>
+        </svg>
       </div>
-      <div class="photo"><img src="https://images.unsplash.com/photo-1507089947368-19c1da9775ae?auto=format&fit=crop&w=800&q=80" alt="Saludo"></div>
-      <div class="content"><h1>Querido invitado,</h1><h2>Gracias por acompañarme</h2><p class="quote">"Que la luz de este bautizo ilumine siempre tu corazón."</p></div>
-      <div class="countdown" id="countdown2" aria-live="polite"></div>
+      <div class="photo"><img src="https://images.unsplash.com/photo-1507089947368-19c1da9775ae?auto=format&fit=crop&w=800&q=80"></div>
+      <div class="content">
+        <h1>Querido invitado,</h1>
+        <h2>Gracias por acompañarme</h2>
+        <p class="quote">"Que la luz de este bautizo ilumine siempre tu corazón."</p>
+      </div>
     </div>
   </section>
 
   <!-- SECCIÓN 3 -->
-  <section class="section" id="section3" aria-label="Padrinos">
+  <section class="section" id="section3">
     <div class="card-wrapper">
       <div class="save-text">
-        <svg viewBox="0 0 300 100"><path id="curve3" d="M 40 90 A 130 130 0 0 1 260 90" fill="transparent" /><text><textPath href="#curve3" startOffset="50%" text-anchor="middle">Mis Padrinos</textPath></text></svg>
+        <svg viewBox="0 0 300 100">
+          <path id="curve3" d="M 40 90 A 130 130 0 0 1 260 90" fill="transparent"/>
+          <text><textPath href="#curve3" startOffset="50%" text-anchor="middle">Mis Padrinos</textPath></text>
+        </svg>
       </div>
-      <div class="photo"><img src="https://images.unsplash.com/photo-1536305030015-4e9ae2f35cb4?auto=format&fit=crop&w=800&q=80" alt="Padrinos"></div>
+      <div class="photo"><img src="https://images.unsplash.com/photo-1536305030015-4e9ae2f35cb4?auto=format&fit=crop&w=800&q=80"></div>
       <div class="content"><h1>Con cariño,</h1><h2>María &amp; José</h2><p class="quote">“Ser padrino es guiar con amor y acompañar con fe.”</p></div>
     </div>
   </section>
 
   <!-- SECCIÓN 4 -->
-  <section class="section" id="section4" aria-label="Padres">
+  <section class="section" id="section4">
     <div class="card-wrapper">
       <div class="save-text">
-        <svg viewBox="0 0 300 100"><path id="curve4" d="M 40 90 A 130 130 0 0 1 260 90" fill="transparent" /><text><textPath href="#curve4" startOffset="50%" text-anchor="middle">Mis Padres</textPath></text></svg>
+        <svg viewBox="0 0 300 100">
+          <path id="curve4" d="M 40 90 A 130 130 0 0 1 260 90" fill="transparent"/>
+          <text><textPath href="#curve4" startOffset="50%" text-anchor="middle">Mis Padres</textPath></text>
+        </svg>
       </div>
-      <div class="photo"><img src="https://images.unsplash.com/photo-1598970434795-0c54fe7c0641?auto=format&fit=crop&w=800&q=80" alt="Padres"></div>
+      <div class="photo"><img src="https://images.unsplash.com/photo-1598970434795-0c54fe7c0641?auto=format&fit=crop&w=800&q=80"></div>
       <div class="content"><h1>Con amor,</h1><h2>Lovely &amp; Carolus</h2><p class="quote">“Dios nos regaló la bendición más grande: ser tus padres.”</p></div>
     </div>
   </section>
-
-  <noscript>
-    <style>.section{opacity:1!important;visibility:visible!important;}body{overflow:auto!important;}</style>
-    <div style="position:fixed;left:10px;top:10px;background:#fff;padding:8px;border-radius:6px;z-index:1000;">Activa JavaScript para ver efectos.</div>
-  </noscript>
 
   <script>
   (function(){
@@ -246,10 +257,10 @@
         const minutes = Math.floor((d % (1000*60*60)) / (1000*60));
         const seconds = Math.floor((d % (1000*60)) / 1000);
         el.innerHTML = `
-          <span><strong>${String(days).padStart(2,'0')}</strong><small>Días</small></span>
-          <span><strong>${String(hours).padStart(2,'0')}</strong><small>Horas</small></span>
-          <span><strong>${String(minutes).padStart(2,'0')}</strong><small>Min</small></span>
-          <span><strong>${String(seconds).padStart(2,'0')}</strong><small>Seg</small></span>`;
+          <span><strong>${days}</strong><small>Días</small></span>
+          <span><strong>${hours}</strong><small>Horas</small></span>
+          <span><strong>${minutes}</strong><small>Min</small></span>
+          <span><strong>${seconds}</strong><small>Seg</small></span>`;
       }
       update();
       if (!el._interval) el._interval = setInterval(update, 1000);
@@ -262,12 +273,12 @@
       current.classList.remove('active');
       setTimeout(()=>{
         next.classList.add('active');
-        document.body.classList.add('scroll-enabled');
         next.scrollIntoView({behavior:'auto'});
       },400);
     }
 
-    (function crearPetalos(){
+    // Crear pétalos
+    (function(){
       const numPetals = 25;
       for (let i=0;i<numPetals;i++){
         const petal = document.createElement('div');
@@ -279,45 +290,22 @@
         petal.style.left = Math.random()*100 + 'vw';
         petal.style.animationDuration = (Math.random()*6 + 6) + 's';
         petal.style.animationDelay = Math.random()*5 + 's';
-        petal.style.opacity = (Math.random()*0.5 + 0.4).toString();
       }
     })();
 
-    function resetToStart(){
-      document.body.classList.remove('scroll-enabled');
-      document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
-      const s1 = document.getElementById('section1');
-      if (s1){
-        requestAnimationFrame(()=>{
-          s1.classList.add('active');
-          window.scrollTo({top:0, behavior:'auto'});
-        });
-      } else {
-        window.scrollTo({top:0, behavior:'auto'});
-      }
-    }
+    // Solo contador de la primera sección
+    window.addEventListener('DOMContentLoaded', ()=>{ iniciarCountdown('countdown1'); });
 
-    window.addEventListener('DOMContentLoaded', ()=>{
-      resetToStart();
-      iniciarCountdown('countdown1');
-      iniciarCountdown('countdown2');
-    });
-
-    window.addEventListener('pageshow', ()=>{ resetToStart(); });
-
+    // Botón iniciar
     const startBtn = document.getElementById('startBtn');
     const music = document.getElementById('bgMusic');
-
     if (startBtn) startBtn.addEventListener('click', ()=>{
       goToSection('section2');
-      // Reproducir música al presionar el botón
       if (music) {
         music.volume = 0.8;
         music.play().catch(err=>console.log('Autoplay bloqueado:', err));
       }
     });
-
-    window.goToSection = goToSection;
   })();
   </script>
 </body>
