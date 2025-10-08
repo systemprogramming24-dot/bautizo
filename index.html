@@ -22,18 +22,21 @@
       overflow-y: auto;
     }
 
-    body::before {
-      content: "";
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: url('https://i.pinimg.com/736x/1b/ee/76/1bee76edd115d3726463467cf6bf8373.jpg') no-repeat center center;
-      background-size: cover;
-      z-index: -1000;
-      opacity: 0.95;
-    }
+   body::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: url('https://i.pinimg.com/736x/1b/ee/76/1bee76edd115d3726463467cf6bf8373.jpg') center center no-repeat;
+  background-size: 100% 100%; /* ✅ fuerza a mostrar todo el marco */
+  background-attachment: fixed;
+  background-color: #fffdfa; /* ✅ rellena cualquier borde */
+  z-index: -1000;
+  opacity: 0.95;
+}
+
 
     .card-wrapper {
       position: relative;
