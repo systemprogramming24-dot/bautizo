@@ -7,6 +7,7 @@
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Parisienne&family=Playfair+Display:wght@400;600&family=Poppins:wght@400;600&display=swap');
 
+    /* ===== ESTILOS GLOBALES ===== */
     body {
       margin: 0;
       padding: 0;
@@ -20,23 +21,46 @@
       position: relative;
       overflow-x: hidden;
       overflow-y: auto;
+      transition: opacity 1s ease; /* transición fade */
     }
 
-   body::before {
-  content: "";
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  background: url('https://i.pinimg.com/736x/1b/ee/76/1bee76edd115d3726463467cf6bf8373.jpg') center center no-repeat;
-  background-size: 100% 100%; /* ✅ fuerza a mostrar todo el marco */
-  background-attachment: fixed;
-  background-color: #fffdfa; /* ✅ rellena cualquier borde */
-  z-index: -1000;
-  opacity: 0.95;
-}
+    body.fade-out {
+      opacity: 0;
+      transition: opacity 1s ease;
+    }
 
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: url('https://i.pinimg.com/736x/1b/ee/76/1bee76edd115d3726463467cf6bf8373.jpg') center center no-repeat;
+      background-size: 100% 100%;
+      background-attachment: fixed;
+      background-color: #fffdfa;
+      z-index: -1000;
+      opacity: 0.95;
+    }
+
+    /* ===== SECCIONES ===== */
+    .section {
+      width: 100%;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 1s ease;
+    }
+
+    .section.active {
+      opacity: 1;
+      visibility: visible;
+    }
 
     .card-wrapper {
       position: relative;
@@ -51,12 +75,13 @@
       z-index: 10;
     }
 
+    /* ===== TÍTULO ===== */
     .save-text {
       position: relative;
       margin-top: 40px;
       width: 100%;
       max-width: 360px;
-      height: 100px; /* ⬆️ más alto para el texto grande */
+      height: 100px;
       text-align: center;
       z-index: 20;
     }
@@ -64,13 +89,14 @@
     .save-text svg { width: 100%; height: 100%; overflow: visible; }
     .save-text text {
       font-family: 'Parisienne', cursive;
-      font-size: clamp(3.5rem, 7vw, 5rem); /* ⬆️ tamaño aumentado */
+      font-size: clamp(3.5rem, 7vw, 5rem);
       fill: #f6e6a8;
       stroke: #e8cf76;
       stroke-width: 0.4px;
       filter: drop-shadow(0 2px 5px rgba(0, 0, 0, 0.3));
     }
 
+    /* ===== FOTO ===== */
     .photo {
       position: relative;
       width: clamp(180px, 55vw, 260px);
@@ -93,6 +119,7 @@
       border-radius: 50%;
     }
 
+    /* ===== BOTÓN ===== */
     .start-button {
       margin-top: 20px;
       background: linear-gradient(135deg, #f6e6a8, #e8cf76);
@@ -113,6 +140,7 @@
       box-shadow: 0 6px 14px rgba(0,0,0,0.25);
     }
 
+    /* ===== CONTENIDO ===== */
     .content {
       text-align: center;
       color: #3f3f3f;
@@ -137,6 +165,7 @@
       z-index: 15;
     }
 
+    /* ===== CONTADOR ===== */
     .countdown {
       margin-top: 30px;
       width: 95%;
@@ -161,6 +190,7 @@
     .countdown span { display: flex; flex-direction: column; align-items: center; font-size: 1rem; }
     .countdown strong { font-size: clamp(1.6rem, 5vw, 2.4rem); color: #3d1460; }
 
+    /* ===== PÉTALOS ===== */
     .petal {
       position: fixed;
       top: -10px;
@@ -179,13 +209,14 @@
       100% { transform: translateY(110vh) rotate(720deg); opacity: 0.7; }
     }
 
+    /* ===== MÓVIL ===== */
     @media (max-width: 600px) {
       html, body { height: 100%; overflow: hidden; }
 
       .card-wrapper { max-width: 100%; padding: 0; height: 100vh; justify-content: center; }
 
       .save-text { margin-top: 0; height: 70px; }
-      .save-text text { font-size: 3rem; } /* ⬆️ más grande también en móvil */
+      .save-text text { font-size: 3rem; }
 
       .photo { width: 160px; height: 160px; margin-top: 5px; }
       .start-button { margin-top: 10px; padding: 10px 20px; font-size: 0.9rem; }
@@ -200,65 +231,114 @@
   </style>
 </head>
 <body>
-  <div class="card-wrapper">
-    <div class="save-text">
-      <svg viewBox="0 0 300 100" preserveAspectRatio="xMidYMid meet">
-        <path id="curve" d="M 40 90 A 130 130 0 0 1 260 90" fill="transparent" />
-        <text width="500">
-          <textPath href="#curve" startOffset="50%" text-anchor="middle">Mi bautizo</textPath>
-        </text>
-      </svg>
-    </div>
-
-    <div class="photo">
-      <img src="https://images.unsplash.com/photo-1503454537195-1dcabb73ffb9?auto=format&fit=crop&w=800&q=80" alt="Foto de niña bautizo elegante">
-    </div>
-
-    <button class="start-button" onclick="scrollToContent()">Toca para comenzar</button>
-
-    <div class="content" id="content">
-      <h1>Carolus</h1>
-      <h2>& Lovely</h2>
-      <div class="details">
-        <p><strong>Sábado, 31 de Agosto</strong></p>
-        <p>4:00 PM</p>
+  <!-- SECCIÓN 1 -->
+  <section class="section active" id="section1">
+    <div class="card-wrapper">
+      <div class="save-text">
+        <svg viewBox="0 0 300 100" preserveAspectRatio="xMidYMid meet">
+          <path id="curve1" d="M 40 90 A 130 130 0 0 1 260 90" fill="transparent" />
+          <text width="500"><textPath href="#curve1" startOffset="50%" text-anchor="middle">Mi bautizo</textPath></text>
+        </svg>
       </div>
-    </div>
 
-    <div class="quote">
-      <p>“Un día lleno de luz y bendiciones para celebrar el amor y la fe.”</p>
-    </div>
+      <div class="photo">
+        <img src="https://images.unsplash.com/photo-1503454537195-1dcabb73ffb9?auto=format&fit=crop&w=800&q=80" alt="Foto de niña bautizo elegante">
+      </div>
 
-    <div class="countdown" id="countdown"></div>
-  </div>
+      <button class="start-button" onclick="goToSection('section2')">Toca para comenzar</button>
+
+      <div class="content" id="content1">
+        <h1>Carolus</h1>
+        <h2>& Lovely</h2>
+        <div class="details">
+          <p><strong>Sábado, 31 de Agosto</strong></p>
+          <p>4:00 PM</p>
+        </div>
+      </div>
+
+      <div class="quote">
+        <p>“Un día lleno de luz y bendiciones para celebrar el amor y la fe.”</p>
+      </div>
+
+      <div class="countdown" id="countdown1"></div>
+    </div>
+  </section>
+
+  <!-- SECCIÓN 2 -->
+  <section class="section" id="section2">
+    <div class="card-wrapper">
+      <div class="save-text">
+        <svg viewBox="0 0 300 100" preserveAspectRatio="xMidYMid meet">
+          <path id="curve2" d="M 40 90 A 130 130 0 0 1 260 90" fill="transparent" />
+          <text width="500"><textPath href="#curve2" startOffset="50%" text-anchor="middle">Nuestra Celebración</textPath></text>
+        </svg>
+      </div>
+
+      <div class="photo">
+        <img src="https://images.unsplash.com/photo-1589216532372-2d5f7d9ef3c1?auto=format&fit=crop&w=800&q=80" alt="Foto segunda sección">
+      </div>
+
+      <div class="content">
+        <h1>Te esperamos</h1>
+        <h2>Con mucho amor</h2>
+        <div class="details">
+          <p><strong>Salón Lovely Garden</strong></p>
+          <p>Av. Los Rosales 123 - Lima</p>
+        </div>
+      </div>
+
+      <div class="quote">
+        <p>“Compartamos juntos este momento tan especial en nuestras vidas.”</p>
+      </div>
+
+      <div class="countdown" id="countdown2"></div>
+    </div>
+  </section>
 
   <script>
-    const countdownElement = document.getElementById('countdown');
-    const targetDate = new Date('November 22, 2025 20:00:00').getTime();
+    // ===== CONTADORES =====
+    function iniciarCountdown(id) {
+      const countdownElement = document.getElementById(id);
+      const targetDate = new Date('November 22, 2025 20:00:00').getTime();
 
-    function updateCountdown() {
-      const now = Date.now();
-      const distance = targetDate - now;
-      if (distance < 0) {
-        countdownElement.innerHTML = '<strong>¡El gran día ha llegado!</strong>';
-        return;
+      function updateCountdown() {
+        const now = Date.now();
+        const distance = targetDate - now;
+        if (distance < 0) {
+          countdownElement.innerHTML = '<strong>¡El gran día ha llegado!</strong>';
+          return;
+        }
+        const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+        countdownElement.innerHTML = `
+          <span><strong>${String(days).padStart(2, '0')}</strong><small>Días</small></span>
+          <span><strong>${String(hours).padStart(2, '0')}</strong><small>Horas</small></span>
+          <span><strong>${String(minutes).padStart(2, '0')}</strong><small>Min</small></span>
+          <span><strong>${String(seconds).padStart(2, '0')}</strong><small>Seg</small></span>
+        `;
       }
-      const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-      const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-      const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-      const seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-      countdownElement.innerHTML = `
-        <span><strong>${String(days).padStart(2, '0')}</strong><small>Días</small></span>
-        <span><strong>${String(hours).padStart(2, '0')}</strong><small>Horas</small></span>
-        <span><strong>${String(minutes).padStart(2, '0')}</strong><small>Min</small></span>
-        <span><strong>${String(seconds).padStart(2, '0')}</strong><small>Seg</small></span>
-      `;
+      updateCountdown();
+      setInterval(updateCountdown, 1000);
     }
 
-    updateCountdown();
-    setInterval(updateCountdown, 1000);
+    iniciarCountdown('countdown1');
+    iniciarCountdown('countdown2');
 
+    // ===== EFECTO FADE ENTRE SECCIONES =====
+    function goToSection(targetId) {
+      const current = document.querySelector('.section.active');
+      const next = document.getElementById(targetId);
+
+      current.classList.remove('active');
+      setTimeout(() => {
+        next.classList.add('active');
+      }, 500);
+    }
+
+    // ===== PÉTALOS =====
     const numPetals = 25;
     for (let i = 0; i < numPetals; i++) {
       const petal = document.createElement('div');
@@ -272,10 +352,6 @@
       petal.style.animationDuration = Math.random() * 6 + 6 + 's';
       petal.style.animationDelay = Math.random() * 5 + 's';
       petal.style.opacity = Math.random() * 0.5 + 0.5;
-    }
-
-    function scrollToContent() {
-      document.getElementById('content').scrollIntoView({ behavior: 'smooth' });
     }
   </script>
 </body>
