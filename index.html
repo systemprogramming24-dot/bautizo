@@ -1,190 +1,207 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Invitación - Bautizo Samantha Sayuri Adanaqué Maza</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mi Bautizo - Carolus & Lovely</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Parisienne&family=Playfair+Display:wght@400;600&family=Poppins:wght@400;600&display=swap');
 
-  <!-- Fuentes -->
-  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Playfair+Display:wght@400;600;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    body {
+      margin: 0;
+      padding: 0;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: #fffdfa;
+      font-family: 'Playfair Display', serif;
+      position: relative;
+      overflow: hidden;
+    }
 
-  <!-- Styles -->
-  <link rel="stylesheet" href="styles.css" />
-e
-  <!-- Supabase client -->
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    /* Marco visible completo */
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: url('https://i.pinimg.com/736x/1b/ee/76/1bee76edd115d3726463467cf6bf8373.jpg') no-repeat center center;
+      background-size: 100% 100%;
+      z-index: -1000;
+      opacity: 0.95;
+    }
+
+    .card-wrapper {
+      position: relative;
+      width: 90%;
+      max-width: 460px;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background: transparent;
+      z-index: 10;
+    }
+
+    .save-text {
+      position: relative;
+      margin-top: 10px;
+      width: 100%;
+      max-width: 360px;
+      height: 80px;
+      text-align: center;
+      z-index: 20;
+    }
+
+    .save-text svg { width: 100%; height: 100%; overflow: visible; }
+    .save-text text {
+      font-family: 'Parisienne', cursive;
+      font-size: clamp(2.5rem, 5vw, 4rem);
+      fill: #f6e6a8;
+      stroke: #e8cf76;
+      stroke-width: 0.4px;
+      filter: drop-shadow(0 2px 5px rgba(0, 0, 0, 0.3));
+    }
+
+    .photo {
+      position: relative;
+      width: clamp(180px, 55vw, 260px);
+      height: clamp(180px, 55vw, 260px);
+      border-radius: 50%;
+      overflow: hidden;
+      box-shadow: 0 0 25px rgba(0,0,0,0.25);
+      border: 5px solid #f8e7b3;
+      z-index: 15;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .photo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 50%;
+    }
+
+    .content {
+      text-align: center;
+      color: #3f3f3f;
+      z-index: 15;
+      margin-top: 10px;
+    }
+
+    h1, h2 { font-family: 'Parisienne', cursive; color: #b25f67; margin: 0; }
+    h1 { font-size: clamp(2.2rem, 6vw, 3rem); }
+    h2 { font-size: clamp(1.8rem, 5vw, 2.3rem); }
+
+    .details { font-family: 'Poppins', sans-serif; font-size: 1.1rem; color: #6b4f55; }
+
+    .quote {
+      margin-top: 10px;
+      width: 85%;
+      text-align: center;
+      font-style: italic;
+      font-size: 1.1rem;
+      color: #7a5d68;
+      font-family: 'Playfair Display', serif;
+      z-index: 15;
+    }
+
+    .countdown {
+      margin-top: 15px;
+      width: 95%;
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      background: rgba(200,150,250,0.4);
+      border: 1px solid rgba(190,120,240,0.45);
+      border-radius: 16px;
+      padding: 18px 12px;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.15);
+      font-family: 'Poppins', sans-serif;
+      color: #4b2570;
+      font-weight: 700;
+      backdrop-filter: blur(6px);
+      z-index: 20;
+      flex-wrap: wrap;
+      gap: 10px;
+      position: relative;
+      bottom: 0;
+    }
+
+    .countdown span { display: flex; flex-direction: column; align-items: center; font-size: 1rem; }
+    .countdown strong { font-size: clamp(1.6rem, 5vw, 2.4rem); color: #3d1460; }
+
+    @media (max-width: 600px) {
+      .card-wrapper { max-width: 95%; }
+      .quote { font-size: 1rem; }
+      .save-text text { font-size: clamp(2.2rem, 7vw, 3rem); }
+      .countdown { font-size: 0.9rem; padding: 12px; }
+    }
+  </style>
 </head>
 <body>
-
-  <!-- Audio (tu musica.mp3 debe estar en la carpeta) -->
-  <audio id="musica" preload="auto" loop>
-    <source src="musica.mp3" type="audio/mpeg" />
-    Tu navegador no soporta audio.
-  </audio>
-
-  <!-- GOLD FLASH -->
-  <div id="gold-flash" aria-hidden="true"></div>
-
-  <!-- PETALS container -->
-  <div id="petals" aria-hidden="true"></div>
-
-  <!-- COVER (first screen - story style) -->
-  <div id="cover" class="cover" role="region" aria-label="Portada - Desliza a la izquierda para comenzar">
-    <div class="cover-inner">
-      <img src="img/flores.gif" alt="Samantha" class="cover-photo" />
-      <h1 class="cover-title">Samantha Sayuri</h1>
-      <p class="cover-sub">Te invito a mi bautizo</p>
-
-      <div class="cover-date">22 de Noviembre de 2025 — 08:00 p.m.</div>
-
-      <div class="cover-countdown" aria-live="polite">
-        <div class="count-box"><span id="cover-days">00</span><small>Días</small></div>
-        <div class="count-box"><span id="cover-hours">00</span><small>Horas</small></div>
-        <div class="count-box"><span id="cover-minutes">00</span><small>Min</small></div>
-        <div class="count-box"><span id="cover-seconds">00</span><small>Segs</small></div>
-      </div>
-
-      <div class="cover-hint">Desliza a la izquierda para continuar ▸</div>
+  <div class="card-wrapper">
+    <div class="save-text">
+      <svg viewBox="0 0 300 100" preserveAspectRatio="xMidYMid meet">
+        <path id="curve" d="M 40 90 A 130 130 0 0 1 260 90" fill="transparent" />
+        <text width="500">
+          <textPath href="#curve" startOffset="50%" text-anchor="middle">Mi bautizo</textPath>
+        </text>
+      </svg>
     </div>
+
+    <div class="photo">
+      <img src="https://images.unsplash.com/photo-1503454537195-1dcabb73ffb9?auto=format&fit=crop&w=800&q=80" alt="Foto de niña bautizo elegante">
+    </div>
+
+    <div class="content">
+      <h1>Carolus</h1>
+      <h2>& Lovely</h2>
+      <div class="details">
+        <p><strong>Sábado, 31 de Agosto</strong></p>
+        <p>4:00 PM</p>
+      </div>
+    </div>
+
+    <div class="quote">
+      <p>“Un día lleno de luz y bendiciones para celebrar el amor y la fe.”</p>
+    </div>
+
+    <div class="countdown" id="countdown"></div>
   </div>
 
-  <!-- CONTENT (revealed after sliding cover) -->
-  <main id="content" class="content" tabindex="-1" role="main" aria-label="Contenido de la invitación">
+  <script>
+    const countdownElement = document.getElementById('countdown');
+    const targetDate = new Date('November 22, 2025 20:00:00').getTime();
 
-    <!-- Panel: Ceremonia -->
-    <section class="panel panel-1 framed" id="panel-1" data-bg="img/floral-1.svg" aria-label="Ceremonia">
-      <div class="panel-inner">
-        <img src="img/icon-church.svg" alt="" class="panel-illustration" />
-        <h2>🌿 Ceremonia</h2>
-        <p class="muted large">La misa se celebrará en:</p>
-        <p class="strong xlarge">Parroquia Virgen de Fátima –  Calupe</p>
-        <p class="muted large">Sábado 22 de Noviembre de 2025 - 08:00 p.m.</p>
-      </div>
-    </section>
-
-    <!-- Panel: Recepción -->
-    <section class="panel panel-2 framed" id="panel-2" data-bg="img/floral-2.svg" aria-label="Recepción">
-      <div class="panel-inner">
-        <img src="img/icon-party.svg" alt="" class="panel-illustration" />
-        <h2>🎉 Recepción</h2>
-        <p class="large">Después de la ceremonia te esperamos para celebrar juntos en:</p>
-        <p class="strong xlarge">Coliseo Calupe</p>
-        <p class="large">🎶 Amenizada por la orquesta <strong>Son Diluvio</strong></p>
-        <p class="large">👗 Asiste con ropa de vestir elegante</p>
-      </div>
-    </section>
-
-    <!-- Panel: Padrinos -->
-    <section class="panel panel-3 framed" id="panel-3" data-bg="img/floral-3.svg" aria-label="Padrinos">
-      <div class="panel-inner">
-        <img src="img/icon-heart.svg" alt="" class="panel-illustration" />
-        <h2>💖 Mis Padrinos</h2>
-        <p class="strong xlarge">🌸 Rosa Elena Maza Moscol</p>
-        <p class="strong xlarge">🌸 Danny William Adanaqué Santos</p>
-      </div>
-    </section>
-
-    <!-- Panel: Padres -->
-    <section class="panel panel-4 framed" id="panel-4" data-bg="img/floral-4.svg" aria-label="Padres">
-      <div class="panel-inner">
-        <img src="img/icon-family.svg" alt="" class="panel-illustration" />
-        <h2>👨‍👩‍👧 Mis Papás</h2>
-        <p class="strong xlarge">Adrián Bernardo Adanaqué Santos</p>
-        <p class="strong xlarge">Tania Maza Moscol</p>
-      </div>
-    </section>
-
-    <!-- Panel: Confirmación -->
-    <section class="panel panel-5 framed" id="panel-5" data-bg="img/floral-5.svg" aria-label="Confirmación">
-      <div class="panel-inner confirmation">
-        <img src="img/icon-check.svg" alt="" class="panel-illustration" />
-        <h2>✅ Confirmar asistencia</h2>
-
-        <form id="formConfirmar" style="display:none;">
-          <label for="cantidad" class="label-large">¿Cuántas personas asistirán?</label>
-          <input type="number" id="cantidad" min="1" max="10" required />
-          <div class="form-actions">
-            <button type="submit" class="btn primary btn-confirmar">Confirmar asistencia</button>
-          </div>
-        </form>
-
-        <p id="mensaje" class="mensaje-estado" aria-live="polite"></p>
-        <button id="cambiar" class="btn ghost" style="display:none;">🔄 Cambiar respuesta</button>
-      </div>
-    </section>
-
-    <!-- Panel: Frase y firma -->
-    <section class="panel panel-6 framed" id="panel-6" data-bg="img/floral-6.svg" aria-label="Frase">
-      <div class="panel-inner frase">
-        <img src="img/icon-quote.svg" alt="" class="panel-illustration" />
-        <blockquote>“Que la luz de Dios guíe mi vida y llene mi corazón de amor y alegría.”</blockquote>
-        <p class="firma xlarge">💖 Con cariño, <strong>Samantha Sayuri</strong></p>
-      </div>
-    </section>
-
-    <!-- Panel: Contador final -->
-    <section class="panel panel-7 framed" id="panel-7" data-bg="img/floral-7.svg" aria-label="Contador">
-      <div class="panel-inner contador">
-        <img src="img/icon-clock.svg" alt="" class="panel-illustration" />
-        <h2>⏳ Falta muy poco</h2>
-        <div id="countdown" class="countdown-vertical">
-          <div class="time"><span id="days">00</span><small>Días</small></div>
-          <div class="time"><span id="hours">00</span><small>Horas</small></div>
-          <div class="time"><span id="minutes">00</span><small>Minutos</small></div>
-          <div class="time"><span id="seconds">00</span><small>Segundos</small></div>
-        </div>
-      </div>
-    </section>
-
-  </main>
-
-  <footer class="site-footer" role="contentinfo">✨ Con cariño, la familia Adanaqué Maza ✨</footer>
-
-  <!-- Floating music button -->
-  <button id="btnMusica" class="music-btn" title="Activar / pausar música">🎶</button>
-
-  <!-- Script -->
-  <script src="script.js"></script>
-</body>
-
-<script>
-document.addEventListener('DOMContentLoaded', () => {
-  const petalsContainer = document.getElementById('petals');
-
-  function createPetal() {
-    const petal = document.createElement('div');
-    petal.classList.add('petal');
-
-    // Tamaño y posición aleatoria
-    const size = Math.random() * 20 + 20; // 20px–40px
-    petal.style.width = `${size}px`;
-    petal.style.height = `${size}px`;
-    petal.style.left = `${Math.random() * 100}vw`;
-    petal.style.animationDuration = `${Math.random() * 5 + 5}s`; // 5–10s
-    petal.style.opacity = (Math.random() * 0.5 + 0.5).toFixed(2);
-
-    // Movimiento lateral aleatorio
-    const moveX = Math.random() * 200 - 100; // -100 a 100px
-    petal.animate(
-      [
-        { transform: `translate(0, -50px) rotate(0deg)` },
-        { transform: `translate(${moveX}px, 110vh) rotate(${360 + Math.random() * 360}deg)` }
-      ],
-      {
-        duration: (Math.random() * 5 + 5) * 1000,
-        iterations: 1,
-        easing: "linear",
-        fill: "forwards"
+    function updateCountdown() {
+      const now = Date.now();
+      const distance = targetDate - now;
+      if (distance < 0) {
+        countdownElement.innerHTML = '<strong>¡El gran día ha llegado!</strong>';
+        return;
       }
-    );
+      const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-    petalsContainer.appendChild(petal);
-    setTimeout(() => petal.remove(), 10000);
-  }
+      countdownElement.innerHTML = `
+        <span><strong>${String(days).padStart(2, '0')}</strong><small>Días</small></span>
+        <span><strong>${String(hours).padStart(2, '0')}</strong><small>Horas</small></span>
+        <span><strong>${String(minutes).padStart(2, '0')}</strong><small>Min</small></span>
+        <span><strong>${String(seconds).padStart(2, '0')}</strong><small>Seg</small></span>
+      `;
+    }
 
-  // Genera pétalos constantemente
-  setInterval(createPetal, 200);
-});
-</script>
-
+    updateCountdown();
+    setInterval(updateCountdown, 1000);
+  </script>
+</body>
 </html>
