@@ -56,90 +56,279 @@ body::before {
 }
 
 /* ==== TEXTOS ==== */
-.save-text svg { width: 100%; height: 70px; overflow: visible; }
-.save-text text {
-  font-family: 'Parisienne', cursive;
-  font-size: clamp(2.5rem, 6vw, 4.5rem);
-  fill: #f6e6a8;
-  stroke: #e8cf76;
-  stroke-width: 0.4px;
-  filter: drop-shadow(0 2px 5px rgba(0,0,0,0.3));
+.save-text svg {
+  width: 100%;
+  height: 100px;
+  overflow: visible;
 }
+
+/* Texto "Mi Bautizo" */
+.save-text text {
+  font-family: 'Gliker', cursive;
+  font-size: clamp(3rem, 9vw, 7rem);
+  fill: url(#goldGradient); /* Degradado dorado claro */
+  stroke: #d6b85a; /* contorno más suave, dorado claro */
+  stroke-width: 2.5px;
+  paint-order: stroke fill;
+  filter:
+    drop-shadow(1px 1px 0 #d6b85a)
+    drop-shadow(3px 3px 0 #c5a84f)
+    drop-shadow(6px 6px 6px rgba(0,0,0,0.25)); /* profundidad 3D suave */
+  transform: translateY(50px);
+  animation: zoomIn 1.2s ease-out forwards;
+  transform-origin: center;
+}
+
+/* Animación de entrada */
+@keyframes zoomIn {
+  0% {
+    transform: scale(0.5) translateY(50px);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1) translateY(50px);
+    opacity: 1;
+  }
+}
+
+/* Definición del degradado dorado claro */
+.save-text svg defs linearGradient#goldGradient stop:first-child {
+  stop-color: #fffbe6; /* marfil brillante */
+}
+.save-text svg defs linearGradient#goldGradient stop:nth-child(2) {
+  stop-color: #f8e9a1; /* dorado claro */
+}
+.save-text svg defs linearGradient#goldGradient stop:last-child {
+  stop-color: #f4d86c; /* oro suave */
+}
+
 
 .photo {
-  width: clamp(120px, 40vw, 200px);
-  height: clamp(120px, 40vw, 200px);
+  width: clamp(180px, 45vw, 280px);
+  height: clamp(180px, 45vw, 280px);
   border-radius: 50%;
   overflow: hidden;
-  border: 5px solid #f8e7b3;
-  box-shadow: 0 0 20px rgba(0,0,0,0.25);
+  border: 6px solid #f8e7b3;
+  box-shadow: 0 0 25px rgba(0, 0, 0, 0.3);
+  opacity: 0;
+  transform: translateY(50px);
+  animation: slideIn 1.2s ease-out forwards;
 }
-.photo img { width: 100%; height: 100%; object-fit: cover; }
 
-.content h1, .content h2 {
-  font-family: 'Parisienne', cursive;
+/* Imagen dentro del círculo */
+.photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Animación de entrada */
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+
+
+@import url('https://fonts.cdnfonts.com/css/bukhari-script');
+
+
+.name-block {
+  background-image: url('https://images.freeimages.com/vhq/images/previews/b48/gold-metal-sign-137002.png?fmt=webp&h=350');
+  background-size: cover;
+  background-position: center;
+  border-radius: 20px;
+  padding: 1.5em;
+  display: inline-block;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.25);
+  text-align: center;
+  margin: 0 auto;
+  animation: fadeInBlock 1.2s ease-out forwards;
+}
+
+@keyframes fadeInBlock {
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+/* Estilo del nombre */
+.name-block h1 {
+  font-family: 'Bukhari Script', cursive;
   margin: 0;
   color: #b25f67;
+  text-shadow: 2px 2px 6px rgba(0,0,0,0.25);
+  font-size: clamp(1.8rem, 5vw, 3rem);
+  line-height: 1.2;
 }
-h1 { font-size: clamp(1.6rem, 5vw, 2.8rem); }
-h2 { font-size: clamp(1.3rem, 4vw, 2rem); }
 
-.details {
-  font-family: 'Poppins', sans-serif;
-  font-size: 0.95rem;
-  color: #6b4f55;
+
+/* Opcional: animación suave de entrada */
+.content h1 {
+  opacity: 0;
+  transform: translateY(20px);
+  animation: slideInName 1s ease-out forwards;
 }
+
+@keyframes slideInName {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+
 
 .quote {
-  width: 85%;
+  width: 70%; /* hace que se formen unas 3 líneas según el tamaño del texto */
+  margin: clamp(1em, 4vw, 2em) auto 0;
   font-style: italic;
-  font-size: 0.85rem;
+  font-size: 0.95rem;
   color: #7a5d68;
+  padding: 10px;
+  text-align: center;
+  line-height: 1.6;
+  display: block;
 }
 
+
+
+/* ==== CONTADOR ==== */
 /* ==== CONTADOR ==== */
 .countdown {
   display: flex;
   justify-content: center;
-  gap: 8px;
-  background: rgba(255,255,255,0.4);
+  gap: 12px; /* más espacio entre los cubos */
+  background: rgba(255, 255, 255, 0.25);
   backdrop-filter: blur(10px);
   border-radius: 15px;
-  padding: 6px 10px;
-  box-shadow: 0 2px 10px rgba(0,0,0,0.15);
+  padding: 10px 15px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
   color: #4b2570;
   font-family: 'Poppins', sans-serif;
   flex-wrap: nowrap;
 }
 
+/* Cada bloque del contador */
 .countdown span {
   display: flex;
   flex-direction: column;
   align-items: center;
-  min-width: 48px;
-}
-.countdown strong {
-  font-size: 1.4rem;
-  font-weight: 700;
-}
-.countdown small {
-  font-size: 0.7rem;
+  justify-content: center;
+  min-width: 60px;
+  min-height: 60px;
+  background: linear-gradient(145deg, #c7a8f5, #a67bd8);
+  border-radius: 12px;
+  box-shadow:
+    3px 3px 8px rgba(0, 0, 0, 0.25), /* sombra exterior */
+    inset -3px -3px 6px rgba(255, 255, 255, 0.4), /* luz interior */
+    inset 3px 3px 6px rgba(0, 0, 0, 0.15); /* profundidad */
+  transform: perspective(400px) rotateX(4deg);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
+/* efecto hover 3D */
+.countdown span:hover {
+  transform: perspective(400px) rotateX(0deg) scale(1.05);
+  box-shadow:
+    4px 4px 10px rgba(0, 0, 0, 0.3),
+    inset -2px -2px 5px rgba(255, 255, 255, 0.4);
+}
+
+/* números */
+.countdown strong {
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: #fff;
+  text-shadow: 0 1px 3px rgba(0,0,0,0.3);
+}
+
+/* etiquetas */
+.countdown small {
+  font-size: 0.75rem;
+  color: #f8e7b3;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-top: 2px;
+}
+
+
 /* ==== BOTÓN ==== */
+@import url('https://fonts.googleapis.com/css2?family=Parisienne&family=Poppins:wght@400;600&display=swap');
+
 .start-button {
-  background: linear-gradient(135deg, #f6e6a8, #e8cf76);
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  background: linear-gradient(135deg, #f9e7a8, #e6c76d);
   color: #4b2570;
   border: none;
-  border-radius: 25px;
-  padding: 10px 22px;
-  font-family: 'Poppins', sans-serif;
-  font-weight: 600;
+  border-radius: 30px;
+  padding: 14px 28px;
+  font-family: 'Parisienne', cursive;
+  font-size: 1.3rem;
+  letter-spacing: 0.5px;
   cursor: pointer;
-  box-shadow: 0 3px 10px rgba(0,0,0,0.2);
-  transition: all 0.25s ease;
+  box-shadow:
+    0 5px 15px rgba(0, 0, 0, 0.25),
+    inset 0 2px 6px rgba(255, 255, 255, 0.4);
+  transition: all 0.3s ease;
+  text-shadow: 1px 1px 4px rgba(255,255,255,0.6);
+  animation: floatButton 3s ease-in-out infinite;
 }
-.start-button:hover { transform: scale(1.04); }
+
+/* Ícono de "Play" */
+.start-button::before {
+  content: '▶';
+  font-size: 1.1rem;
+  color: #4b2570;
+  background: rgba(255, 255, 255, 0.4);
+  border-radius: 50%;
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: inset 0 2px 4px rgba(0,0,0,0.2);
+  transition: transform 0.3s ease;
+}
+
+/* Hover con brillo y efecto flotante */
+.start-button:hover {
+  transform: scale(1.07);
+  box-shadow:
+    0 8px 20px rgba(0, 0, 0, 0.3),
+    inset 0 2px 8px rgba(255, 255, 255, 0.6);
+}
+
+.start-button:hover::before {
+  transform: scale(1.1) rotate(10deg);
+}
+
+/* Animación de flotación suave */
+@keyframes floatButton {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-6px);
+  }
+}
+
+/* Centrando el botón si está solo */
+.button-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 2em;
+}
 
 /* ==== MOBILE FIX ==== */
 @media (max-height: 700px) {
@@ -154,7 +343,7 @@ h2 { font-size: clamp(1.3rem, 4vw, 2rem); }
 .petal {
   position: fixed;
   top: -10px;
-  background-image: url('img/petalo.png');
+  background-image: url('img/flor.png');
   background-size: cover;
   width: 25px;
   height: 25px;
@@ -187,19 +376,25 @@ h2 { font-size: clamp(1.3rem, 4vw, 2rem); }
     </div>
 
     <div class="content">
-      <h1>Carolus</h1>
-      <h2>&amp; Lovely</h2>
-      <div class="details">
-        <p><strong>Sábado, 31 de Agosto</strong></p>
-        <p>4:00 PM</p>
-      </div>
+      <div class="name-block">
+  <h1>
+    Samantha Sayuri<br>
+    Adanaqué Maza
+  </h1>
+</div>
+
+          <div class="quote">“Un día lleno de luz y bendiciones para celebrar el amor y la fe.”</div>
+
+
     </div>
 
     <div class="countdown" id="countdown1"></div>
 
-    <div class="quote">“Un día lleno de luz y bendiciones para celebrar el amor y la fe.”</div>
 
-    <button class="start-button" id="startBtn">Comenzar</button>
+   <div class="button-container">
+  <button class="start-button">Comenzar</button>
+</div>
+
   </div>
 </section>
 
