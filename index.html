@@ -4,6 +4,9 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>Mi Bautizo - Carolus & Lovely</title>
+<!-- Supabase client -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Parisienne&family=Playfair+Display:wght@400;600&family=Poppins:wght@400;600&display=swap');
 
@@ -170,7 +173,7 @@ body::before {
     <div class="seal"></div>
     <div class="message">
       <div>Toca para abrir la invitación</div>
-      <div>Para: Adrian Adanaqué Santos</div>
+      <div>Para: <spam class="cover-title">Adrian Adanaqué Santos</spam></div>
     </div>
   </div>
 </section>
@@ -261,6 +264,7 @@ body::before {
     setInterval(update, 1000);
   }
   iniciarCountdown('countdown2');
+cargarInvitado();
 
   // Petalos
   for(let i=0;i<20;i++){
@@ -286,6 +290,55 @@ body::before {
   btnPrev.addEventListener('click', () => slideTo(section2));
 
 })();
+
+
+
+/* ---------------- Supabase config (your keys) ---------------- */
+const SUPABASE_URL = "https://rsjyfchiynskjddpjupt.supabase.co";
+const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJzanlmY2hpeW5za2pkZHBqdXB0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTk3MTkzMzEsImV4cCI6MjA3NTI5NTMzMX0.pxnbFP03pSWra1zOrCsR8ADyWF3wpGN88BQlameVRWM";
+const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+/* guest key from querystring (first key) */
+const params = new URLSearchParams(window.location.search);
+const guestKey = Array.from(params.keys())[0] || null;
+
+
+/* ---------------- Supabase: load guest, show form, confirm, change ---------------- */
+async function cargarInvitado() {
+  const nombreElCover = document.querySelector('.cover-title');
+  if (!guestKey) {
+    nombreElCover && (nombreElCover.textContent = 'Querido invitado');
+    return;
+  }
+  try {
+    const { data, error } = await supabase
+      .from('guests')
+      .select('guest, confirm, persons')
+      .eq('key', guestKey)
+      .single();
+
+    if (error || !data) {
+      console.warn('Invitación no encontrada:', error);
+      nombreElCover && (nombreElCover.textContent = 'Invitación no encontrada 😕');
+      return;
+    }
+
+    invitadoActual = data;
+    nombreElCover && (nombreElCover.textContent = `Hola ${data.guest} 👋`);
+
+    if (data.confirm) {
+      mensajeEl && (mensajeEl.textContent = `✅ Ya confirmaste tu asistencia (${data.persons} persona${data.persons > 1 ? 's' : ''}).`);
+      btnCambiar && (btnCambiar.style.display = 'inline-block');
+    } else {
+      form && (form.style.display = 'block');
+    }
+  } catch (err) {
+    console.error('Error cargando invitado', err);
+    nombreElCover && (nombreElCover.textContent = 'Invitación no válida');
+  }
+}
+
+
 </script>
 </body>
 </html>
