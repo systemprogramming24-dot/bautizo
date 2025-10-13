@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>Mi Bautizo - Carolus & Lovely</title>
 <!-- Supabase client -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -228,42 +228,60 @@ body::before {
 </div>
 
 <script>
-/* ---------------- Supabase config (your keys) ---------------- */
+/* ---------------- Supabase config ---------------- */
 const SUPABASE_URL = "https://rsjyfchiynskjddpjupt.supabase.co";
 const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJzanlmY2hpeW5za2pkZHBqdXB0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTk3MTkzMzEsImV4cCI6MjA3NTI5NTMzMX0.pxnbFP03pSWra1zOrCsR8ADyWF3wpGN88BQlameVRWM";
 const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
-/* guest key from querystring (first key) */
+/* ---------------- Parámetro invitado ---------------- */
 const nombreCover = document.querySelector('.cover-title');
-
-//const params = new URLSearchParams(window.location.search);
-//const guestKey = Array.from(params.keys())[0] || null;
-// obtener guestKey desde la URL sin nombre de parámetro
 const guestKey = window.location.search ? window.location.search.substring(1) : null;
-console.log('guestKey:', guestKey); // debería mostrar "0002"
 
+/* ---------------- Función para fullscreen ---------------- */
+function activarPantallaCompleta() {
+  const elem = document.documentElement;
+  if (elem.requestFullscreen) {
+    elem.requestFullscreen().catch(()=>{});
+  } else if (elem.webkitRequestFullscreen) { // Safari iOS
+    elem.webkitRequestFullscreen();
+  } else if (elem.msRequestFullscreen) {
+    elem.msRequestFullscreen();
+  }
+}
+
+/* ---------------- Principal ---------------- */
 (function(){
   const envelope = document.getElementById('envelope');
   const mainContent = document.getElementById('mainContent');
   const music = document.getElementById('bgMusic');
 
- envelope.addEventListener('click', () => {
-  envelope.classList.add('open');
+  const section2 = document.getElementById('section2');
+  const section3 = document.getElementById('section3');
+  const btnNext = document.getElementById('goToSection3');
+  const btnPrev = document.getElementById('goToSection2');
 
-  setTimeout(() => {
-    document.getElementById('section1').style.display = 'none';
-    mainContent.style.display = 'block';
-    mainContent.style.position = 'relative';
-    
-    // Forzar full screen en la primera sección visible (section2)
-    const firstSection = document.getElementById('section2');
-    firstSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  envelope.addEventListener('click', () => {
+    envelope.classList.add('open');
+    setTimeout(() => {
+      document.getElementById('section1').style.display = 'none';
+      mainContent.style.display = 'block';
+      mainContent.style.position = 'relative';
+      section2.scrollIntoView({ behavior: 'smooth', block: 'start' });
 
-    // Música
-    music.volume = 0.8;
-    music.play().catch(()=>{});
-  }, 900);
-});
+      // Activa fullscreen y música
+      activarPantallaCompleta();
+      music.volume = 0.8;
+      music.play().catch(()=>{});
+    }, 900);
+  });
+
+  // Botones de navegación con fullscreen
+  function slideTo(section){
+    section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    activarPantallaCompleta();
+  }
+  btnNext.addEventListener('click', () => slideTo(section3));
+  btnPrev.addEventListener('click', () => slideTo(section2));
 
   // Countdown
   function iniciarCountdown(id){
@@ -285,9 +303,6 @@ console.log('guestKey:', guestKey); // debería mostrar "0002"
   }
   iniciarCountdown('countdown2');
 
-
-cargarInvitado();
-
   // Petalos
   for(let i=0;i<20;i++){
     const p=document.createElement('div');
@@ -298,24 +313,10 @@ cargarInvitado();
     document.body.appendChild(p);
   }
 
-  // Slide vertical entre secciones 2 y 3
-  const section2 = document.getElementById('section2');
-  const section3 = document.getElementById('section3');
-  const btnNext = document.getElementById('goToSection3');
-  const btnPrev = document.getElementById('goToSection2');
-
-  function slideTo(section){
-    section.scrollIntoView({ behavior: 'smooth', block: 'start' });
-  }
-
-  btnNext.addEventListener('click', () => slideTo(section3));
-  btnPrev.addEventListener('click', () => slideTo(section2));
-
+  cargarInvitado();
 })();
 
-
-
-/* ---------------- Supabase: load guest, show form, confirm, change ---------------- */
+/* ---------------- Supabase: cargar invitado ---------------- */
 async function cargarInvitado() {
   const nombreElCover = document.querySelector('.cover-title');
   if (!guestKey) {
@@ -334,25 +335,13 @@ async function cargarInvitado() {
       nombreElCover && (nombreElCover.textContent = 'Invitación no encontrada 😕');
       return;
     }
-
-    invitadoActual = data;
     nombreElCover && (nombreElCover.textContent = ` ${data.guest}`);
-
-   // if (data.confirm) {
-     // mensajeEl && (mensajeEl.textContent = `✅ Ya confirmaste tu asistencia (${data.persons} persona${data.persons > 1 ? 's' : ''}).`);
-   //   btnCambiar && (btnCambiar.style.display = 'inline-block');
-    //} else {
-   //   form && (form.style.display = 'block');
-   // }
   } catch (err) {
     console.error('Error cargando invitado', err);
     nombreElCover && (nombreElCover.textContent = 'Invitación no válida');
   }
 }
-
-btnNext.addEventListener('click', () => section3.scrollIntoView({ behavior: 'smooth', block: 'start' }));
-btnPrev.addEventListener('click', () => section2.scrollIntoView({ behavior: 'smooth', block: 'start' }));
-
 </script>
+
 </body>
 </html>
