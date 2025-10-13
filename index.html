@@ -5,19 +5,12 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"/>
 <title>Mi Bautizo - Carolus & Lovely</title>
 <!-- Supabase client -->
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Parisienne&family=Playfair+Display:wght@400;600&family=Poppins:wght@400;600&display=swap');
 
-html, body { 
-  margin: 0; 
-  padding: 0; 
-  scroll-behavior: smooth; 
-  height: 100%; 
-  overflow-x: hidden; 
-}
-
+html, body { margin: 0; padding: 0; scroll-behavior: smooth; height: 100%; overflow-x: hidden; }
 body {
   background-color: #fffdfa;
   font-family: 'Playfair Display', serif;
@@ -32,10 +25,9 @@ body::before {
   opacity: 0.96;
 }
 
-/* ================= Fullscreen sections ================= */
 .section {
   width: 100%;
-  min-height: calc(var(--vh, 1vh) * 100);
+  min-height: 100svh;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -44,9 +36,7 @@ body::before {
   visibility: hidden;
   transition: opacity 0.4s ease, visibility 0.4s ease, transform 0.6s ease;
   will-change: transform, opacity;
-  overflow: hidden;
 }
-
 .section.active { opacity: 1; visibility: visible; }
 
 .card-wrapper {
@@ -57,11 +47,10 @@ body::before {
   align-items: center;
   justify-content: space-evenly;
   text-align: center;
-  min-height: 100%;
+  min-height: 100svh;
   box-sizing: border-box;
   padding: 10px 0;
 }
-
 .envelope {
   position: absolute;
   top: 50%;
@@ -172,6 +161,7 @@ body::before {
 
 .petal { position: fixed; top:-10px; background-image: url('img/flor.png'); background-size: cover; width:25px; height:25px; opacity:0.8; animation: fall linear infinite; pointer-events:none; z-index:5; }
 @keyframes fall { 0%{ transform: translateY(0) rotate(0deg); opacity:1;} 100% { transform: translateY(110svh) rotate(720deg); opacity:0.7; } }
+
 </style>
 </head>
 <body>
@@ -183,7 +173,7 @@ body::before {
     <div class="seal"></div>
     <div class="message">
       <div>Toca para abrir la invitación</div>
-      <div>Para: <span class="cover-title"></span></div>
+      <div>Para: <spam class="cover-title"></spam></div>
     </div>
   </div>
 </section>
@@ -238,40 +228,42 @@ body::before {
 </div>
 
 <script>
-/* ---------------- Supabase config ---------------- */
+/* ---------------- Supabase config (your keys) ---------------- */
 const SUPABASE_URL = "https://rsjyfchiynskjddpjupt.supabase.co";
 const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJzanlmY2hpeW5za2pkZHBqdXB0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTk3MTkzMzEsImV4cCI6MjA3NTI5NTMzMX0.pxnbFP03pSWra1zOrCsR8ADyWF3wpGN88BQlameVRWM";
 const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
+/* guest key from querystring (first key) */
 const nombreCover = document.querySelector('.cover-title');
+
+//const params = new URLSearchParams(window.location.search);
+//const guestKey = Array.from(params.keys())[0] || null;
+// obtener guestKey desde la URL sin nombre de parámetro
 const guestKey = window.location.search ? window.location.search.substring(1) : null;
+console.log('guestKey:', guestKey); // debería mostrar "0002"
 
-/* ===== Calcular altura full screen ===== */
-function setFullHeight() {
-  const vh = window.innerHeight * 0.01;
-  document.documentElement.style.setProperty('--vh', `${vh}px`);
-}
-window.addEventListener('resize', setFullHeight);
-setFullHeight();
-
-/* ===== Animación sobre y mostrar contenido ===== */
 (function(){
   const envelope = document.getElementById('envelope');
   const mainContent = document.getElementById('mainContent');
   const music = document.getElementById('bgMusic');
 
-  envelope.addEventListener('click', () => {
-    envelope.classList.add('open');
-    setTimeout(() => {
-      document.getElementById('section1').style.display = 'none';
-      mainContent.style.display = 'block';
-      mainContent.style.position = 'relative';
-      setFullHeight();
-      window.scrollTo({ top: 0, behavior: 'instant' });
-      music.volume = 0.8;
-      music.play().catch(()=>{});
-    }, 900);
-  });
+ envelope.addEventListener('click', () => {
+  envelope.classList.add('open');
+
+  setTimeout(() => {
+    document.getElementById('section1').style.display = 'none';
+    mainContent.style.display = 'block';
+    mainContent.style.position = 'relative';
+    
+    // Forzar full screen en la primera sección visible (section2)
+    const firstSection = document.getElementById('section2');
+    firstSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+    // Música
+    music.volume = 0.8;
+    music.play().catch(()=>{});
+  }, 900);
+});
 
   // Countdown
   function iniciarCountdown(id){
@@ -293,7 +285,8 @@ setFullHeight();
   }
   iniciarCountdown('countdown2');
 
-  cargarInvitado();
+
+cargarInvitado();
 
   // Petalos
   for(let i=0;i<20;i++){
@@ -320,7 +313,9 @@ setFullHeight();
 
 })();
 
-/* ---------------- Supabase: cargar invitado ---------------- */
+
+
+/* ---------------- Supabase: load guest, show form, confirm, change ---------------- */
 async function cargarInvitado() {
   const nombreElCover = document.querySelector('.cover-title');
   if (!guestKey) {
@@ -340,13 +335,24 @@ async function cargarInvitado() {
       return;
     }
 
+    invitadoActual = data;
     nombreElCover && (nombreElCover.textContent = ` ${data.guest}`);
 
+   // if (data.confirm) {
+     // mensajeEl && (mensajeEl.textContent = `✅ Ya confirmaste tu asistencia (${data.persons} persona${data.persons > 1 ? 's' : ''}).`);
+   //   btnCambiar && (btnCambiar.style.display = 'inline-block');
+    //} else {
+   //   form && (form.style.display = 'block');
+   // }
   } catch (err) {
     console.error('Error cargando invitado', err);
     nombreElCover && (nombreElCover.textContent = 'Invitación no válida');
   }
 }
+
+btnNext.addEventListener('click', () => section3.scrollIntoView({ behavior: 'smooth', block: 'start' }));
+btnPrev.addEventListener('click', () => section2.scrollIntoView({ behavior: 'smooth', block: 'start' }));
+
 </script>
 </body>
 </html>
