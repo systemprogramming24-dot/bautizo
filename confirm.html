@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Confirmación de Asistencia</title>
+
+<!-- Supabase client -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<style>
+  body {
+    font-family: 'Playfair Display', serif;
+    background: #fafafa;
+    margin: 0;
+    padding: 20px;
+    text-align: center;
+    color: #333;
+  }
+  h2 {
+    margin-bottom: 20px;
+  }
+  .guest-card {
+    background: white;
+    border-radius: 14px;
+    box-shadow: 0 3px 12px rgba(0,0,0,0.1);
+    margin: 15px auto;
+    padding: 20px;
+    max-width: 420px;
+    text-align: center;
+  }
+  .guest-card h3 {
+    margin: 0 0 8px 0;
+  }
+  .guest-card p {
+    margin: 5px 0;
+  }
+  button {
+    padding: 8px 16px;
+    border: none;
+    border-radius: 8px;
+    margin: 5px;
+    font-weight: bold;
+    cursor: pointer;
+    color: white;
+    transition: opacity 0.2s ease-in-out;
+  }
+  .confirm-btn { background-color: #2e8b57; }
+  .cancel-btn { background-color: #c0392b; }
+  button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+</style>
+</head>
+
+<body>
+  <h2>Confirmación de Asistencia</h2>
+  <p>Confirma o cancela tu asistencia antes de la fecha límite.</p>
+  <div id="guestList"></div>
+
+  <script>
+    // ⚙️ Configuración de Supabase
+    const SUPABASE_URL = "https://rsjyfchiynskjddpjupt.supabase.co";
+    const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJzanlmY2hpeW5za2pkZHBqdXB0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTk3MTkzMzEsImV4cCI6MjA3NTI5NTMzMX0.pxnbFP03pSWra1zOrCsR8ADyWF3wpGN88BQlameVRWM";
+    const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+    // Obtener el código de grupo desde la URL
+    const urlParams = new URLSearchParams(window.location.search);
+    const groupCode = urlParams.get("group_code");
+
+    // Cargar invitados del grupo
+    async function loadGuests() {
+      const { data, error } = await supabase
+        .from("guests_baptism")
+        .select("guest, confirm, key, confirmation_deadline, group_name")
+        .eq("group_code", groupCode)
+        .order("guest", { ascending: true });
+
+      const container = document.getElementById("guestList");
+      container.innerHTML = "";
+
+      if (error) {
+        container.innerHTML = "<p>❌ Error al cargar los invitados.</p>";
+        console.error(error);
+        return;
+      }
+
+      if (!data || data.length === 0) {
+        container.innerHTML = "<p>No se encontraron invitados para este grupo.</p>";
+        return;
+      }
+
+      // Mostrar el nombre de la familia
+      const famTitle = document.createElement("h3");
+      famTitle.textContent = data[0].group_name;
+      container.appendChild(famTitle);
+
+      // Crear una tarjeta por invitado
+      data.forEach(guest => {
+        const card = document.createElement("div");
+        card.className = "guest-card";
+
+        // Limpiar “jefe de familia” si aparece en el nombre
+        const cleanName = guest.guest.replace(/\(.*?jefe.*?\)/i, "").trim();
+
+        const deadline = new Date(guest.confirmation_deadline);
+        const now = new Date();
+        const expired = now > deadline;
+
+        const status =
+          guest.confirm === true ? "✅ Confirmado" :
+          guest.confirm === false ? "❌ No confirmado" :
+          "⚪ Pendiente";
+
+        card.innerHTML = `
+          <h3>${cleanName}</h3>
+          <p><strong>Estado:</strong> ${status}</p>
+          <p><small>Cierre: ${deadline.toLocaleString()}</small></p>
+          <div class="buttons">
+            <button class="confirm-btn" ${expired ? "disabled" : ""}>Confirmar</button>
+            <button class="cancel-btn" ${expired ? "disabled" : ""}>Cancelar</button>
+          </div>
+        `;
+
+        const confirmBtn = card.querySelector(".confirm-btn");
+        const cancelBtn = card.querySelector(".cancel-btn");
+
+        async function updateConfirmation(value) {
+          const now = new Date();
+          if (now > deadline) {
+            alert("⏰ El tiempo límite ha pasado. Ya no puedes actualizar tu confirmación.");
+            confirmBtn.disabled = true;
+            cancelBtn.disabled = true;
+            return;
+          }
+
+          const { error } = await supabase
+            .from("guests_baptism")
+            .update({ confirm: value })
+            .eq("key", guest.key);
+
+          if (error) {
+            console.warn("Error al confirmar:", error);
+            alert("⏰ Ya no es posible actualizar la confirmación. El tiempo límite ha pasado.");
+          } else {
+            loadGuests();
+          }
+        }
+
+        confirmBtn.onclick = () => updateConfirmation(true);
+        cancelBtn.onclick = () => updateConfirmation(false);
+
+        container.appendChild(card);
+      });
+    }
+
+    loadGuests();
+  </script>
+</body>
+</html>
