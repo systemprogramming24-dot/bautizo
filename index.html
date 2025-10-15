@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>Mi Bautizo - Carolus & Lovely</title>
 <!-- Supabase client -->
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Parisienne&family=Playfair+Display:wght@400;600&family=Poppins:wght@400;600&display=swap');
@@ -15,7 +15,6 @@ body {
   background-color: #fffdfa;
   font-family: 'Playfair Display', serif;
 }
-
 body::before {
   content: "";
   position: fixed;
@@ -24,7 +23,6 @@ body::before {
   z-index: -1;
   opacity: 0.96;
 }
-
 .section {
   width: 100%;
   min-height: 100svh;
@@ -35,10 +33,8 @@ body::before {
   opacity: 0;
   visibility: hidden;
   transition: opacity 0.4s ease, visibility 0.4s ease, transform 0.6s ease;
-  will-change: transform, opacity;
 }
 .section.active { opacity: 1; visibility: visible; }
-
 .card-wrapper {
   width: 90%;
   max-width: 440px;
@@ -51,6 +47,8 @@ body::before {
   box-sizing: border-box;
   padding: 10px 0;
 }
+
+/* ===== Sobre ===== */
 .envelope {
   position: absolute;
   top: 50%;
@@ -61,199 +59,183 @@ body::before {
   background: linear-gradient(135deg, #d6b8f5, #ffffff);
   border-radius: 12px;
   border: 4px solid #d4af37;
-  box-shadow: 0 6px 20px rgba(0,0,0,0.3), 
+  box-shadow: 0 6px 20px rgba(0,0,0,0.3),
               inset 0 0 10px rgba(255, 223, 0, 0.4);
   cursor: pointer;
   z-index: 10;
-  animation: heartbeat 1.2s infinite; /* efecto latido */
+  animation: heartbeat 1.2s infinite;
   transition: transform 0.4s ease, box-shadow 0.4s ease;
 }
-
-.envelope:hover { 
-  transform: translate(-50%, -50%) rotate(-8deg) scale(1.05); 
-  box-shadow: 0 8px 25px rgba(0,0,0,0.35), 
-              inset 0 0 15px rgba(255, 223, 0, 0.5);
+.envelope:hover {
+  transform: translate(-50%, -50%) rotate(-8deg) scale(1.05);
 }
-
-/* ===== Animación latido ===== */
 @keyframes heartbeat {
-  0%, 100% { transform: translate(-50%, -50%) rotate(-8deg) scale(1); }
-  25% { transform: translate(-50%, -50%) rotate(-8deg) scale(1.05); }
-  50% { transform: translate(-50%, -50%) rotate(-8deg) scale(1); }
-  75% { transform: translate(-50%, -50%) rotate(-8deg) scale(1.05); }
+  0%,100% { transform: translate(-50%, -50%) rotate(-8deg) scale(1);}
+  25%,75% { transform: translate(-50%, -50%) rotate(-8deg) scale(1.05);}
 }
-
 .envelope .flap {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
+  position: absolute; top:0; left:0; width:100%; height:100%;
   background: linear-gradient(135deg, #e1cffc, #d6b8f5);
   clip-path: polygon(0 0, 50% 50%, 100% 0, 100% 100%, 0 100%);
   transform-origin: top;
   transition: transform 0.8s ease;
   border-radius: 12px;
 }
-
 .envelope.open .flap { transform: rotateX(180deg); }
-
 .envelope .message {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  text-align: center;
-  color: #4b2570;
-  font-size: 1.3rem;
-  font-family: 'Parisienne', cursive;
+  position: absolute; top:50%; left:50%; transform:translate(-50%, -50%);
+  text-align:center; color:#4b2570;
+  font-size:1.3rem; font-family:'Parisienne', cursive;
 }
 .envelope .message div:nth-child(2) {
-  font-size: 1rem;
-  margin-top: 8px;
-  color: #4b2570;
-  font-family: 'Poppins', sans-serif;
+  font-size:1rem; margin-top:8px; color:#4b2570; font-family:'Poppins', sans-serif;
 }
-
 .envelope .seal {
-  position: absolute;
-  top: 45%;
-  left: 50%;
-  transform: translate(-50%, -50%) scale(1);
-  width: 60px;
-  height: 60px;
-  background: radial-gradient(circle at 30% 30%, #fff9d6, #d4af37, #b48a1f);
-  border-radius: 50%;
+  position:absolute; top:45%; left:50%;
+  transform:translate(-50%, -50%) scale(1);
+  width:60px; height:60px; background: radial-gradient(circle at 30% 30%, #fff9d6, #d4af37, #b48a1f);
+  border-radius:50%;
   box-shadow: inset 0 0 8px rgba(255,255,255,0.8),
               0 0 12px rgba(212,175,55,0.8),
               0 0 25px rgba(180,138,31,0.5);
-  border: 2px solid #c9a13b;
-  z-index: 0;
-  transition: transform 0.5s ease;
+  border:2px solid #c9a13b;
+  z-index:0;
 }
 
-.envelope:hover .seal {
-  transform: translate(-50%, -50%) scale(1.1);
-  box-shadow: inset 0 0 10px rgba(255,255,255,0.9),
-              0 0 20px rgba(212,175,55,1),
-              0 0 35px rgba(180,138,31,0.6);
-}
-
-/* ==== Contenido principal ==== */
-.save-text svg { width: 100%; height: 100px; overflow: visible; }
-.save-text text { font-family: 'Gliker', cursive; font-size: clamp(3rem, 9vw, 7rem); fill: url(#goldGradient); stroke: #d6b85a; stroke-width: 2.5px; paint-order: stroke fill; filter: drop-shadow(1px 1px 0 #d6b85a) drop-shadow(3px 3px 0 #c5a84f) drop-shadow(6px 6px 6px rgba(0,0,0,0.25)); transform: translateY(50px); animation: zoomIn 1.2s ease-out forwards; }
-@keyframes zoomIn { 0% { transform: scale(0.5) translateY(50px); opacity: 0;} 100% { transform: scale(1) translateY(50px); opacity: 1; } }
-
-.photo { width: clamp(180px, 45vw, 280px); height: clamp(180px, 45vw, 280px); border-radius: 50%; overflow: hidden; border: 6px solid #f8e7b3; box-shadow: 0 0 25px rgba(0,0,0,0.3); opacity: 0; transform: translateY(50px); animation: slideIn 1.2s ease-out forwards; }
-.photo img { width: 100%; height: 100%; object-fit: cover; }
-@keyframes slideIn { from { opacity: 0; transform: translateY(50px); } to { opacity: 1; transform: translateY(0); } }
-
-.name-block { background-image: url('https://images.freeimages.com/vhq/images/previews/b48/gold-metal-sign-137002.png?fmt=webp&h=350'); background-size: cover; background-position: center; border-radius: 20px; padding: 1.5em; display: inline-block; box-shadow: 0 4px 20px rgba(0,0,0,0.25); text-align: center; margin: 0 auto; animation: fadeInBlock 1.2s ease-out forwards; }
-.name-block h1 { font-family: 'Bukhari Script', cursive; margin: 0; color: #b25f67; text-shadow: 2px 2px 6px rgba(0,0,0,0.25); font-size: clamp(1.8rem, 5vw, 3rem); line-height: 1.2; }
-
-.quote { width: 70%; margin: clamp(1em, 4vw, 2em) auto 0; font-style: italic; font-size: 0.95rem; color: #7a5d68; padding: 10px; text-align: center; line-height: 1.6; }
-
-.countdown { display: flex; justify-content: center; gap: 12px; background: rgba(255, 255, 255, 0.25); backdrop-filter: blur(10px); border-radius: 15px; padding: 10px 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.2); color: #4b2570; font-family: 'Poppins', sans-serif; flex-wrap: nowrap; }
-.countdown span { display: flex; flex-direction: column; align-items: center; justify-content: center; min-width: 60px; min-height: 60px; background: linear-gradient(145deg, #c7a8f5, #a67bd8); border-radius: 12px; }
-
-.start-button { background: linear-gradient(135deg, #f9e7a8, #e6c76d); border: none; border-radius: 30px; padding: 14px 28px; font-family: 'Parisienne', cursive; font-size: 1.3rem; cursor: pointer; }
-.button-container { display: flex; justify-content: center; align-items: center; margin-top: 2em; }
-
-.petal { position: fixed; top:-10px; background-image: url('img/flor.png'); background-size: cover; width:25px; height:25px; opacity:0.8; animation: fall linear infinite; pointer-events:none; z-index:5; }
-@keyframes fall { 0%{ transform: translateY(0) rotate(0deg); opacity:1;} 100% { transform: translateY(110svh) rotate(720deg); opacity:0.7; } }
+/* ==== Elementos comunes ==== */
+.save-text svg { width:100%; height:100px; overflow:visible; }
 .save-text text {
-  font-family: 'Gliker', cursive;
-  font-size: clamp(3rem, 9vw, 7rem);
-  fill: url(#goldGradient);
-  stroke: #d6b85a;
-  stroke-width: 2.5px;
-  paint-order: stroke fill;
-  filter: drop-shadow(1px 1px 0 #d6b85a)
-          drop-shadow(3px 3px 0 #c5a84f)
-          drop-shadow(6px 6px 6px rgba(0,0,0,0.25));
-  transform: translateY(50px);
-  animation: zoomIn 1.2s ease-out forwards;
+  font-family:'Gliker', cursive;
+  font-size:clamp(3rem,9vw,7rem);
+  fill:url(#goldGradient);
+  stroke:#d6b85a; stroke-width:2.5px;
+  paint-order:stroke fill;
+  filter:drop-shadow(1px 1px 0 #d6b85a) drop-shadow(3px 3px 0 #c5a84f) drop-shadow(6px 6px 6px rgba(0,0,0,0.25));
+  transform:translateY(50px);
+  animation:zoomIn 1.2s ease-out forwards;
 }
+@keyframes zoomIn { 0%{transform:scale(0.5) translateY(50px);opacity:0;}100%{transform:scale(1) translateY(50px);opacity:1;} }
 
-/* 🌸 En pantallas móviles, hazlo más grande */
-@media (max-width: 768px) {
-  .save-text text {
-    font-size: clamp(8rem, 14vw, 9rem); /* más grande */
-    stroke-width: 3px; /* contorno un poco más marcado */
-  }
+.photo { width:clamp(180px,45vw,280px); height:clamp(180px,45vw,280px); border-radius:50%; overflow:hidden; border:6px solid #f8e7b3; box-shadow:0 0 25px rgba(0,0,0,0.3);}
+.photo img { width:100%; height:100%; object-fit:cover; }
+
+.name-block {
+  background-image:url('https://images.freeimages.com/vhq/images/previews/b48/gold-metal-sign-137002.png?fmt=webp&h=350');
+  background-size:cover; background-position:center;
+  border-radius:20px; padding:1.5em; display:inline-block;
+  box-shadow:0 4px 20px rgba(0,0,0,0.25);
+  text-align:center;
 }
+.name-block h1 {
+  font-family:'Bukhari Script', cursive;
+  margin:0; color:#b25f67; font-size:clamp(1.8rem,5vw,3rem);
+}
+.quote { width:70%; margin:1.5em auto 0; font-style:italic; font-size:0.95rem; color:#7a5d68; text-align:center; line-height:1.6; }
+.countdown {
+  display:flex; justify-content:center; gap:12px; background:rgba(255,255,255,0.25);
+  backdrop-filter:blur(10px); border-radius:15px; padding:10px 15px;
+  box-shadow:0 4px 15px rgba(0,0,0,0.2); color:#4b2570;
+  font-family:'Poppins', sans-serif;
+}
+.countdown span {
+  display:flex; flex-direction:column; align-items:center; justify-content:center;
+  min-width:60px; min-height:60px; background:linear-gradient(145deg,#c7a8f5,#a67bd8);
+  border-radius:12px;
+}
+.start-button {
+  background:linear-gradient(135deg,#f9e7a8,#e6c76d); border:none; border-radius:30px;
+  padding:14px 28px; font-family:'Parisienne', cursive; font-size:1.3rem; cursor:pointer;
+}
+.button-container { display:flex; justify-content:center; align-items:center; margin-top:2em; }
+.petal { position:fixed; top:-10px; background-image:url('img/flor.png'); background-size:cover; width:25px; height:25px; opacity:0.8; animation:fall linear infinite; pointer-events:none; z-index:5;}
+@keyframes fall {0%{transform:translateY(0) rotate(0deg);opacity:1;}100%{transform:translateY(110svh) rotate(720deg);opacity:0.7;}}
 
-
+/* móvil */
+@media (max-width:768px){
+  .save-text text{font-size:clamp(8rem,14vw,9rem);stroke-width:3px;}
+}
 </style>
 </head>
 <body>
 <audio id="bgMusic" src="sake.mp3" preload="auto"></audio>
 
+<!-- SECCIÓN 1: SOBRE -->
 <section class="section active" id="section1">
   <div class="envelope" id="envelope">
     <div class="flap"></div>
     <div class="seal"></div>
     <div class="message">
       <div>Toca para abrir la invitación</div>
-      <div>Para: <spam class="cover-title"></spam></div>
+      <div>Para: <span class="cover-title"></span></div>
     </div>
   </div>
 </section>
 
+<!-- CONTENIDO PRINCIPAL -->
 <div id="mainContent" style="display:none; position:absolute; top:0; left:0; width:100%;">
+  <!-- SECCIÓN 2 -->
   <section class="section active" id="section2">
     <div class="card-wrapper">
- <div class="save-text">
-  <svg viewBox="0 0 600 230" preserveAspectRatio="xMidYMid meet">
-    <defs>
-      <linearGradient id="goldGradient" x1="0" x2="0" y1="0" y2="1">
-        <stop offset="0%" stop-color="#fffbe6" />
-        <stop offset="50%" stop-color="#f8e9a1" />
-        <stop offset="100%" stop-color="#f4d86c" />
-      </linearGradient>
-    </defs>
-    <!-- Más abajo: Y = 185 -->
-    <path id="curve2" d="M 60 295 A 260 260 0 0 1 540 295" fill="transparent"/>
-    <text>
-      <textPath href="#curve2" startOffset="50%" text-anchor="middle">
-        Mi bautizo
-      </textPath>
-    </text>
-  </svg>
-</div>
-
-
-
-
-
-      <div class="photo">
-        <img src="https://images.unsplash.com/photo-1503454537195-1dcabb73ffb9?auto=format&fit=crop&w=800&q=80">
+      <div class="save-text">
+        <svg viewBox="0 0 600 230">
+          <defs>
+            <linearGradient id="goldGradient" x1="0" x2="0" y1="0" y2="1">
+              <stop offset="0%" stop-color="#fffbe6"/>
+              <stop offset="50%" stop-color="#f8e9a1"/>
+              <stop offset="100%" stop-color="#f4d86c"/>
+            </linearGradient>
+          </defs>
+          <path id="curve2" d="M 60 295 A 260 260 0 0 1 540 295" fill="transparent"/>
+          <text><textPath href="#curve2" startOffset="50%" text-anchor="middle">Mi bautizo</textPath></text>
+        </svg>
       </div>
-
+      <div class="photo"><img src="https://images.unsplash.com/photo-1503454537195-1dcabb73ffb9?auto=format&fit=crop&w=800&q=80"></div>
       <div class="content">
-        <div class="name-block">
-          <h1>Samantha Sayuri<br>Adanaqué Maza</h1>
-        </div>
+        <div class="name-block"><h1>Samantha Sayuri<br>Adanaqué Maza</h1></div>
         <div class="quote">“Un día lleno de luz y bendiciones para celebrar el amor y la fe.”</div>
       </div>
-
       <div class="countdown" id="countdown2"></div>
-
-      <div class="button-container">
-        <button class="start-button" id="goToSection3">Siguiente</button>
-      </div>
+      <div class="button-container"><button class="start-button" id="goToSection3">Siguiente</button></div>
     </div>
   </section>
 
+  <!-- SECCIÓN 3: DETALLES -->
   <section class="section active" id="section3">
     <div class="card-wrapper">
       <h1>Detalles del Evento</h1>
       <p><strong>Ceremonia:</strong> Parroquia San José - 4:00 PM</p>
       <p><strong>Recepción:</strong> Salón Lovely Garden - 6:00 PM</p>
       <p class="quote">“Compartamos juntos este día lleno de fe, amor y alegría.”</p>
-      <div class="button-container">
-        <button class="start-button" id="goToSection2">Anterior</button>
-      </div>
+      <div class="button-container"><button class="start-button" id="goToSection4">Siguiente</button></div>
+    </div>
+  </section>
+
+  <!-- SECCIÓN 4: GALERÍA -->
+  <section class="section active" id="section4">
+    <div class="card-wrapper">
+      <h1>Momentos Especiales</h1>
+      <p class="quote">“Algunas imágenes del amor y la alegría que compartimos.”</p>
+      <img src="https://images.unsplash.com/photo-1603575448362-4d6d26a0e45b?auto=format&fit=crop&w=600&q=80" width="90%" style="border-radius:20px;box-shadow:0 4px 20px rgba(0,0,0,0.3);margin-bottom:1em;">
+      <div class="button-container"><button class="start-button" id="goToSection5">Siguiente</button></div>
+    </div>
+  </section>
+
+  <!-- SECCIÓN 5: UBICACIÓN -->
+  <section class="section active" id="section5">
+    <div class="card-wrapper">
+      <h1>Ubicación</h1>
+      <iframe src="https://www.google.com/maps?q=-12.0464,-77.0428&hl=es&z=14&output=embed" width="90%" height="250" style="border-radius:15px;border:2px solid #d4af37;"></iframe>
+      <div class="button-container"><button class="start-button" id="goToSection6">Siguiente</button></div>
+    </div>
+  </section>
+
+  <!-- SECCIÓN 6: CONFIRMAR ASISTENCIA -->
+  <section class="section active" id="section6">
+    <div class="card-wrapper">
+      <h1>Confirmar Asistencia</h1>
+      <p class="quote">Tu presencia es muy importante para nosotros 💖</p>
+      <a id="confirmLink" class="start-button" target="_blank" href="#">Confirmar asistencia</a>
+      <div class="button-container"><button class="start-button" id="goToSection5Back">Anterior</button></div>
     </div>
   </section>
 </div>
@@ -268,12 +250,10 @@ const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 const urlParams = new URLSearchParams(window.location.search);
 const groupCode = urlParams.get("group_code");
 
-/* ---------------- Función para fullscreen ---------------- */
+/* ---------------- Pantalla completa ---------------- */
 function activarPantallaCompleta() {
   const elem = document.documentElement;
   if (elem.requestFullscreen) elem.requestFullscreen().catch(()=>{});
-  else if (elem.webkitRequestFullscreen) elem.webkitRequestFullscreen();
-  else if (elem.msRequestFullscreen) elem.msRequestFullscreen();
 }
 
 /* ---------------- Principal ---------------- */
@@ -281,53 +261,33 @@ function activarPantallaCompleta() {
   const envelope = document.getElementById('envelope');
   const mainContent = document.getElementById('mainContent');
   const music = document.getElementById('bgMusic');
+  const sec2 = document.getElementById('section2');
+  const sec3 = document.getElementById('section3');
+  const sec4 = document.getElementById('section4');
+  const sec5 = document.getElementById('section5');
+  const sec6 = document.getElementById('section6');
 
-  const section2 = document.getElementById('section2');
-  const section3 = document.getElementById('section3');
-  const btnNext = document.getElementById('goToSection3');
-  const btnPrev = document.getElementById('goToSection2');
+  function slideTo(section){ section.scrollIntoView({behavior:'smooth'}); activarPantallaCompleta(); }
 
-  envelope.addEventListener('click', () => {
+  document.getElementById('goToSection3').onclick = ()=>slideTo(sec3);
+  document.getElementById('goToSection4').onclick = ()=>slideTo(sec4);
+  document.getElementById('goToSection5').onclick = ()=>slideTo(sec5);
+  document.getElementById('goToSection5Back').onclick = ()=>slideTo(sec5);
+  document.getElementById('goToSection6').onclick = ()=>slideTo(sec6);
+
+  envelope.addEventListener('click',()=>{
     envelope.classList.add('open');
-    setTimeout(() => {
-      document.getElementById('section1').style.display = 'none';
-      mainContent.style.display = 'block';
-      mainContent.style.position = 'relative';
-      section2.scrollIntoView({ behavior: 'smooth', block: 'start' });
-
+    setTimeout(()=>{
+      document.getElementById('section1').style.display='none';
+      mainContent.style.display='block';
+      mainContent.style.position='relative';
+      slideTo(sec2);
       activarPantallaCompleta();
-      music.volume = 0.8;
-      music.play().catch(()=>{});
-    }, 900);
+      music.volume=0.8; music.play().catch(()=>{});
+    },900);
   });
 
-  function slideTo(section){
-    section.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    activarPantallaCompleta();
-  }
-  btnNext.addEventListener('click', () => slideTo(section3));
-  btnPrev.addEventListener('click', () => slideTo(section2));
-
-  function iniciarCountdown(id){
-    const el = document.getElementById(id);
-    if (!el) return;
-    const target = new Date('November 22, 2025 20:00:00').getTime();
-    function update(){
-      const now = Date.now();
-      const d = target - now;
-      if (d <= 0){ el.innerHTML = '<strong>¡Hoy es el gran día!</strong>'; return; }
-      const days = Math.floor(d/(1000*60*60*24));
-      const hrs = Math.floor((d%(1000*60*60*24))/(1000*60*60));
-      const mins = Math.floor((d%(1000*60*60))/(1000*60));
-      const secs = Math.floor((d%(1000*60))/1000);
-      el.innerHTML = `<span><strong>${days}</strong><small>Días</small></span><span><strong>${hrs}</strong><small>Horas</small></span><span><strong>${mins}</strong><small>Min</small></span><span><strong>${secs}</strong><small>Seg</small></span>`;
-    }
-    update();
-    setInterval(update, 1000);
-  }
   iniciarCountdown('countdown2');
-
-  // Efecto pétalos
   for(let i=0;i<20;i++){
     const p=document.createElement('div');
     p.className='petal';
@@ -336,43 +296,49 @@ function activarPantallaCompleta() {
     p.style.animationDelay=(Math.random()*4)+'s';
     document.body.appendChild(p);
   }
-
   cargarGrupo();
 })();
 
+/* ---------------- Countdown ---------------- */
+function iniciarCountdown(id){
+  const el=document.getElementById(id);
+  const target=new Date('November 22, 2025 20:00:00').getTime();
+  function update(){
+    const d=target-Date.now();
+    if(d<=0){el.innerHTML='<strong>¡Hoy es el gran día!</strong>';return;}
+    const days=Math.floor(d/86400000);
+    const hrs=Math.floor((d%86400000)/3600000);
+    const mins=Math.floor((d%3600000)/60000);
+    const secs=Math.floor((d%60000)/1000);
+    el.innerHTML=`<span><strong>${days}</strong><small>Días</small></span><span><strong>${hrs}</strong><small>Horas</small></span><span><strong>${mins}</strong><small>Min</small></span><span><strong>${secs}</strong><small>Seg</small></span>`;
+  }
+  update(); setInterval(update,1000);
+}
+
 /* ---------------- Supabase: cargar grupo ---------------- */
-async function cargarGrupo() {
-  const nombreElCover = document.querySelector('.cover-title');
-  if (!groupCode) {
-    nombreElCover.textContent = 'Querida familia';
+async function cargarGrupo(){
+  const nombreElCover=document.querySelector('.cover-title');
+  const confirmLink=document.getElementById('confirmLink');
+  if(!groupCode){
+    nombreElCover.textContent='Querida familia';
+    confirmLink.href="https://bautizo-samantha-sayuri.vercel.app/confirm.html";
     return;
   }
-
-  try {
-    const { data, error } = await supabase
-      .from('guests_baptism')
-      .select('guest, group_name')
-      .eq('group_code', groupCode);
-
-    if (error || !data || data.length === 0) {
-      console.warn('Grupo no encontrado:', error);
-      nombreElCover.textContent = 'Invitación no encontrada 😕';
+  try{
+    const {data,error}=await supabase.from('guests_baptism').select('guest,group_name').eq('group_code',groupCode);
+    if(error||!data||!data.length){
+      nombreElCover.textContent='Invitación no encontrada 😕';
       return;
     }
-
-    // Buscar jefe de familia
-    let jefe = data.find(g => /\(.*?jefe.*?\)/i.test(g.guest));
-    if (!jefe) jefe = data[0]; // fallback si no hay etiqueta
-
-    // Limpiar el texto de “(jefe de familia)”
-    const cleanName = jefe.guest.replace(/\(.*?jefe.*?\)/i, "").trim();
-    nombreElCover.textContent = `${cleanName} y familia`;
-  } catch (err) {
-    console.error('Error cargando grupo', err);
-    document.querySelector('.cover-title').textContent = 'Invitación no válida';
+    let jefe=data.find(g=>/\(.*?jefe.*?\)/i.test(g.guest))||data[0];
+    const cleanName=jefe.guest.replace(/\(.*?jefe.*?\)/i,"").trim();
+    nombreElCover.textContent=`${cleanName} y familia`;
+    confirmLink.href=`https://bautizo-samantha-sayuri.vercel.app/confirm.html?group_code=${groupCode}`;
+  }catch(err){
+    console.error(err);
+    nombreElCover.textContent='Invitación no válida';
   }
 }
 </script>
-
 </body>
 </html>
