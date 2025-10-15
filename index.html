@@ -264,20 +264,16 @@ const SUPABASE_URL = "https://rsjyfchiynskjddpjupt.supabase.co";
 const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJzanlmY2hpeW5za2pkZHBqdXB0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTk3MTkzMzEsImV4cCI6MjA3NTI5NTMzMX0.pxnbFP03pSWra1zOrCsR8ADyWF3wpGN88BQlameVRWM";
 const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
-/* ---------------- Parámetro invitado ---------------- */
-const nombreCover = document.querySelector('.cover-title');
-const guestKey = window.location.search ? window.location.search.substring(1) : null;
+/* ---------------- Parámetro de grupo ---------------- */
+const urlParams = new URLSearchParams(window.location.search);
+const groupCode = urlParams.get("group_code");
 
 /* ---------------- Función para fullscreen ---------------- */
 function activarPantallaCompleta() {
   const elem = document.documentElement;
-  if (elem.requestFullscreen) {
-    elem.requestFullscreen().catch(()=>{});
-  } else if (elem.webkitRequestFullscreen) { // Safari iOS
-    elem.webkitRequestFullscreen();
-  } else if (elem.msRequestFullscreen) {
-    elem.msRequestFullscreen();
-  }
+  if (elem.requestFullscreen) elem.requestFullscreen().catch(()=>{});
+  else if (elem.webkitRequestFullscreen) elem.webkitRequestFullscreen();
+  else if (elem.msRequestFullscreen) elem.msRequestFullscreen();
 }
 
 /* ---------------- Principal ---------------- */
@@ -299,14 +295,12 @@ function activarPantallaCompleta() {
       mainContent.style.position = 'relative';
       section2.scrollIntoView({ behavior: 'smooth', block: 'start' });
 
-      // Activa fullscreen y música
       activarPantallaCompleta();
       music.volume = 0.8;
       music.play().catch(()=>{});
     }, 900);
   });
 
-  // Botones de navegación con fullscreen
   function slideTo(section){
     section.scrollIntoView({ behavior: 'smooth', block: 'start' });
     activarPantallaCompleta();
@@ -314,7 +308,6 @@ function activarPantallaCompleta() {
   btnNext.addEventListener('click', () => slideTo(section3));
   btnPrev.addEventListener('click', () => slideTo(section2));
 
-  // Countdown
   function iniciarCountdown(id){
     const el = document.getElementById(id);
     if (!el) return;
@@ -334,7 +327,7 @@ function activarPantallaCompleta() {
   }
   iniciarCountdown('countdown2');
 
-  // Petalos
+  // Efecto pétalos
   for(let i=0;i<20;i++){
     const p=document.createElement('div');
     p.className='petal';
@@ -344,32 +337,39 @@ function activarPantallaCompleta() {
     document.body.appendChild(p);
   }
 
-  cargarInvitado();
+  cargarGrupo();
 })();
 
-/* ---------------- Supabase: cargar invitado ---------------- */
-async function cargarInvitado() {
+/* ---------------- Supabase: cargar grupo ---------------- */
+async function cargarGrupo() {
   const nombreElCover = document.querySelector('.cover-title');
-  if (!guestKey) {
-    nombreElCover && (nombreElCover.textContent = 'Querido invitado');
+  if (!groupCode) {
+    nombreElCover.textContent = 'Querida familia';
     return;
   }
+
   try {
     const { data, error } = await supabase
-      .from('guests')
-      .select('guest, confirm, persons')
-      .eq('key', guestKey)
-      .single();
+      .from('guests_baptism')
+      .select('guest, group_name')
+      .eq('group_code', groupCode);
 
-    if (error || !data) {
-      console.warn('Invitación no encontrada:', error);
-      nombreElCover && (nombreElCover.textContent = 'Invitación no encontrada 😕');
+    if (error || !data || data.length === 0) {
+      console.warn('Grupo no encontrado:', error);
+      nombreElCover.textContent = 'Invitación no encontrada 😕';
       return;
     }
-    nombreElCover && (nombreElCover.textContent = ` ${data.guest}`);
+
+    // Buscar jefe de familia
+    let jefe = data.find(g => /\(.*?jefe.*?\)/i.test(g.guest));
+    if (!jefe) jefe = data[0]; // fallback si no hay etiqueta
+
+    // Limpiar el texto de “(jefe de familia)”
+    const cleanName = jefe.guest.replace(/\(.*?jefe.*?\)/i, "").trim();
+    nombreElCover.textContent = `${cleanName} y familia`;
   } catch (err) {
-    console.error('Error cargando invitado', err);
-    nombreElCover && (nombreElCover.textContent = 'Invitación no válida');
+    console.error('Error cargando grupo', err);
+    document.querySelector('.cover-title').textContent = 'Invitación no válida';
   }
 }
 </script>
