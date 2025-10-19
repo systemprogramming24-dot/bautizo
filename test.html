@@ -286,7 +286,7 @@ font-family: 'Great Vibes', cursive;
     <div class="seal"></div>
     <div class="message">
       <div>Toca para abrir la invitación</div>
-      <div>Para: <span class="cover-title"></span></div>
+      <div> <span class="cover-title"></span></div>
     </div>
   </div>
 </section>
@@ -458,14 +458,16 @@ async function cargarGrupo(){
     return;
   }
   try{
-    const {data,error}=await supabase.from('guests_baptism').select('guest,group_name').eq('group_code',groupCode);
+    const {data,error}=await supabase.from('guests_baptism').select('guest,message_invitation').eq('group_code',groupCode);
     if(error||!data||!data.length){
       nombreElCover.textContent='Invitación no encontrada 😕';
       return;
     }
     let jefe=data.find(g=>/\(.*?jefe.*?\)/i.test(g.guest))||data[0];
-    const cleanName=jefe.guest.replace(/\(.*?jefe.*?\)/i,"").trim();
-    nombreElCover.textContent=`${cleanName} y familia`;
+    let textoCompleto = `${jefe.guest} ${jefe.message_invitation}`;
+
+   nombreElCover.textContent=`Para: ${textoCompleto}`;
+
     confirmLink.href=`https://bautizo-samantha-sayuri.vercel.app/confirm.html?group_code=${groupCode}`;
   }catch(err){
     console.error(err);
@@ -499,4 +501,3 @@ async function cargarGrupo(){
 </script>
 </body>
 </html>
-
