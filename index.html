@@ -111,7 +111,7 @@ body::before {
   font-size:2.0rem;  font-family: 'Great Vibes', cursive;
 }
 .envelope .message div:nth-child(2) {
-  font-size:2.0rem; margin-top:8px; color:#b48a1f; font-family:'Great Vibes', cursive;
+  font-size:2.0rem; margin-top:100px; color:#b48a1f; font-family:'Great Vibes', cursive;
 
 }
 .envelope .seal {
@@ -466,7 +466,7 @@ async function cargarGrupo(){
     let jefe=data.find(g=>/\(.*?jefe.*?\)/i.test(g.guest))||data[0];
     let textoCompleto = `${jefe.guest} ${jefe.message_invitation}`;
 
-   nombreElCover.textContent=`Para: ${textoCompleto}`;
+   nombreElCover.textContent=`${textoCompleto}`;
 
     confirmLink.href=`https://bautizo-samantha-sayuri.vercel.app/confirm.html?group_code=${groupCode}`;
   }catch(err){
@@ -501,6 +501,7 @@ async function cargarGrupo(){
 </script>
 </body>
 </html>
+
 
 
 
