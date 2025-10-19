@@ -1,161 +1,243 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Confirmación de Asistencia</title>
-
-<!-- Supabase client -->
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
+<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Playfair+Display:wght@400;600&display=swap" rel="stylesheet">
+
 <style>
-  body {
-    font-family: 'Playfair Display', serif;
-    background: #fafafa;
-    margin: 0;
-    padding: 20px;
-    text-align: center;
-    color: #333;
-  }
-  h2 {
-    margin-bottom: 20px;
-  }
-  .guest-card {
-    background: white;
-    border-radius: 14px;
-    box-shadow: 0 3px 12px rgba(0,0,0,0.1);
-    margin: 15px auto;
-    padding: 20px;
-    max-width: 420px;
-    text-align: center;
-  }
-  .guest-card h3 {
-    margin: 0 0 8px 0;
-  }
-  .guest-card p {
-    margin: 5px 0;
-  }
-  button {
-    padding: 8px 16px;
-    border: none;
-    border-radius: 8px;
-    margin: 5px;
-    font-weight: bold;
-    cursor: pointer;
-    color: white;
-    transition: opacity 0.2s ease-in-out;
-  }
-  .confirm-btn { background-color: #2e8b57; }
-  .cancel-btn { background-color: #c0392b; }
-  button:disabled {
-    opacity: 0.6;
-    cursor: not-allowed;
-  }
+body {
+  background: linear-gradient(135deg, #f3e4ff, #f9dcff);
+  font-family: 'Playfair Display', serif;
+  color: #4a336f;
+  text-align: center;
+  margin: 0;
+  padding: 20px;
+}
+
+h1 {
+  font-family: 'Great Vibes', cursive;
+  font-size: 3em;
+  color: #6b3fa0;
+  margin-bottom: 0.3em;
+}
+
+
+
+.card {
+  border-radius: 20px;
+  box-shadow: 0 4px 20px rgba(120, 87, 159, 0.2);
+  padding: 25px;
+  margin: 20px auto;
+  max-width: 400px;
+  transition: background 0.3s ease;
+}
+
+.guest-name {
+  font-family: 'Great Vibes', cursive;
+  font-size: 1.8em;
+  color: #553285;
+  margin-bottom: 15px;
+}
+
+.status-message {
+  margin-top: 15px;
+  font-size: 1em;
+  font-weight: 500;
+  color: #59337a;
+}
+
+.button-group {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-top: 15px;
+}
+
+button {
+  border: none;
+  color: white;
+  font-weight: 600;
+  border-radius: 30px;
+  padding: 10px 18px;
+  cursor: pointer;
+  font-size: 0.95em;
+  transition: all 0.3s ease;
+}
+
+button:hover { transform: scale(1.05); }
+
+.confirm { background-color: #6fcf97; } /* verde */
+.decline { background-color: #eb5757; } /* rojo */
+.change { background-color: #6c63ff; } /* lila intenso */
+
+.loading { opacity: 0.7; pointer-events: none; }
+
+#summary {
+  margin-top: 30px;
+  font-size: 1.1em;
+  font-weight: 500;
+  color: #4a336f;
+}
 </style>
 </head>
-
 <body>
-  <h2>Confirmación de Asistencia</h2>
-  <p>Confirma o cancela tu asistencia antes de la fecha límite.</p>
-  <div id="guestList"></div>
 
-  <script>
-    // ⚙️ Configuración de Supabase
-    const SUPABASE_URL = "https://rsjyfchiynskjddpjupt.supabase.co";
-    const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJzanlmY2hpeW5za2pkZHBqdXB0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTk3MTkzMzEsImV4cCI6MjA3NTI5NTMzMX0.pxnbFP03pSWra1zOrCsR8ADyWF3wpGN88BQlameVRWM";
-    const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+<h1>Confirmación de Asistencia</h1>
 
-    // Obtener el código de grupo desde la URL
-    const urlParams = new URLSearchParams(window.location.search);
-    const groupCode = urlParams.get("group_code");
+<p>Nos encantaría contar contigo 💕<br>
+Por favor confirma o cambia tu respuesta antes del <strong id="fecha-limite-global"></strong>,<br>
+para poder preparar con tiempo tu lugar, tu mesa y todo con el cariño que mereces 💜</p>
 
-    // Cargar invitados del grupo
-    async function loadGuests() {
-      const { data, error } = await supabase
-        .from("guests_baptism")
-        .select("guest, confirm, key, confirmation_deadline, group_name")
-        .eq("group_code", groupCode)
-        .order("guest", { ascending: true });
+<div id="guest-list"></div>
+<div id="summary"></div>
 
-      const container = document.getElementById("guestList");
-      container.innerHTML = "";
+<script>
+const SUPABASE_URL = "https://rsjyfchiynskjddpjupt.supabase.co";
+const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJzanlmY2hpeW5za2pkZHBqdXB0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTk3MTkzMzEsImV4cCI6MjA3NTI5NTMzMX0.pxnbFP03pSWra1zOrCsR8ADyWF3wpGN88BQlameVRWM";
+const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
-      if (error) {
-        container.innerHTML = "<p>❌ Error al cargar los invitados.</p>";
-        console.error(error);
-        return;
-      }
+const groupCode = new URLSearchParams(window.location.search).get("group_code");
+const guestList = document.getElementById("guest-list");
+const summary = document.getElementById("summary");
 
-      if (!data || data.length === 0) {
-        container.innerHTML = "<p>No se encontraron invitados para este grupo.</p>";
-        return;
-      }
+async function loadGuests() {
+  const { data, error } = await supabase
+    .from("guests_baptism")
+    .select("*")
+    .eq("group_code", groupCode)
+    .order("id");
 
-      // Mostrar el nombre de la familia
-      const famTitle = document.createElement("h3");
-      famTitle.textContent = data[0].group_name;
-      container.appendChild(famTitle);
+  if (error || !data) { guestList.innerHTML = "<p>Error al cargar los datos.</p>"; return; }
 
-      // Crear una tarjeta por invitado
-      data.forEach(guest => {
-        const card = document.createElement("div");
-        card.className = "guest-card";
+  // fecha límite global si todos iguales
+  const deadlines = [...new Set(data.map(g => g.confirmation_deadline).filter(Boolean))];
+  document.getElementById("fecha-limite-global").textContent = deadlines[0] ? new Date(deadlines[0]).toLocaleDateString() : "—";
 
-        // Limpiar “jefe de familia” si aparece en el nombre
-        const cleanName = guest.guest.replace(/\(.*?jefe.*?\)/i, "").trim();
+  guestList.innerHTML = "";
 
-        const deadline = new Date(guest.confirmation_deadline);
-        const now = new Date();
-        const expired = now > deadline;
+  data.forEach(guest => {
+    const card = document.createElement("div");
+    card.className = "card";
 
-        const status =
-          guest.confirm === true ? "✅ Confirmado" :
-          guest.confirm === false ? "❌ No confirmado" :
-          "⚪ Pendiente";
+    if (guest.confirm === true) card.style.backgroundColor = "#d4f3e4";
+    else if (guest.confirm === false) card.style.backgroundColor = "#f8d6d6";
+    else card.style.backgroundColor = "#ffffff";
 
-        card.innerHTML = `
-          <h3>${cleanName}</h3>
-          <p><strong>Estado:</strong> ${status}</p>
-          <p><small>Cierre: ${deadline.toLocaleString()}</small></p>
-          <div class="buttons">
-            <button class="confirm-btn" ${expired ? "disabled" : ""}>Confirmar</button>
-            <button class="cancel-btn" ${expired ? "disabled" : ""}>Cancelar</button>
-          </div>
-        `;
+    const name = document.createElement("div");
+    name.className = "guest-name";
+    name.textContent = guest.guest;
 
-        const confirmBtn = card.querySelector(".confirm-btn");
-        const cancelBtn = card.querySelector(".cancel-btn");
+    const status = document.createElement("div");
+    status.className = "status-message";
+    if (guest.confirm === true) status.textContent = "Asistirá ❤️";
+    else if (guest.confirm === false) status.textContent = "No asistirá 💔";
+    else status.textContent = "Pendiente de confirmación";
 
-        async function updateConfirmation(value) {
-          const now = new Date();
-          if (now > deadline) {
-            alert("⏰ El tiempo límite ha pasado. Ya no puedes actualizar tu confirmación.");
-            confirmBtn.disabled = true;
-            cancelBtn.disabled = true;
-            return;
-          }
+    const buttonGroup = document.createElement("div");
+    buttonGroup.className = "button-group";
 
-          const { error } = await supabase
-            .from("guests_baptism")
-            .update({ confirm: value })
-            .eq("key", guest.key);
+    const confirmBtn = document.createElement("button");
+    confirmBtn.className = "confirm";
+    confirmBtn.textContent = "❤️ Asistirá";
 
-          if (error) {
-            console.warn("Error al confirmar:", error);
-            alert("⏰ Ya no es posible actualizar la confirmación. El tiempo límite ha pasado.");
-          } else {
-            loadGuests();
-          }
-        }
+    const declineBtn = document.createElement("button");
+    declineBtn.className = "decline";
+    declineBtn.textContent = "💔 No asistirá";
 
-        confirmBtn.onclick = () => updateConfirmation(true);
-        cancelBtn.onclick = () => updateConfirmation(false);
+    const changeBtn = document.createElement("button");
+    changeBtn.className = "change";
+    changeBtn.textContent = "Cambiar respuesta";
 
-        container.appendChild(card);
-      });
+    if (guest.confirm === null) {
+      confirmBtn.style.display = "inline-block";
+      declineBtn.style.display = "inline-block";
+      changeBtn.style.display = "none";
+    } else {
+      confirmBtn.style.display = "none";
+      declineBtn.style.display = "none";
+      changeBtn.style.display = "inline-block";
     }
 
-    loadGuests();
-  </script>
+    confirmBtn.onclick = async () => await updateResponse(true, guest, status, confirmBtn, declineBtn, changeBtn, card);
+    declineBtn.onclick = async () => await updateResponse(false, guest, status, confirmBtn, declineBtn, changeBtn, card);
+    changeBtn.onclick = async () => await resetResponse(guest, status, confirmBtn, declineBtn, changeBtn, card);
+
+    buttonGroup.append(confirmBtn, declineBtn, changeBtn);
+    card.append(name, status, buttonGroup);
+    guestList.appendChild(card);
+  });
+
+  renderSummary(data);
+}
+
+async function updateResponse(value, guest, status, confirmBtn, declineBtn, changeBtn, card){
+  status.textContent = "Enviando respuesta...";
+  confirmBtn.classList.add("loading");
+  declineBtn.classList.add("loading");
+
+  // actualizar tabla principal
+  await supabase.from("guests_baptism").update({ confirm: value, confirmed_at: new Date().toISOString() }).eq("id", guest.id);
+
+  // agregar registro a la tabla de historial
+  await supabase.from("guests_baptism_history").insert({ guest_id: guest.id, status: value });
+
+  guest.confirm = value;
+  status.textContent = value ? "Asistirá ❤️" : "No asistirá 💔";
+  card.style.backgroundColor = value ? "#d4f3e4" : "#f8d6d6";
+  confirmBtn.style.display = "none";
+  declineBtn.style.display = "none";
+  changeBtn.style.display = "inline-block";
+
+  confirmBtn.classList.remove("loading");
+  declineBtn.classList.remove("loading");
+
+  renderSummary(await getUpdatedGuests());
+}
+
+async function resetResponse(guest, status, confirmBtn, declineBtn, changeBtn, card){
+  status.textContent = "Pendiente de confirmación";
+  card.style.backgroundColor = "#ffffff";
+
+  // Actualizar tabla principal
+  await supabase.from("guests_baptism").update({ confirm: null }).eq("id", guest.id);
+
+  // Registrar en la tabla de historial como pendiente
+  await supabase.from("guests_baptism_history").insert({ guest_id: guest.id, status: null });
+
+  confirmBtn.style.display = "inline-block";
+  declineBtn.style.display = "inline-block";
+  changeBtn.style.display = "none";
+
+  renderSummary(await getUpdatedGuests());
+}
+
+async function getUpdatedGuests() {
+  const { data } = await supabase.from("guests_baptism").select("*").eq("group_code", groupCode);
+  return data || [];
+}
+
+function renderSummary(data){
+  const confirmed = data.filter(g => g.confirm === true).length;
+  const declined = data.filter(g => g.confirm === false).length;
+  const pending = data.filter(g => g.confirm === null).length;
+
+  if (pending === data.length)
+    summary.textContent = "Esperamos con ilusión tu confirmación 💜";
+  else if (confirmed > 0 && declined === 0)
+    summary.textContent = `Gracias por tu respuesta, ¡nos encantará compartir este día contigo! (${confirmed} asistirán)`;
+  else if (confirmed > 0 && declined > 0)
+    summary.textContent = `Algunos asistirán (${confirmed}) y otros no (${declined}). ¡Gracias por confirmar!`;
+  else if (confirmed === 0 && declined > 0)
+    summary.textContent = "Lamentamos que no puedas acompañarnos, pero te agradecemos de corazón 💜";
+}
+
+loadGuests();
+</script>
+
 </body>
 </html>
