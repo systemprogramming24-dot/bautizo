@@ -252,21 +252,112 @@ body::before {
   </section>
 
   <section class="section active" id="section3">
-    <div class="card-wrapper">
-      <h1 class="fade-in-item">Detalles del Evento</h1>
-      <p class="fade-in-item delay-1"><strong>Ceremonia:</strong> Parroquia San José - 4:00 PM</p>
-      <p class="fade-in-item delay-1"><strong>Recepción:</strong> Salón Lovely Garden - 6:00 PM</p>
-      <p class="quote fade-in-item delay-2">“Compartamos juntos este día lleno de fe, amor y alegría.”</p>
-    </div>
-  </section>
+  <div class="card-wrapper" 
+       style="
+         position: relative;
+         overflow: hidden;
+         border-radius: 22px;
+         box-shadow: 0 6px 25px rgba(0,0,0,0.35);
+         min-height: 70svh;
+         display: flex;
+         align-items: center;
+         justify-content: center;
+         text-align: center;
+         padding: 2em;
+         color: #4b2570;
+         font-family: 'Parisienne', cursive;
+         font-size: 1.4rem;
+         line-height: 2;
+         letter-spacing: 0.6px;
+         background: #fffdfa;
+         margin-top: 20px;
+         margin-left: 20px;
+       ">
+       
+    <!-- Fondo centrado sin alteración de color -->
+    <div style="
+         position: absolute;
+         top: 0;
+         left: 0;
+         width: calc(100% - 40px);
+         height: calc(100% - 40px);
+         margin: 20px;
+         background: url('https://m.media-amazon.com/images/I/41XOEZ-G-6L._AC_SL1001_.jpg?auto=format&fit=crop&w=900&q=80') center center no-repeat;
+         background-size: contain;
+         z-index: 0;
+       "></div>
 
-  <section class="section active" id="section4">
-    <div class="card-wrapper">
-      <h1 class="fade-in-item">Momentos Especiales</h1>
-      <p class="quote fade-in-item delay-1">“Algunas imágenes del amor y la alegría que compartimos.”</p>
-      <img src="https://images.unsplash.com/photo-1603575448362-4d6d26a0e45b?auto=format&fit=crop&w=600&q=80" width="90%" style="border-radius:20px;box-shadow:0 4px 20px rgba(0,0,0,0.3);margin-bottom:1em;" class="fade-in-item delay-2">
+    <!-- Capa semitransparente muy ligera para contraste del texto -->
+    <div style="
+         position: absolute;
+         inset: 0;
+         background: rgba(255,255,255,0.35);
+         border-radius: 22px;
+         z-index: 1;
+       "></div>
+
+    <!-- Texto reflexivo -->
+    <div class="fade-in-item delay-1" style="position: relative; z-index: 2; max-width: 90%;">
+      <p>
+        “Con alegría y fe en mi corazón, hoy recibo el Bautismo, un regalo de amor y esperanza que me unirá para siempre con Dios y me guiará en cada paso de mi vida.”
+      </p>
     </div>
-  </section>
+  </div>
+</section>
+<section class="section active" id="section4">
+  <div class="card-wrapper" 
+       style="
+         position: relative;
+         overflow: hidden;
+         border-radius: 22px;
+         box-shadow: 0 6px 25px rgba(0,0,0,0.35);
+         min-height: 60svh;
+         display: flex;
+         flex-direction: column;
+         align-items: center;
+         justify-content: center;
+         text-align: center;
+         background-color: #fffdfa;
+         margin: 20px;
+         padding: 20px;
+       ">
+    
+    <!-- Cinta decorativa -->
+    <div style="
+         position: relative;
+         width: 90%;
+         max-width: 620px;
+         height: 130px;
+         background-color: #ffffff;
+         border-radius: 16px;
+ 
+         background-image: url('https://i.pinimg.com/1200x/ea/01/10/ea0110ca32089338f6671390e62c9f08.jpg');
+         background-repeat: no-repeat;
+         background-size: cover;
+         background-position: center;
+         margin: 25px auto;
+         display: flex;
+         align-items: center;
+         justify-content: center;
+       ">
+       
+       <!-- Texto sobre la cinta -->
+       <h1 style="
+            color: #4a3212;
+            font-family: 'Great Vibes', cursive;
+            font-size: 2.8rem;
+            text-shadow: 0 1px 3px rgba(255,255,255,0.8);
+            margin: 0;
+            letter-spacing: 2px;
+            position: relative;
+            z-index: 2;
+          ">
+         Mis padres
+       </h1>
+    </div>
+  </div>
+</section>
+
 
   <section class="section active" id="section5">
     <div class="card-wrapper">
