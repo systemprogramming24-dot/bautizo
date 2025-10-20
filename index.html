@@ -165,7 +165,7 @@ body::before {
   .save-text text{font-size:clamp(8rem,14vw,9rem);stroke-width:3px;}
 }
 
-/* ==== NUEVO: Estilos para la flecha de scroll fija ==== */
+/* Estilos para la flecha de scroll fija */
 #scrollArrow {
   position: fixed;
   bottom: 25px;
@@ -197,11 +197,10 @@ body::before {
   100% { opacity: 0.2; transform: translateY(0) rotate(-45deg); }
 }
 
-/* ==== MODIFICADO: Animación Fade-in más lenta ==== */
+/* Animación Fade-in más lenta */
 .fade-in-item {
   opacity: 0;
   transform: translateY(30px);
-  /* Se ha aumentado el tiempo de 0.8s a 1.5s */
   transition: opacity 1.5s ease-out, transform 1.5s ease-out;
 }
 .fade-in-item.visible {
@@ -211,13 +210,11 @@ body::before {
 .fade-in-item.delay-1 { transition-delay: 0.3s; }
 .fade-in-item.delay-2 { transition-delay: 0.6s; }
 .fade-in-item.delay-3 { transition-delay: 0.9s; }
-
 </style>
 </head>
 <body>
 <audio id="bgMusic" src="sake.mp3" preload="auto"></audio>
 
-<!-- SECCIÓN 1: SOBRE -->
 <section class="section active" id="section1">
   <div class="envelope" id="envelope">
     <div class="flap"></div>
@@ -229,10 +226,7 @@ body::before {
   </div>
 </section>
 
-<!-- CONTENIDO PRINCIPAL -->
 <div id="mainContent" style="display:none; position:absolute; top:0; left:0; width:100%;">
-  
-  <!-- SECCIÓN 2 -->
   <section class="section active" id="section2">
     <div class="card-wrapper">
       <div class="save-text">
@@ -257,7 +251,6 @@ body::before {
     </div>
   </section>
 
-  <!-- SECCIÓN 3: DETALLES -->
   <section class="section active" id="section3">
     <div class="card-wrapper">
       <h1 class="fade-in-item">Detalles del Evento</h1>
@@ -267,7 +260,6 @@ body::before {
     </div>
   </section>
 
-  <!-- SECCIÓN 4: GALERÍA -->
   <section class="section active" id="section4">
     <div class="card-wrapper">
       <h1 class="fade-in-item">Momentos Especiales</h1>
@@ -276,7 +268,6 @@ body::before {
     </div>
   </section>
 
-  <!-- SECCIÓN 5: UBICACIÓN -->
   <section class="section active" id="section5">
     <div class="card-wrapper">
       <h1 class="fade-in-item">Ubicación</h1>
@@ -284,7 +275,6 @@ body::before {
     </div>
   </section>
 
-  <!-- SECCIÓN 6: CONFIRMAR ASISTENCIA -->
   <section class="section active" id="section6">
     <div class="card-wrapper">
       <h1 class="fade-in-item">Confirmar Asistencia</h1>
@@ -293,14 +283,12 @@ body::before {
     </div>
   </section>
 
-  <!-- NUEVO: Flecha de Scroll movida aquí para ser un elemento fijo -->
   <div id="scrollArrow">
     <div class="double-arrow">
       <span></span>
       <span></span>
     </div>
   </div>
-
 </div>
 
 <script>
@@ -308,7 +296,6 @@ body::before {
 const SUPABASE_URL = "https://rsjyfchiynskjddpjupt.supabase.co";
 const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJzanlmY2hpeW5za2pkZHBqdXB0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTk3MTkzMzEsImV4cCI6MjA3NTI5NTMzMX0.pxnbFP03pSWra1zOrCsR8ADyWF3wpGN88BQlameVRWM";
 const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
-
 const urlParams = new URLSearchParams(window.location.search);
 const groupCode = urlParams.get("group_code");
 
@@ -322,12 +309,7 @@ function activarPantallaCompleta() {
   const mainContent = document.getElementById('mainContent');
   const music = document.getElementById('bgMusic');
   const sec2 = document.getElementById('section2');
-  const scrollArrow = document.getElementById('scrollArrow'); // <-- Obtenemos la flecha
-
-  function slideTo(section){ 
-    section.scrollIntoView({behavior:'smooth'}); 
-    activarPantallaCompleta(); 
-  }
+  const scrollArrow = document.getElementById('scrollArrow');
 
   envelope.addEventListener('click',()=>{
     envelope.classList.add('open');
@@ -335,14 +317,11 @@ function activarPantallaCompleta() {
       document.getElementById('section1').style.display='none';
       mainContent.style.display='block';
       mainContent.style.position='relative';
-      slideTo(sec2);
+      sec2.scrollIntoView({behavior:'smooth'}); 
       activarPantallaCompleta();
       music.volume=0.8; 
       music.play().catch(()=>{});
-      
-      // Hacemos visible la flecha después de abrir la invitación
       setTimeout(() => scrollArrow.classList.add('visible'), 500);
-
     },900);
   });
 
@@ -376,7 +355,6 @@ function iniciarCountdown(id){
 async function cargarGrupo(){
   const nombreElCover = document.querySelector('.cover-title');
   const confirmLink = document.getElementById('confirmLink');
-
   if (!groupCode) {
     nombreElCover.textContent = 'Querida familia';
     confirmLink.href = "https://bautizo-samantha-sayuri.vercel.app/confirm.html";
@@ -403,46 +381,38 @@ async function cargarGrupo(){
 }
 
 document.addEventListener("DOMContentLoaded", () => {
-  // --- Script para Fade-in de componentes al hacer scroll ---
+  // --- Observador para el "Fade In" de los componentes ---
   const fadeItems = document.querySelectorAll(".fade-in-item");
-  const appearOptions = {
-    threshold: 0.15,
-    rootMargin: "0px 0px -50px 0px"
-  };
-  const appearOnScroll = new IntersectionObserver((entries, observer) => {
+  const fadeInObserver = new IntersectionObserver((entries, observer) => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
         entry.target.classList.add("visible");
         observer.unobserve(entry.target);
       }
     });
-  }, appearOptions);
-  fadeItems.forEach(item => {
-    appearOnScroll.observe(item);
-  });
+  }, { threshold: 0.15, rootMargin: "0px 0px -50px 0px" });
+  fadeItems.forEach(item => fadeInObserver.observe(item));
 
-  // --- NUEVO: Script para controlar la visibilidad de la flecha de scroll ---
+  // --- NUEVO Y MEJORADO: Observador para la flecha de scroll ---
   const scrollArrow = document.getElementById('scrollArrow');
-  const footerSection = document.getElementById('section6');
+  const finalSection = document.getElementById('section6');
 
-  function handleScrollArrowVisibility() {
-    if (!footerSection) return;
-    
-    // Calcula el punto donde la parte superior del footer está a punto de entrar en la vista
-    const scrollStopPoint = footerSection.offsetTop - window.innerHeight;
+  if (scrollArrow && finalSection) {
+    const arrowObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        // Si la sección final está en pantalla, oculta la flecha.
+        if (entry.isIntersecting) {
+          scrollArrow.classList.remove('visible');
+        } 
+        // Si no está en pantalla Y el contenido principal es visible, muestra la flecha.
+        else if (document.getElementById('mainContent').style.display === 'block') {
+          scrollArrow.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.1 }); // Se activa cuando el 10% de la sección final es visible
 
-    // Si hemos pasado ese punto, oculta la flecha, si no, muéstrala.
-    if (window.scrollY > scrollStopPoint) {
-      scrollArrow.classList.remove('visible');
-    } else {
-      // Solo la mostramos si el contenido principal está visible
-      if (document.getElementById('mainContent').style.display === 'block') {
-         scrollArrow.classList.add('visible');
-      }
-    }
+    arrowObserver.observe(finalSection);
   }
-
-  window.addEventListener('scroll', handleScrollArrowVisibility);
 });
 </script>
 </body>
