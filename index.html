@@ -27,7 +27,7 @@ body::before {
 }
 .section {
   width: 100%;
-  min-height: 100svh;
+  min-height: 90svh;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -44,8 +44,8 @@ body::before {
 
 .card-wrapper {
   position: relative;
-  width: 90%;
-  max-width: 440px;
+  width: 80%;
+  max-width: 340px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -256,134 +256,187 @@ body::before {
       <div class="countdown" id="countdown2"></div>
     </div>
   </section>
-
   <section class="section active" id="section3">
-  <div class="card-wrapper" 
+  <div class="card-wrapper"
        style="
-         position: relative;
-         overflow: hidden;
-         border-radius: 22px;
-         box-shadow: 0 6px 25px rgba(0,0,0,0.35);
-         min-height: 70svh;
-         display: flex;
-         align-items: center;
-         justify-content: center;
-         text-align: center;
-         padding: 2em;
-         color: #4b2570;
          font-family: 'Parisienne', cursive;
-         font-size: 1.4rem;
-         line-height: 2;
-         letter-spacing: 0.6px;
-         background: #fffdfa;
-         margin-top: 20px;
-         margin-left: 20px;
-       ">
-       
-    <!-- Fondo centrado sin alteración de color -->
-    <div style="
-         position: absolute;
-         top: 0;
-         left: 0;
-         width: calc(100% - 40px);
-         height: calc(100% - 40px);
-         margin: 20px;
-         background: url('https://m.media-amazon.com/images/I/41XOEZ-G-6L._AC_SL1001_.jpg?auto=format&fit=crop&w=900&q=80') center center no-repeat;
-         background-size: contain;
-         z-index: 0;
-       "></div>
-
-    <!-- Capa semitransparente muy ligera para contraste del texto -->
-    <div style="
-         position: absolute;
-         inset: 0;
-         background: rgba(255,255,255,0.35);
+         font-size: 1.2rem;
+         line-height: 1.9;
+         color: #4a3212;
+         text-align: justify;
+         display: flex;
+         flex-direction: column;
+         align-items: center;
+         justify-content: flex-start;
+         padding: 25px 25px 50px 25px;
          border-radius: 22px;
-         z-index: 1;
-       "></div>
+         //background-color: #fffdfa;
+         max-width: 600px;
+         margin: 0 auto;
+         box-shadow: 0 6px 25px rgba(0,0,0,0.15);
+       ">
 
-    <!-- Texto reflexivo -->
-    <div class="fade-in-item delay-1" style="position: relative; z-index: 2; max-width: 90%;">
-      <p>
+    <!-- Imágenes decorativas centradas y pegadas -->
+    <div class="fade-in-item" style="
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          gap: 0; /* Sin espacio entre ellas */
+          margin-bottom: 10px;
+          margin-top: -10px;
+        ">
+      <img class="fade-in-item" src="./img/cruz.png" alt="Cruz izquierda"
+           style="width: 100px; opacity: 0.95; transform: translateX(8px);">
+      <img class="fade-in-item" src="./img/girl.png" alt="Niña central"
+           style="width: 170px; opacity: 1; z-index: 2;">
+      <img class="fade-in-item" src="./img/bendi.png" alt="Bendición derecha"
+           style="width: 100px; opacity: 0.95; transform: translateX(-8px);">
+    </div>
+
+    <!-- Texto -->
+    <div class="quote fade-in-item delay-1" style="max-width: 90%;">
+      <p style="
+            margin: 0;
+            font-size: 1.1rem;
+            color: #5a3e1a;
+            text-align: justify;
+            text-align-last: center;
+          ">
         “Con alegría y fe en mi corazón, hoy recibo el Bautismo, un regalo de amor y esperanza que me unirá para siempre con Dios y me guiará en cada paso de mi vida.”
       </p>
     </div>
   </div>
 </section>
-<section class="section active" id="section4">
-  <div class="card-wrapper" 
-       style="
-         position: relative;
-         overflow: hidden;
-         background-image: url('https://i.pinimg.com/1200x/0c/61/1a/0c611ab0e09772ae18b78f26e77a708b.jpg');
-         background-repeat: no-repeat;
-         background-size: cover;
-         background-position: center;
-         border-radius: 22px;
-         box-shadow: 0 6px 25px rgba(0,0,0,0.35);
-         display: flex;
-         flex-direction: column;
-         align-items: center;
-         text-align: center;
-         background-color: #fffdfa;
-         margin: 20px;
-         padding: 0;
-       ">
-    
-    <!-- Cinta decorativa superior -->
-    <div class="fade-in-item" style="
-         position: relative;
-         width: 100%;
-         height: 130px;
-         background-color: #ffffff;
-         background-image: url('https://i.pinimg.com/1200x/ea/01/10/ea0110ca32089338f6671390e62c9f08.jpg');
-         background-repeat: no-repeat;
-         background-size: cover;
-         background-position: center;
-         border-top-left-radius: 22px;
-         border-top-right-radius: 22px;
-         display: flex;
-         align-items: center;
-         justify-content: center;
-       ">
-       <h1 class="fade-in-item" style="
-            color: #ffffff;
-            font-family: 'Great Vibes', cursive;
-            font-size: 2.8rem;
-            text-shadow: 0 2px 6px rgba(0,0,0,0.4);
-            margin: 0;
-            letter-spacing: 2px;
-          ">
-         Mis padres
-       </h1>
-    </div>
 
-    <!-- Contenido del card debajo del título -->
-    <div class="fade-in-item" style="
-         padding: 40px 20px 60px;
-         flex: 1;
-         display: flex;
-         flex-direction: column;
-         justify-content: center;
-         align-items: center;
-       ">
-       <p style="
-            color: #b48a1f;
-            font-family: 'Parisienne', cursive;
-            font-size: 2.2rem;
-            line-height: 1.3;
-            margin: 0;
-            text-shadow: 0 1px 3px rgba(255,255,255,0.8);
-          ">
-         Adrián Bernardo<br>
-         <span style="font-size: 2rem;">Adanaqué Santos</span><br>
-         &amp;<br>
-         <span style="font-size: 2.2rem;">Tania Elizabeth Maza Moscol</span>
-       </p>
-    </div>
 
+<section class="section active" id="section4" style="position: relative; overflow: hidden;">
+
+  <!-- Título encima de la cinta -->
+  <h1 class="fade-in-item" style="
+        position: relative;
+        z-index: 2;
+        margin: 0;
+        margin-top: 20px;
+        text-align: center;
+        font-family: 'Great Vibes', cursive;
+        font-size: 3.2rem;
+        color: #b27cd9;
+        text-shadow: 
+          0 2px 4px rgba(0,0,0,0.25),
+          0 0 10px rgba(255,255,200,0.6);
+        letter-spacing: 1.5px;
+      ">
+    Mis padres
+  </h1>
+
+  <!-- Cinta decorativa -->
+  <div class="fade-in-item" style="
+        position: relative;
+        width: 100%;
+        height: 130px;
+        background-image: url('./img/cinta.png');
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-position: center;
+        margin-top: -50px; /* un poco más cerca del título */
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      ">
   </div>
+
+  <!-- Contenido debajo -->
+  <div class="fade-in-item" style="
+        padding: 10px 20px 40px; /* antes 40px arriba → ahora 10px */
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: center;
+      ">
+    <p style="
+          color: #b48a1f;
+          font-family: 'Parisienne', cursive;
+          font-size: 2.1rem;
+          line-height: 1.4;
+          margin: 0;
+          margin-top: -10px; /* sube el texto un poco más */
+          text-align: center;
+          text-shadow: 0 1px 3px rgba(255,255,255,0.7);
+        ">
+      Adrián Bernardo<br>
+      <span style="font-size: 1.9rem;">Adanaqué Santos</span><br>
+      &amp;<br>
+      <span style="font-size: 2rem;">Tania Elizabeth Maza Moscol</span>
+    </p>
+  </div>
+
+
+
+
+ <!-- Título encima de la cinta -->
+  <h1 class="fade-in-item" style="
+        position: relative;
+        z-index: 2;
+        margin: 0;
+        margin-top: 20px;
+        text-align: center;
+        font-family: 'Great Vibes', cursive;
+        font-size: 3.2rem;
+        color: #b27cd9;
+        text-shadow: 
+          0 2px 4px rgba(0,0,0,0.25),
+          0 0 10px rgba(255,255,200,0.6);
+        letter-spacing: 1.5px;
+      ">
+    Mis padrinos
+  </h1>
+
+  <!-- Cinta decorativa -->
+  <div class="fade-in-item" style="
+        position: relative;
+        width: 100%;
+        height: 130px;
+        background-image: url('./img/cinta.png');
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-position: center;
+        margin-top: -50px; /* un poco más cerca del título */
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      ">
+  </div>
+
+  <!-- Contenido debajo -->
+  <div class="fade-in-item" style="
+        padding: 10px 20px 40px; /* antes 40px arriba → ahora 10px */
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: center;
+      ">
+    <p style="
+          color: #b48a1f;
+          font-family: 'Parisienne', cursive;
+          font-size: 2.1rem;
+          line-height: 1.4;
+          margin: 0;
+          margin-top: -10px; /* sube el texto un poco más */
+          text-align: center;
+          text-shadow: 0 1px 3px rgba(255,255,255,0.7);
+        ">
+      Danny William<br>
+      <span style="font-size: 1.9rem;">Adanaqué Santos</span><br>
+      &amp;<br>
+      <span style="font-size: 2rem;">Rosa Maza Moscol</span>
+    </p>
+  </div>
+
 </section>
+
+
 
 
 
@@ -675,4 +728,3 @@ document.addEventListener("DOMContentLoaded", () => {
 </script>
 </body>
 </html>
-
