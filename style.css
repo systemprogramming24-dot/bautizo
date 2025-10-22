@@ -68,28 +68,20 @@
 
 
 
-.texto-blanco-luminoso {
-  color: #fff;
+.texto-blanco-sombra-fuerte {
+ 
+margin: 0;
+          text-align: center;
+          font-family: 'Great Vibes', cursive;
+          font-size: 2.5rem;
+  line-height: 1.1; /* 🔥 reduce el espacio vertical */
+
+          color: #fff;
   text-shadow:
-    0 0 8px #fff,
-    0 0 15px #ffd700,
-    0 0 25px #fff4b2;
-  animation: brillowhite 2.5s ease-in-out infinite alternate;
+    2px 2px 6px rgba(0, 0, 0, 0.5),
+    0 0 10px rgba(0, 0, 0, 0.3);
 }
 
-@keyframes brillowhite {
-  from {
-    text-shadow:
-      0 0 4px #000,
-      0 0 10px #ffd700;
-  }
-  to {
-    text-shadow:
-      0 0 12px #fff4b2,
-      0 0 30px #ffd700,
-      0 0 40px #fff9cc;
-  }
-}
 
 
 
