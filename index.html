@@ -21,12 +21,13 @@ html, body { margin: 0; padding: 0; scroll-behavior: smooth; height: 100%; overf
 body {
   background-color: #fffdfa;
   font-family: 'Playfair Display', serif;
+
 }
 body::before {
   content: "";
   position: fixed;
   inset: 0;
-  background: url('https://i.pinimg.com/1200x/5b/c1/ea/5bc1eafa0e02b013861f339ab7d91aa8.jpg') center/100% 100% no-repeat;
+  background: url('https://i.pinimg.com/1200x/b9/f3/ac/b9f3ac9f6ad5c9163e1b06b34be59603.jpg') center/100% 100% no-repeat;
   z-index: -1;
   opacity: 0.96;
 }
@@ -151,7 +152,16 @@ body::before {
   animation: fadeInUp 2s ease forwards;
   margin:0; color:#b25f67; font-size:clamp(2.5rem,5vw,3rem);
 }
-.quote { width:80%; margin:1.5em auto 0; font-style:italic; font-size:0.95rem; color:#7a5d68; text-align:center; line-height:1.6; }
+.quote { 
+//width:80%; 
+//margin:1.5em auto 0; 
+font-style:italic; 
+font-size:1.5rem; 
+color:#7a5d68; 
+text-align:center; 
+line-height:1.6;   
+font-family: 'Great Vibes', cursive;
+}
 .countdown {
   display:flex; justify-content:center; gap:12px; background:rgba(255,255,255,0.25);
   backdrop-filter:blur(10px); border-radius:15px; padding:10px 15px;
@@ -232,7 +242,7 @@ body::before {
     <div class="boton-brillante seal"></div>
     <div class="message">
       <div>Toca para abrir la invitación</div>
-      <div> <span class="golden-text cover-title"></span></div>
+      <div> <span class="cover-title"></span></div>
     </div>
   </div>
 </section>
@@ -256,7 +266,7 @@ body::before {
       <div class="photo"><img src="sami.jpg"></div>
       <div class="content">
         <div class="boton-brillante name-block"><h1>Samantha Sayuri<br>Adanaqué Maza</h1></div>
-        <div class="quote">“Un día lleno de luz y bendiciones para celebrar el amor y la fe.”</div>
+        <div class="sombra-brillante quote">“Un día lleno de luz y bendiciones para celebrar el amor y la fe.”</div>
       </div>
       <div class="countdown" id="countdown2"></div>
     </div>
@@ -299,7 +309,7 @@ body::before {
     </div>
 
     <!-- Texto -->
-    <div class="quote fade-in-item delay-1" style="max-width: 90%;">
+    <div class="sombra-brillante quote fade-in-item delay-1" style="max-width: 90%;">
       <p style="
             margin: 0;
 	    font-family:'Parisienne', cursive;
@@ -331,7 +341,7 @@ body::before {
        ">
 
       <!-- 🔹 BLOQUE 1: MIS PADRES -->
-    <h1 class="golden-text fade-in-item" style="
+    <h1 class="texto-blanco-luminoso fade-in-item" style="
           margin: 0;
           text-align: center;
           font-family: 'Great Vibes', cursive;
@@ -344,10 +354,10 @@ body::before {
       Mis padres
     </h1>
     <div style="
-          width: 100%;
-          height: 120px;
+          width: 120%;
+          height: 200px;
           background: url('./img/cinta.png') center / cover no-repeat;
-          margin-top: -60px;
+          margin-top: -80px;
           margin-bottom: -15px;
         "></div>
     <p style="
@@ -365,23 +375,25 @@ body::before {
 
 
     <!-- 🔹 BLOQUE 2: MIS PADRINOS DE BAUTIZO -->
-    <h1 class="fade-in-item" style="
-          margin: 0;
-          text-align: center;
-          font-family: 'Great Vibes', cursive;
-          font-size: 1.8rem;
-          color: #fff;
-          text-shadow: 
-            0 2px 4px rgba(0,0,0,0.25),
-            0 0 10px rgba(255,255,200,0.6);
-        ">
-      Mis padrinos<br>de bautizo
-    </h1>
+    <h1 class="texto-blanco-luminoso fade-in-item" style="
+  margin: 0;
+  text-align: center;
+  font-family: 'Great Vibes', cursive;
+  font-size: 2.6rem;
+  color: #fff;
+  line-height: 0.9; /* 🔥 reduce el espacio vertical */
+  text-shadow: 
+    0 2px 4px rgba(0,0,0,0.25),
+    0 0 10px rgba(255,255,200,0.6);
+">
+  Mis padrinos de bautizo
+</h1>
+
     <div style="
-          width: 100%;
-          height: 160px;
+          width: 150%;
+          height: 200px;
           background: url('./img/cinta.png') center / cover no-repeat;
-          margin-top: -70px;
+          margin-top: -90px;
           margin-bottom: -15px;
         "></div>
     <p style="
@@ -398,23 +410,25 @@ body::before {
     </p>
 
     <!-- 🔹 BLOQUE 3: MIS PADRINOS DE CORTE DE PELO -->
-    <h1 class="fade-in-item" style="
-          margin: 0;
-          text-align: center;
-          font-family: 'Great Vibes', cursive;
-          font-size: 1.8rem;
-          color: #fff;
-          text-shadow: 
-            0 2px 4px rgba(0,0,0,0.25),
-            0 0 10px rgba(255,255,200,0.6);
-        ">
+    <h1 class="texto-blanco-luminoso fade-in-item" style="
+  margin: 0;
+  text-align: center;
+  font-family: 'Great Vibes', cursive;
+  font-size: 2.6rem;
+  color: #fff;
+  line-height: 0.9; /* 🔥 reduce el espacio vertical */
+  text-shadow: 
+    0 2px 4px rgba(0,0,0,0.25),
+    0 0 10px rgba(255,255,200,0.6);
+">
+
       Mis padrinos<br>de corte de pelo
     </h1>
     <div style="
-          width: 100%;
-          height: 160px;
+          width: 150%;
+          height: 200px;
           background: url('./img/cinta.png') center / cover no-repeat;
-          margin-top: -70px;
+          margin-top: -90px;
           margin-bottom: -15px;
         "></div>
     <p style="
@@ -723,6 +737,5 @@ document.addEventListener("DOMContentLoaded", () => {
 </script>
 </body>
 </html>
-
 
 
