@@ -533,9 +533,17 @@ body::before {
 
       <div class="decoracion">
         <div class="ramita"></div>
-        <div class="cruz"></div>
+       <div class="cruz" style="background-image: url('./img/misa.png');"></div> 
         <div class="ramita"></div>
       </div>
+      
+        <div class="decoracion">
+        <div class="ramita"></div>
+        <div class="copas" style="background-image: url('./img/misa.png');"></div> <!-- Opcional: cambiar ícono --> 
+        <div class="ramita"></div>
+      </div>
+      
+      
     </div>
   </div>
 </section>
@@ -681,12 +689,102 @@ body::before {
   width: 10px; height: 2px;
   background: #d4af37;
 }
+
+/* 🏠 Icono Casa (NUEVO) */
+.home-icon {
+    width: 70px;
+    height: 70px;
+    position: relative;
+    background: #fff;
+    border: 3px solid #d4af37;
+    border-radius: 10px;
+    box-shadow: 0 3px 8px rgba(0,0,0,0.15);
+}
+.home-icon .roof {
+    position: absolute;
+    top: 8px;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-left: 28px solid transparent;
+    border-right: 28px solid transparent;
+    border-bottom: 20px solid #d4af37;
+    transform: translateX(-50%);
+}
+.home-icon .body {
+    position: absolute;
+    bottom: 10px;
+    left: 50%;
+    width: 40px;
+    height: 32px;
+    background: #6b3fa0;
+    transform: translateX(-50%);
+    border-radius: 0 0 3px 3px;
+}
+.home-icon .door {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    width: 12px;
+    height: 20px;
+    background: #fff;
+    transform: translateX(-50%);
+    border-radius: 2px 2px 0 0;
+}
 </style>
 
+<!-- ================================================== -->
+<!-- ============= NUEVA SECCIÓN 6 (RECEPCIÓN) ============= -->
+<!-- ================================================== -->
+<section class="section active" id="section6">
+  <div class="card-wrapper fade-in-item">
+    <div class="overlay"></div>
+
+    <div class="contenido">
+      <h1 class="titulo-seccion">Recepción</h1>
+
+      <div class="info-ceremonia">
+        <!-- Icono de calendario -->
+        <div class="item">
+          <div class="icono-calendario">
+            <div class="calendario-cabecera">NOV</div>
+            <div class="calendario-numero">22</div>
+          </div>
+          <span>Sábado, 22 de Noviembre de 2025</span>
+        </div>
+
+        <!-- Icono de reloj -->
+        <div class="item">
+          <div class="clock-icon">
+             <div class="clock-hand hour" style="transform: translate(-50%, -100%) rotate(30deg);"></div>
+             <div class="clock-hand minute" style="transform: translate(-50%, -100%) rotate(0deg);"></div>
+          </div>
+          <span>01:00 p.m.</span>
+        </div>
+
+        <!-- Icono de casa -->
+        <div class="item">
+          <div class="home-icon">
+              <div class="roof"></div>
+              <div class="body">
+                  <div class="door"></div>
+              </div>
+          </div>
+          <span>Casa de los abuelos: Urb. Los Geranios Mz. A Lt. 17</span>
+        </div>
+      </div>
+
+      <div class="decoracion">
+        <div class="ramita"></div>
+        <div class="copas" style="background-image: url('./img/copas.png');"></div> <!-- Opcional: cambiar ícono --> 
+        <div class="ramita"></div>
+      </div>
+    </div>
+  </div>
+</section>
 
 
-
- <section class="section active" id="section6">
+ <section class="section active" id="section7">
   <!-- AÑADIDA CLASE .fade-in-item -->
   <div class="card-wrapper fade-in-item" 
        style="
@@ -897,7 +995,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Observador para la flecha de scroll
   const scrollArrow = document.getElementById('scrollArrow');
-  const finalSection = document.getElementById('section6');
+  // ***** CAMBIO IMPORTANTE: Apuntar a la nueva última sección (section7) *****
+  const finalSection = document.getElementById('section7');
 
   if (scrollArrow && finalSection) {
     const arrowObserver = new IntersectionObserver((entries) => {
