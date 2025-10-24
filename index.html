@@ -9,6 +9,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Parisienne&family=Playfair+Display:wght@400;600&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
 <link href="style.css" rel="stylesheet">
 
 <style>
@@ -58,7 +59,7 @@ body::before {
   min-height: auto;
 }
 
-/* ===== Sobre ===== */
+/* ===== Sobre (MODIFICADO) ===== */
 .envelope {
   position: absolute;
   top: 50%;
@@ -66,13 +67,13 @@ body::before {
   transform: translate(-50%, -50%);
   width: 300px;
   height: 200px;
-  background: #f0e6d2;
+  background: linear-gradient(135deg, #dcd0ff, #c8b6f2); /* Color lila degradado */
   border-radius: 6px;
-  box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+  box-shadow: 0 8px 30px rgba(62, 39, 94, 0.4); /* Sombra más pronunciada */
   cursor: pointer;
   z-index: 10;
   transition: transform 0.4s ease, box-shadow 0.4s ease;
-  perspective: 1000px; /* Añadido para el efecto 3D */
+  perspective: 1000px;
 }
 
 .envelope:hover {
@@ -85,11 +86,11 @@ body::before {
   left: 0;
   width: 100%;
   height: 50%;
-  background: #e6d8bf;
+  background: linear-gradient(135deg, #d1c4f7, #bda8ea); /* Degradado lila para la solapa */
   clip-path: polygon(0% 0%, 100% 0%, 50% 100%);
   transform-origin: top;
   transition: transform 0.8s ease-in-out;
-  backface-visibility: hidden; /* Oculta la parte trasera al girar */
+  backface-visibility: hidden;
   z-index: 12;
 }
 
@@ -99,15 +100,16 @@ body::before {
 
 .envelope-back {
     position: absolute;
-    top: 0;
+    top: 50%;
     left: 0;
     width: 100%;
     height: 50%;
-    background: #f0e6d2;
+    background: #dcd0ff; /* Lado inferior del sobre */
     clip-path: polygon(0 0, 100% 0, 50% 100%);
     z-index: 9;
+    transform: rotate(180deg);
+    transform-origin: center;
 }
-
 
 .envelope .message {
   position: absolute;
@@ -115,18 +117,24 @@ body::before {
   left: 50%;
   transform: translate(-50%, -50%);
   text-align: center;
-  color: #4b2570;
-  font-size: 1.5rem;
-  font-family: 'Great Vibes', cursive;
+  color: #3d2c56; /* Color de texto oscuro para legibilidad */
+  font-family: 'Parisienne', cursive; /* Fuente Parisienne */
   width: 90%;
   z-index: 16;
+  text-shadow: 1px 1px 3px rgba(255, 255, 255, 0.5); /* Sombra de texto clara */
+}
+
+.envelope .message div:nth-child(1) {
+  font-size: 1.7rem; /* Tamaño de letra más grande */
+  font-weight: 600; /* Letra más gruesa */
 }
 
 .envelope .message div:nth-child(2) {
-  font-size: 1.8rem;
-  margin-top: 10px;
-  color: #b48a1f;
-  font-family: 'Great Vibes', cursive;
+  font-size: 2.1rem; /* Tamaño de letra más grande */
+  margin-top: 12px;
+  color: #4b2570; /* Color distintivo */
+  font-family: 'Parisienne', cursive;
+  font-weight: 600; /* Letra más gruesa */
 }
 
 .envelope .seal {
@@ -149,6 +157,38 @@ body::before {
 .envelope.open .seal {
   opacity: 0;
 }
+
+/* ===== Control de Música (NUEVO) ===== */
+#musicControl {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 999;
+  background-color: rgba(255, 255, 255, 0.5);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  border-radius: 50%;
+  width: 45px;
+  height: 45px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.15);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.5s ease, visibility 0.5s ease;
+}
+#musicControl.visible {
+  opacity: 1;
+  visibility: visible;
+}
+#musicControl svg {
+  width: 22px;
+  height: 22px;
+  fill: #4b2570;
+}
+#pauseIcon { display: none; }
 
 
 /* ==== Elementos comunes ==== */
@@ -258,7 +298,17 @@ body::before {
 </style>
 </head>
 <body>
-<audio id="bgMusic" src="sake.mp3" preload="auto"></audio>
+<audio id="bgMusic" src="sake.mp3" preload="auto" loop></audio> <!-- Añadido loop -->
+
+<!-- Contenido HTML sin cambios... -->
+
+<!-- Botón de música (NUEVO) -->
+<div id="musicControl">
+  <!-- Icono de Play -->
+  <svg id="playIcon" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"></path></svg>
+  <!-- Icono de Pausa -->
+  <svg id="pauseIcon" viewBox="0 0 24 24"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"></path></svg>
+</div>
 
 <section class="section active" id="section1">
   <div class="envelope" id="envelope">
@@ -267,7 +317,7 @@ body::before {
     <div class="boton-brillante seal"></div>
     <div class="message">
       <div>Toca para abrir la invitación</div>
-      <div><span class="cover-title"></span></div>
+      <div><span class="sombra-brillante cover-title"></span></div>
     </div>
   </div>
 </section>
@@ -730,6 +780,9 @@ function activarPantallaCompleta() {
   const music = document.getElementById('bgMusic');
   const sec2 = document.getElementById('section2');
   const scrollArrow = document.getElementById('scrollArrow');
+  const musicControl = document.getElementById('musicControl'); // <-- Control música
+  const playIcon = document.getElementById('playIcon');
+  const pauseIcon = document.getElementById('pauseIcon');
 
   envelope.addEventListener('click',()=>{
     envelope.classList.add('open');
@@ -739,11 +792,40 @@ function activarPantallaCompleta() {
       mainContent.style.position='relative';
       sec2.scrollIntoView({behavior:'smooth'}); 
       activarPantallaCompleta();
+      
+      // Reproducir música
       music.volume=0.8; 
-      music.play().catch(()=>{});
-      setTimeout(() => scrollArrow.classList.add('visible'), 500);
+      music.play().then(() => {
+        // La música comenzó a reproducirse
+        playIcon.style.display = 'none';
+        pauseIcon.style.display = 'block';
+      }).catch(()=>{
+        // El navegador bloqueó la reproducción automática
+        playIcon.style.display = 'block';
+        pauseIcon.style.display = 'none';
+      });
+
+      setTimeout(() => {
+        scrollArrow.classList.add('visible');
+        musicControl.classList.add('visible'); // <-- Hacer visible el control
+      }, 500);
+
     },900);
   });
+  
+  // Lógica del botón de música
+  musicControl.addEventListener('click', () => {
+    if (music.paused) {
+      music.play();
+      playIcon.style.display = 'none';
+      pauseIcon.style.display = 'block';
+    } else {
+      music.pause();
+      playIcon.style.display = 'block';
+      pauseIcon.style.display = 'none';
+    }
+  });
+
 
   iniciarCountdown('countdown2');
   for(let i=0;i<20;i++){
@@ -776,7 +858,7 @@ async function cargarGrupo(){
   const nombreElCover = document.querySelector('.cover-title');
   const confirmLink = document.getElementById('confirmLink');
   if (!groupCode) {
-    nombreElCover.textContent = 'Querida familia';
+    nombreElCover.textContent = 'Querida Familia'; // Mensaje genérico
     confirmLink.href = "https://bautizo-samantha-sayuri.vercel.app/confirm.html";
     return;
   }
