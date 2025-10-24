@@ -1,281 +1,1018 @@
-.golden-text {
-  background: linear-gradient(45deg, #d4af37, #ffd700, #fff1b0, #d4af37);
-  background-size: 200% auto;
-  color: #000; /* color de respaldo */
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  animation: shine 3s linear infinite;
-  font-family: 'Great Vibes', cursive; /* opcional, elegante */
-}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Mi Bautizo - Samantha Sayuri</title>
+<!-- Supabase client -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Parisienne&family=Playfair+Display:wght@400;600&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+<link href="style.css" rel="stylesheet">
 
-@keyframes shine {
-  to {
-    background-position: 200% center;
-  }
-}
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Parisienne&family=Playfair+Display:wght@400;600&family=Poppins:wght@400;600&display=swap');
 
- 
- 
-.boton-brillante {
-  position: relative;
-  overflow: hidden;
-  background: linear-gradient(135deg, #b8860b, #ffd700, #fff4b0, #b8860b);
-  color: #4a3212;
-  border: 2px solid #d4af37;
-  border-radius: 12px;
-  padding: 5px 14px;
-  font-size: 0.95rem;
-  font-weight: bold;
-  font-family: 'Parisienne', cursive;
-  cursor: pointer;
-  box-shadow: 0 0 8px rgba(255, 215, 0, 0.5);
-  transition: transform 0.3s ease;
+html, body { margin: 0; padding: 0; scroll-behavior: smooth; height: 100%; overflow-x: hidden; }
+body {
+  background-color: #fffdfa;
+  font-family: 'Playfair Display', serif;
 }
-
-.boton-brillante:hover {
-  transform: scale(1.05);
-}
-
-.boton-brillante::after {
+body::before {
   content: "";
+  position: fixed;
+  inset: 0;
+  background: url('https://i.pinimg.com/1200x/b9/f3/ac/b9f3ac9f6ad5c9163e1b06b34be59603.jpg') center/100% 100% no-repeat;
+  z-index: -1;
+  opacity: 0.96;
+}
+.section {
+  width: 100%;
+  min-height: 90svh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.4s ease, visibility 0.4s ease, transform 0.6s ease;
+}
+
+.section.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+.card-wrapper {
+  position: relative;
+  width: 80%;
+  max-width: 340px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  text-align: center;
+  box-sizing: border-box;
+  padding: 15px 0;
+  min-height: auto;
+}
+
+/* ===== Sobre (MODIFICADO) ===== */
+.envelope {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 300px;
+  height: 200px;
+  background: linear-gradient(135deg, #dcd0ff, #c8b6f2); /* Color lila degradado */
+  border-radius: 6px;
+  box-shadow: 0 8px 30px rgba(62, 39, 94, 0.4); /* Sombra más pronunciada */
+  cursor: pointer;
+  z-index: 10;
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
+  perspective: 1000px;
+}
+
+.envelope:hover {
+  transform: translate(-50%, -52%) scale(1.05);
+}
+
+.envelope .flap {
   position: absolute;
   top: 0;
-  left: -75px;
-  width: 50px;
-  height: 100%;
-  background: rgba(255, 255, 255, 0.6);
-  transform: skewX(-25deg);
-  animation: brillo 2s infinite;
+  left: 0;
+  width: 100%;
+  height: 50%;
+  background: linear-gradient(135deg, #d1c4f7, #bda8ea); /* Degradado lila para la solapa */
+  clip-path: polygon(0% 0%, 100% 0%, 50% 100%);
+  transform-origin: top;
+  transition: transform 0.8s ease-in-out;
+  backface-visibility: hidden;
+  z-index: 12;
 }
 
-@keyframes brillo {
-  0% {
-    left: -75px;
-  }
-  100% {
-    left: 125%;
-  }
+.envelope.open .flap {
+  transform: rotateX(-180deg);
 }
 
-
-.sombra-brillante {
-color: #C8A2C8; /* morado claro pastel */
-text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3); /* sombra gris
+.envelope-back {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    width: 100%;
+    height: 50%;
+    background: #dcd0ff; /* Lado inferior del sobre */
+    clip-path: polygon(0 0, 100% 0, 50% 100%);
+    z-index: 9;
+    transform: rotate(180deg);
+    transform-origin: center;
 }
 
-.texto-blanco-sombra-fuerte {
- 
-margin: 0;
-          text-align: center;
-          font-family: 'Great Vibes', cursive;
-          font-size: 2.5rem;
-  line-height: 1.1; /* 🔥 reduce el espacio vertical */
-
-          color: #fff;
-  text-shadow:
-    2px 2px 6px rgba(0, 0, 0, 0.5),
-    0 0 10px rgba(0, 0, 0, 0.3);
-}
-
-
-
-
-
-
-
-
-#section5 {
-  margin: 90px 0; /* separa de las otras secciones */
-}
-
-#section5 .card-wrapper {
-  font-family: 'Parisienne', cursive;
-  color: #4a3212;
-  border-radius: 22px;
-  max-width: 600px;
-  margin: 0 auto;
-  box-shadow: 0 6px 25px rgba(0,0,0,0.15);
-  background-image: url('./img/iglesia.jpg');
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-position: center;
-  position: relative;
-  overflow: hidden;
-}
-
-.overlay {
+.envelope .message {
   position: absolute;
-  inset: 0;
-  background-color: rgba(255, 255, 255, 0.75);
-  backdrop-filter: blur(2px);
-}
-
-.contenido {
-  position: relative;
-  z-index: 2;
-  padding: 40px 25px 50px 25px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   text-align: center;
+  color: #3d2c56; /* Color de texto oscuro para legibilidad */
+  font-family: 'Parisienne', cursive; /* Fuente Parisienne */
+  width: 90%;
+  z-index: 16;
+  text-shadow: 1px 1px 3px rgba(255, 255, 255, 0.5); /* Sombra de texto clara */
 }
 
-.titulo-seccion {
+.envelope .message div:nth-child(1) {
+  font-size: 1.7rem; /* Tamaño de letra más grande */
+  font-weight: 600; /* Letra más gruesa */
+}
+
+.envelope .message div:nth-child(2) {
+  font-size: 2.1rem; /* Tamaño de letra más grande */
+  margin-top: 12px;
+  color: #4b2570; /* Color distintivo */
+  font-family: 'Parisienne', cursive;
+  font-weight: 600; /* Letra más gruesa */
+}
+
+.envelope .seal {
+  position: absolute;
+  top: 45%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 50px;
+  height: 50px;
+  background: radial-gradient(circle at 30% 30%, #fff9d6, #d4af37, #b48a1f);
+  border-radius: 50%;
+  box-shadow: inset 0 0 8px rgba(255,255,255,0.8),
+              0 0 12px rgba(212,175,55,0.8),
+              0 0 25px rgba(180,138,31,0.5);
+  border: 2px solid #c9a13b;
+  z-index: 15;
+  transition: opacity 0.5s ease;
+}
+
+.envelope.open .seal {
+  opacity: 0;
+}
+
+/* ===== Control de Música (NUEVO) ===== */
+#musicControl {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 999;
+  background-color: rgba(255, 255, 255, 0.5);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  border-radius: 50%;
+  width: 45px;
+  height: 45px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.15);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.5s ease, visibility 0.5s ease;
+}
+#musicControl.visible {
+  opacity: 1;
+  visibility: visible;
+}
+#musicControl svg {
+  width: 22px;
+  height: 22px;
+  fill: #4b2570;
+}
+#pauseIcon { display: none; }
+
+
+/* ==== Elementos comunes ==== */
+.save-text svg { width:100%; height:100px; overflow:visible; }
+.save-text text {
+  font-family:'Gliker', cursive;
+  font-size:clamp(3rem,9vw,7rem);
+  fill:url(#goldGradient);
+  stroke:#d6b85a; stroke-width:2.5px;
+  paint-order:stroke fill;
+  filter:drop-shadow(1px 1px 0 #d6b85a) drop-shadow(3px 3px 0 #c5a84f) drop-shadow(6px 6px 6px rgba(0,0,0,0.25));
+  transform:translateY(50px);
+  animation: fadeInUp 2s ease forwards;
+}
+.photo { width:clamp(180px,45vw,280px); height:clamp(180px,45vw,280px); border-radius:50%; overflow:hidden; border:6px solid #f8e7b3; box-shadow:0 0 25px rgba(0,0,0,0.3);}
+.photo img { width:100%; height:100%; object-fit:cover; }
+
+.name-block {
+  background-image:url('https://images.freeimages.com/vhq/images/previews/b48/gold-metal-sign-137002.png?fmt=webp&h=350');
+  background-size:cover; background-position:center;
+  border-radius:20px; padding:1.5em; display:inline-block;
+  box-shadow:0 4px 20px rgba(0,0,0,0.25);
+  text-align:center;
+}
+@keyframes fadeInUp {
+  0% { opacity: 0; transform: translateY(30px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+.name-block h1 {
   font-family: 'Great Vibes', cursive;
-  font-size: 3rem;
-  color: #d4af37;
-  text-decoration: underline;
-  text-decoration-color: #e6c76f;
-  text-underline-offset: 8px;
-  text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.3);
-  margin-bottom: 40px;
-  margin-top: 10px;
+  animation: fadeInUp 2s ease forwards;
+  margin:0; color:#b25f67; font-size:clamp(2.5rem,5vw,3rem);
+}
+.quote { 
+  font-style:italic; 
+  font-size:1.5rem; 
+  color:#7a5d68; 
+  text-align:center; 
+  line-height:1.6;   
+  font-family: 'Great Vibes', cursive;
+}
+.countdown {
+  display:flex; justify-content:center; gap:12px; background:rgba(255,255,255,0.25);
+  backdrop-filter:blur(10px); border-radius:15px; padding:10px 15px;
+  box-shadow:0 4px 15px rgba(0,0,0,0.2); color:#4b2570;
+  font-family:'Poppins', sans-serif;
+}
+.countdown span {
+  display:flex; flex-direction:column; align-items:center; justify-content:center;
+  min-width:60px; min-height:60px; background:linear-gradient(145deg,#c7a8f5,#a67bd8);
+  border-radius:12px;
+}
+.start-button {
+  background:linear-gradient(135deg,#f9e7a8,#e6c76d); border:none; border-radius:30px;
+  padding:14px 28px; font-family:'Parisienne', cursive; font-size:1.3rem; cursor:pointer;
+  text-decoration: none;
+  color: #4b2570;
+}
+.petal { position:fixed; top:-10px; background-image:url('img/flor.png'); background-size:cover; width:25px; height:25px; opacity:0.8; animation:fall linear infinite; pointer-events:none; z-index:5;}
+@keyframes fall {0%{transform:translateY(0) rotate(0deg);opacity:1;}100%{transform:translateY(110svh) rotate(720deg);opacity:0.7;}}
+
+@media (max-width:768px){
+  .save-text text{font-size:clamp(8rem,14vw,9rem);stroke-width:3px;}
 }
 
-.info-ceremonia {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 25px;
+#scrollArrow {
+  position: fixed;
+  bottom: 25px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 100;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.5s ease, visibility 0.5s ease;
+}
+#scrollArrow.visible {
+  opacity: 1;
+  visibility: visible;
+}
+.double-arrow {
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: 4px; opacity: 0.6;
+}
+.double-arrow span {
+  display: block; width: 18px; height: 18px;
+  border-left: 3px solid #000; border-bottom: 3px solid #000;
+  transform: rotate(-45deg); border-radius: 2px;
+  animation: arrowDown 1.4s infinite ease-in-out;
+}
+.double-arrow span:nth-child(2) { animation-delay: 0.2s; }
+@keyframes arrowDown {
+  0% { opacity: 0.2; transform: translateY(0) rotate(-45deg); }
+  50% { opacity: 0.9; transform: translateY(8px) rotate(-45deg); }
+  100% { opacity: 0.2; transform: translateY(0) rotate(-45deg); }
 }
 
-.item {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 8px;
+/* ===== ESTILOS PARA EL FADE IN ===== */
+.fade-in-item {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 1.5s ease-out, transform 1.5s ease-out;
 }
+.fade-in-item.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+</style>
+</head>
+<body>
+<audio id="bgMusic" src="sake.mp3" preload="auto" loop></audio> <!-- Añadido loop -->
 
-.item span {
+<!-- Contenido HTML sin cambios... -->
+
+<!-- Botón de música (NUEVO) -->
+<div id="musicControl">
+  <!-- Icono de Play -->
+  <svg id="playIcon" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"></path></svg>
+  <!-- Icono de Pausa -->
+  <svg id="pauseIcon" viewBox="0 0 24 24"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"></path></svg>
+</div>
+
+<section class="section active" id="section1">
+  <div class="envelope" id="envelope">
+    <div class="flap"></div>
+    <div class="envelope-back"></div>
+    <div class="boton-brillante seal"></div>
+    <div class="message">
+      <div>Toca para abrir la invitación</div>
+      <div><span class="sombra-brillante cover-title"></span></div>
+    </div>
+  </div>
+</section>
+
+<!-- El resto de tu contenido HTML permanece igual -->
+
+<div id="mainContent" style="display:none; position:absolute; top:0; left:0; width:100%;">
+  <section class="section active" id="section2">
+    <!-- AÑADIDA CLASE .fade-in-item -->
+    <div class="card-wrapper fade-in-item">
+      <div class="save-text">
+        <svg viewBox="0 0 600 230">
+          <defs>
+            <linearGradient id="goldGradient" x1="0" x2="0" y1="0" y2="1">
+              <stop offset="0%" stop-color="#fffbe6"/>
+              <stop offset="50%" stop-color="#f8e9a1"/>
+              <stop offset="100%" stop-color="#f4d86c"/>
+            </linearGradient>
+          </defs>
+          <path id="curve2" d="M 60 295 A 260 260 0 0 1 540 295" fill="transparent"/>
+          <text><textPath href="#curve2" startOffset="50%" text-anchor="middle">Mi bautizo</textPath></text>
+        </svg>
+      </div>
+      <div class="photo"><img src="sami.jpg"></div>
+      <div class="content">
+        <div class="boton-brillante name-block"><h1>Samantha Sayuri<br>Adanaqué Maza</h1></div>
+        <div class="sombra-brillante quote">“Un día lleno de luz y bendiciones para celebrar el amor y la fe.”</div>
+      </div>
+      <div class="countdown" id="countdown2"></div>
+    </div>
+  </section>
+  
+  <section class="section active" id="section3">
+  <!-- AÑADIDA CLASE .fade-in-item -->
+  <div class="card-wrapper fade-in-item"
+       style="
+         font-family: 'Parisienne', cursive;
+         font-size: 1.2rem;
+         line-height: 1.9;
+         color: #4a3212;
+         text-align: justify;
+         padding: 25px 25px 50px 25px;
+         border-radius: 22px;
+         max-width: 600px;
+         margin: 0 auto;
+         box-shadow: 0 6px 25px rgba(0,0,0,0.15);
+       ">
+
+    <div style="
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          gap: 0;
+          margin-bottom: 10px;
+          margin-top: -10px;
+        ">
+      <img src="./img/cruz.png" alt="Cruz izquierda" style="width: 100px; opacity: 0.95; transform: translateX(8px);">
+      <img src="./img/girl.png" alt="Niña central" style="width: 170px; opacity: 1; z-index: 2;">
+      <img src="./img/bendi.png" alt="Bendición derecha" style="width: 100px; opacity: 0.95; transform: translateX(-8px);">
+    </div>
+
+    <div style="max-width: 90%;">
+      <p class="sombra-brillante"
+          style="
+            color: #6b3fa0;
+            font-family: 'Parisienne', cursive;
+            font-size: 1.8rem;
+            font-weight: 600;
+            line-height: 1.5;
+            margin: 0;
+            text-align: center;
+            text-shadow: 0 1px 3px rgba(255, 255, 255, 0.7);
+          ">
+        “Con alegría y fe en mi corazón, hoy recibo el Bautismo, un regalo de amor y esperanza que me unirá para siempre con Dios y me guiará en cada paso de mi vida.”
+      </p>
+    </div>
+  </div>
+</section>
+
+<section class="section active" id="section4">
+  <div class="card-wrapper fade-in-item"
+       style="
+         font-family: 'Parisienne', cursive;
+         color: #4a3212;
+         border-radius: 22px;
+         max-width: 600px;
+         margin: 0 auto;
+         box-shadow: 0 6px 25px rgba(0,0,0,0.15);
+       ">
+
+    <!-- 🩶 MIS PADRES -->
+    <h1 class="texto-blanco-sombra-fuerte"
+        style="font-family: 'Great Vibes', cursive; font-size: 3rem; color: #d4af37;
+               text-align: center; text-decoration: underline; text-decoration-color: #e6c76f;
+               text-underline-offset: 8px; text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.3);
+               margin-bottom: 15px; margin-top: 30px;">
+      Mis padres
+    </h1>
+
+    <div style="width: 100px; height: 100px; margin: 0 auto 20px; border-radius: 50%;
+                overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.2);">
+      <img src="img/padres.png" alt="Padres" style="width: 100%; height: 100%; object-fit: cover;">
+    </div>
+
+    <p class="sombra-brillante" style="color: #6b3fa0; font-family: 'Parisienne', cursive;
+        font-size: 1.8rem; font-weight: 600; line-height: 1.5; margin: 0; text-align: center;
+        text-shadow: 0 1px 3px rgba(255, 255, 255, 0.7);">
+      Adrián Bernardo<br />
+      <span style="font-size: 1.8rem;">Adanaqué Santos</span><br /><br />
+      Tania Elizabeth<br />
+      <span style="font-size: 1.9rem;">Maza Moscol</span>
+    </p>
+
+    <!-- 💒 PADRINOS DE BAUTIZO -->
+    <h1 class="texto-blanco-sombra-fuerte"
+        style="font-family: 'Great Vibes', cursive; font-size: 3rem; color: #d4af37;
+               text-align: center; text-decoration: underline; text-decoration-color: #e6c76f;
+               text-underline-offset: 8px; text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.3);
+               margin-bottom: 15px; margin-top: 30px;">
+      Mis padrinos <br /> de bautizo
+    </h1>
+
+    <div style="display: flex; justify-content: center; gap: 20px; margin-bottom: 20px;">
+      <div style="width: 100px; height: 100px; border-radius: 50%; overflow: hidden;
+                  box-shadow: 0 4px 15px rgba(0,0,0,0.2);">
+        <img src="img/danny.png" alt="Padrino de Bautizo"
+             style="width: 100%; height: 100%; object-fit: cover;">
+      </div>
+      <div style="width: 100px; height: 100px; border-radius: 50%; overflow: hidden;
+                  box-shadow: 0 4px 15px rgba(0,0,0,0.2);">
+        <img src="img/elena.png" alt="Madrina de Bautizo"
+             style="width: 100%; height: 100%; object-fit: cover;">
+      </div>
+    </div>
+
+    <p class="sombra-brillante" style="color: #6b3fa0; font-family: 'Parisienne', cursive;
+        font-size: 1.8rem; font-weight: 600; line-height: 1.5; margin: 0; text-align: center;
+        text-shadow: 0 1px 3px rgba(255, 255, 255, 0.7);">
+      Danny William<br />
+      <span style="font-size: 1.8rem;">Adanaqué Santos</span><br /><br />
+      Rosa Elena<br />
+      <span style="font-size: 1.9rem;">Maza Moscol</span>
+    </p>
+
+    <!-- 💇‍♂️ PADRINOS DE CORTE DE PELO -->
+    <h1 class="texto-blanco-sombra-fuerte"
+        style="font-family: 'Great Vibes', cursive; font-size: 3rem; color: #d4af37;
+               text-align: center; text-decoration: underline; text-decoration-color: #e6c76f;
+               text-underline-offset: 8px; text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.3);
+               margin-bottom: 15px; margin-top: 30px; line-height: 1.2;">
+      Mis padrinos de<br />corte de pelo
+    </h1>
+
+    <div style="display: flex; justify-content: center; gap: 20px; margin-bottom: 20px;">
+      <div style="width: 100px; height: 100px; border-radius: 50%; overflow: hidden;
+                  box-shadow: 0 4px 15px rgba(0,0,0,0.2);">
+        <img src="img/micky.png" alt="Padrino de Corte"
+             style="width: 100%; height: 100%; object-fit: cover;">
+      </div>
+      <div style="width: 100px; height: 100px; border-radius: 50%; overflow: hidden;
+                  box-shadow: 0 4px 15px rgba(0,0,0,0.2);">
+        <img src="img/paty.png" alt="Madrina de Corte"
+             style="width: 100%; height: 100%; object-fit: cover;">
+      </div>
+    </div>
+
+    <p class="sombra-brillante" style="color: #6b3fa0; font-family: 'Parisienne', cursive;
+        font-size: 1.8rem; font-weight: 600; line-height: 1.5; margin: 0; text-align: center;
+        text-shadow: 0 1px 3px rgba(255, 255, 255, 0.7);">
+      Luis Miguel<br />
+      <span style="font-size: 1.8rem;">Maza Moscol</span><br /><br />
+      Patricia Paola<br />
+      <span style="font-size: 1.9rem;">Adanaqué Santos</span>
+    </p>
+
+  </div>
+</section>
+<section class="section active" id="section5">
+  <div class="card-wrapper fade-in-item">
+    <div class="overlay"></div>
+
+    <div class="contenido">
+      <h1 class="titulo-seccion">Ceremonia</h1>
+
+      <div class="info-ceremonia">
+        <!-- Icono de calendario -->
+        <div class="item">
+          <div class="icono-calendario">
+            <div class="calendario-cabecera">NOV</div>
+            <div class="calendario-numero">22</div>
+          </div>
+          <span>Sábado, 22 de Noviembre de 2025</span>
+        </div>
+
+        <!-- Icono de reloj -->
+        <div class="item">
+          <div class="icono-reloj">
+            <div class="manecilla-hora"></div>
+            <div class="manecilla-minuto"></div>
+          </div>
+          <span>10:00 a.m.</span>
+        </div>
+
+        <!-- Icono de iglesia -->
+        <div class="item">
+          <div class="icono-iglesia">
+            <div class="torre"></div>
+            <div class="puerta"></div>
+          </div>
+          <span>Iglesia Virgen de Fátima de Calupe</span>
+        </div>
+      </div>
+
+      <div class="decoracion">
+        <div class="ramita"></div>
+       <div class="cruz" style="background-image: url('./img/misa.png');"></div> 
+        <div class="ramita"></div>
+      </div>
+      
+        <div class="decoracion">
+        <div class="ramita"></div>
+        <div class="copas" style="background-image: url('./img/misa.png');"></div> <!-- Opcional: cambiar ícono --> 
+        <div class="ramita"></div>
+      </div>
+      
+      
+    </div>
+  </div>
+</section>
+
+<style>
+/* 🔹 Estilos comunes */
+.info-text {
   font-size: 1.8rem;
   color: #6b3fa0;
   font-weight: 600;
   text-shadow: 0 1px 3px rgba(255,255,255,0.7);
+  font-family: 'Poppins', sans-serif;
 }
 
-/* 🗓️ Icono Calendario */
-.icono-calendario {
-  width: 60px;
-  height: 60px;
-  background: white;
-  border: 3px solid #6b3fa0;
+/* 🗓️ Icono calendario */
+.calendar-icon {
+  width: 70px;
+  height: 70px;
+  background-color: #fff;
+  border: 3px solid #d4af37;
   border-radius: 10px;
+  box-shadow: 0 3px 8px rgba(0,0,0,0.15);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
   position: relative;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
-  font-family: 'Parisienne', cursive;
 }
-.calendario-cabecera {
-  background: #6b3fa0;
-  color: white;
-  font-weight: bold;
-  font-size: 0.9rem;
-  border-radius: 6px 6px 0 0;
-  padding: 2px 0;
-}
-.calendario-numero {
-  font-size: 1.8rem;
-  color: #4a3212;
-  font-weight: bold;
-  margin-top: 5px;
-}
-
-/* ⏰ Icono Reloj */
-.icono-reloj {
-  width: 55px;
-  height: 55px;
-  border: 3px solid #6b3fa0;
-  border-radius: 50%;
-  position: relative;
-  background: white;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
-}
-.manecilla-hora {
-  width: 3px;
-  height: 14px;
-  background: #6b3fa0;
-  position: absolute;
-  top: 17px;
-  left: 26px;
-  transform: rotate(120deg);
-  transform-origin: bottom center;
-}
-.manecilla-minuto {
-  width: 2px;
-  height: 20px;
-  background: #6b3fa0;
-  position: absolute;
-  top: 10px;
-  left: 26px;
-  transform: rotate(0deg);
-  transform-origin: bottom center;
-}
-
-/* ⛪ Icono Iglesia */
-.icono-iglesia {
-  position: relative;
-  width: 40px;
-  height: 40px;
-}
-.torre {
+.calendar-top {
   width: 100%;
-  height: 70%;
-  background: #6b3fa0;
-  border-radius: 3px 3px 0 0;
-  position: absolute;
-  bottom: 0;
+  background-color: #d4af37;
+  color: white;
+  text-align: center;
+  font-size: 0.9rem;
+  font-weight: 600;
+  padding: 2px 0;
+  letter-spacing: 1px;
 }
-.torre::before {
-  content: '';
-  position: absolute;
-  top: -15px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 0;
-  height: 0;
-  border-left: 10px solid transparent;
-  border-right: 10px solid transparent;
-  border-bottom: 15px solid #6b3fa0;
+.calendar-date {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #6b3fa0;
+  font-weight: 700;
+  font-size: 1.7rem;
 }
-.puerta {
-  width: 12px;
+.calendar-icon::before,
+.calendar-icon::after {
+  content: "";
+  position: absolute;
+  top: -6px;
+  width: 14px;
   height: 14px;
   background: #fff;
-  border-radius: 2px;
+  border: 3px solid #d4af37;
+  border-radius: 50%;
+}
+.calendar-icon::before { left: 12px; }
+.calendar-icon::after { right: 12px; }
+
+/* ⏰ Icono reloj */
+.clock-icon {
+  width: 70px;
+  height: 70px;
+  background-color: #fff;
+  border: 3px solid #d4af37;
+  border-radius: 50%;
+  position: relative;
+  box-shadow: 0 3px 8px rgba(0,0,0,0.15);
+}
+.clock-icon::after {
+  content: "";
   position: absolute;
-  bottom: 5px;
-  left: 50%;
+  top: 50%; left: 50%;
+  width: 8px; height: 8px;
+  background-color: #d4af37;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+}
+.clock-hand {
+  position: absolute;
+  background-color: #6b3fa0;
+  top: 50%; left: 50%;
+  transform-origin: bottom center;
+}
+.clock-hand.hour {
+  width: 3px; height: 18px;
+  transform: translate(-50%, -100%) rotate(150deg);
+}
+.clock-hand.minute {
+  width: 2px; height: 25px;
+  transform: translate(-50%, -100%) rotate(0deg);
+}
+
+/* ⛪ Icono iglesia */
+.church-icon {
+  width: 70px;
+  height: 70px;
+  position: relative;
+  background: #fff;
+  border: 3px solid #d4af37;
+  border-radius: 10px;
+  box-shadow: 0 3px 8px rgba(0,0,0,0.15);
+}
+.church-icon .roof {
+  position: absolute;
+  top: 10px; left: 50%;
+  width: 0; height: 0;
+  border-left: 20px solid transparent;
+  border-right: 20px solid transparent;
+  border-bottom: 15px solid #d4af37;
   transform: translateX(-50%);
 }
-
-/* 🌸 Decoración */
-.decoracion {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 20px;
-  margin-top: 40px;
-}
-.ramita {
-  width: 70px;
-  height: 4px;
-  background: linear-gradient(to right, transparent, #d4af37, transparent);
-  border-radius: 2px;
-}
-.cruz {
-  width: 12px;
-  height: 30px;
-  background: #d4af37;
-  position: relative;
-}
-.cruz::before {
-  content: '';
+.church-icon .body {
   position: absolute;
-  top: 10px;
-  left: -9px;
-  width: 30px;
-  height: 10px;
-  background: #d4af37;
+  bottom: 10px; left: 50%;
+  width: 35px; height: 30px;
+  background: #6b3fa0;
+  border-radius: 3px;
+  transform: translateX(-50%);
+}
+.church-icon .door {
+  position: absolute;
+  bottom: 10px; left: 50%;
+  width: 10px; height: 15px;
+  background: #fff;
   border-radius: 2px;
+  transform: translateX(-50%);
+}
+.church-icon .cross {
+  position: absolute;
+  top: 4px; left: 50%;
+  width: 2px; height: 10px;
+  background: #d4af37;
+  transform: translateX(-50%);
+}
+.church-icon .cross::after {
+  content: "";
+  position: absolute;
+  top: 4px; left: -4px;
+  width: 10px; height: 2px;
+  background: #d4af37;
 }
 
+/* 🏠 Icono Casa (NUEVO) */
+.home-icon {
+    width: 70px;
+    height: 70px;
+    position: relative;
+    background: #fff;
+    border: 3px solid #d4af37;
+    border-radius: 10px;
+    box-shadow: 0 3px 8px rgba(0,0,0,0.15);
+}
+.home-icon .roof {
+    position: absolute;
+    top: 8px;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-left: 28px solid transparent;
+    border-right: 28px solid transparent;
+    border-bottom: 20px solid #d4af37;
+    transform: translateX(-50%);
+}
+.home-icon .body {
+    position: absolute;
+    bottom: 10px;
+    left: 50%;
+    width: 40px;
+    height: 32px;
+    background: #6b3fa0;
+    transform: translateX(-50%);
+    border-radius: 0 0 3px 3px;
+}
+.home-icon .door {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    width: 12px;
+    height: 20px;
+    background: #fff;
+    transform: translateX(-50%);
+    border-radius: 2px 2px 0 0;
+}
+</style>
+
+<!-- ================================================== -->
+<!-- ============= NUEVA SECCIÓN 6 (RECEPCIÓN) ============= -->
+<!-- ================================================== -->
+<section class="section active" id="section6">
+  <div class="card-wrapper fade-in-item">
+    <div class="overlay"></div>
+
+    <div class="contenido">
+      <h1 class="titulo-seccion">Recepción</h1>
+
+      <div class="info-ceremonia">
+        <!-- Icono de calendario -->
+        <div class="item">
+          <div class="icono-calendario">
+            <div class="calendario-cabecera">NOV</div>
+            <div class="calendario-numero">22</div>
+          </div>
+          <span>Sábado, 22 de Noviembre de 2025</span>
+        </div>
+
+        <!-- Icono de reloj -->
+        <div class="item">
+          <div class="clock-icon">
+             <div class="clock-hand hour" style="transform: translate(-50%, -100%) rotate(30deg);"></div>
+             <div class="clock-hand minute" style="transform: translate(-50%, -100%) rotate(0deg);"></div>
+          </div>
+          <span>01:00 p.m.</span>
+        </div>
+
+        <!-- Icono de casa -->
+        <div class="item">
+          <div class="home-icon">
+              <div class="roof"></div>
+              <div class="body">
+                  <div class="door"></div>
+              </div>
+          </div>
+          <span>Casa de los abuelos: Urb. Los Geranios Mz. A Lt. 17</span>
+        </div>
+      </div>
+
+      <div class="decoracion">
+        <div class="ramita"></div>
+        <div class="copas" style="background-image: url('./img/copas.png');"></div> <!-- Opcional: cambiar ícono --> 
+        <div class="ramita"></div>
+      </div>
+    </div>
+  </div>
+</section>
 
 
+ <section class="section active" id="section7">
+  <!-- AÑADIDA CLASE .fade-in-item -->
+  <div class="card-wrapper fade-in-item" 
+       style="
+         position: relative;
+         overflow: hidden;
+         background-image: url('https://i.pinimg.com/1200x/0c/61/1a/0c611ab0e09772ae18b78f26e77a708b.jpg');
+         background-repeat: no-repeat;
+         background-size: cover;
+         background-position: center;
+         border-radius: 22px;
+         box-shadow: 0 6px 25px rgba(0,0,0,0.35);
+         text-align: center;
+         background-color: #fffdfa;
+         margin: 20px;
+         padding: 0;
+       ">
+    
+    <div style="
+         position: relative;
+         width: 100%;
+         height: 130px;
+         background-color: #ffffff;
+         background-image: url('https://i.pinimg.com/1200x/ea/01/10/ea0110ca32089338f6671390e62c9f08.jpg');
+         background-repeat: no-repeat;
+         background-size: cover;
+         background-position: center;
+         border-top-left-radius: 22px;
+         border-top-right-radius: 22px;
+         display: flex;
+         align-items: center;
+         justify-content: center;
+       ">
+       <h1 style="
+            color: #ffffff;
+            font-family: 'Great Vibes', cursive;
+            font-size: 2.8rem;
+            text-shadow: 0 2px 6px rgba(0,0,0,0.4);
+            margin: 0;
+            letter-spacing: 2px;
+          ">
+         Confirmar asistencia
+       </h1>
+    </div>
+
+    <div style="
+         padding: 40px 20px 60px;
+         flex: 1;
+         display: flex;
+         flex-direction: column;
+         justify-content: center;
+         align-items: center;
+       ">
+        
+      <p class="quote" style="
+            color: #b48a1f;
+            font-family: 'Parisienne', cursive;
+            font-size: 2.2rem;
+            line-height: 1.3;
+            margin: 0;
+            text-shadow: 0 1px 3px rgba(255,255,255,0.8);
+          ">Tu presencia es muy importante para nosotros 💖</p>
+      <a id="confirmLink" class="start-button" target="_blank" href="#">Confirmar asistencia</a>
+    </div>
+  </div>
+</section>
+
+  <div id="scrollArrow">
+    <div class="double-arrow">
+      <span></span>
+      <span></span>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ---------------- Supabase config ---------------- */
+const SUPABASE_URL = "https://rsjyfchiynskjddpjupt.supabase.co";
+const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJzanlmY2hpeW5za2pkZHBqdXB0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTk3MTkzMzEsImV4cCI6MjA3NTI5NTMzMX0.pxnbFP03pSWra1zOrCsR8ADyWF3wpGN88BQlameVRWM";
+const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+const urlParams = new URLSearchParams(window.location.search);
+const groupCode = urlParams.get("group_code");
+
+function activarPantallaCompleta() {
+  const elem = document.documentElement;
+  if (elem.requestFullscreen) elem.requestFullscreen().catch(()=>{});
+}
+
+(function(){
+  const envelope = document.getElementById('envelope');
+  const mainContent = document.getElementById('mainContent');
+  const music = document.getElementById('bgMusic');
+  const sec2 = document.getElementById('section2');
+  const scrollArrow = document.getElementById('scrollArrow');
+  const musicControl = document.getElementById('musicControl'); // <-- Control música
+  const playIcon = document.getElementById('playIcon');
+  const pauseIcon = document.getElementById('pauseIcon');
+
+  envelope.addEventListener('click',()=>{
+    envelope.classList.add('open');
+    setTimeout(()=>{
+      document.getElementById('section1').style.display='none';
+      mainContent.style.display='block';
+      mainContent.style.position='relative';
+      sec2.scrollIntoView({behavior:'smooth'}); 
+      activarPantallaCompleta();
+      
+      // Reproducir música
+      music.volume=0.8; 
+      music.play().then(() => {
+        // La música comenzó a reproducirse
+        playIcon.style.display = 'none';
+        pauseIcon.style.display = 'block';
+      }).catch(()=>{
+        // El navegador bloqueó la reproducción automática
+        playIcon.style.display = 'block';
+        pauseIcon.style.display = 'none';
+      });
+
+      setTimeout(() => {
+        scrollArrow.classList.add('visible');
+        musicControl.classList.add('visible'); // <-- Hacer visible el control
+      }, 500);
+
+    },900);
+  });
+  
+  // Lógica del botón de música
+  musicControl.addEventListener('click', () => {
+    if (music.paused) {
+      music.play();
+      playIcon.style.display = 'none';
+      pauseIcon.style.display = 'block';
+    } else {
+      music.pause();
+      playIcon.style.display = 'block';
+      pauseIcon.style.display = 'none';
+    }
+  });
 
 
+  iniciarCountdown('countdown2');
+  for(let i=0;i<20;i++){
+    const p=document.createElement('div');
+    p.className='petal';
+    p.style.left=Math.random()*100+'vw';
+    p.style.animationDuration=(6+Math.random()*6)+'s';
+    p.style.animationDelay=(Math.random()*4)+'s';
+    document.body.appendChild(p);
+  }
+  cargarGrupo();
+})();
+
+function iniciarCountdown(id){
+  const el=document.getElementById(id);
+  const target=new Date('November 22, 2025 20:00:00').getTime();
+  function update(){
+    const d=target-Date.now();
+    if(d<=0){el.innerHTML='<strong>¡Hoy es el gran día!</strong>';return;}
+    const days=Math.floor(d/86400000);
+    const hrs=Math.floor((d%86400000)/3600000);
+    const mins=Math.floor((d%3600000)/60000);
+    const secs=Math.floor((d%60000)/1000);
+    el.innerHTML=`<span><strong>${days}</strong><small>Días</small></span><span><strong>${hrs}</strong><small>Horas</small></span><span><strong>${mins}</strong><small>Min</small></span><span><strong>${secs}</strong><small>Seg</small></span>`;
+  }
+  update(); setInterval(update,1000);
+}
+
+async function cargarGrupo(){
+  const nombreElCover = document.querySelector('.cover-title');
+  const confirmLink = document.getElementById('confirmLink');
+  if (!groupCode) {
+    nombreElCover.textContent = 'Querida Familia'; // Mensaje genérico
+    confirmLink.href = "https://bautizo-samantha-sayuri.vercel.app/confirm.html";
+    return;
+  }
+  try {
+    const { data, error } = await supabase
+      .from('guests_baptism')
+      .select('guest, message_invitation')
+      .eq('group_code', groupCode)
+      .eq('is_leader', true)
+      .maybeSingle(); 
+    if (error || !data) {
+      nombreElCover.textContent = 'Invitación no encontrada 😕';
+      return;
+    }
+    const textoCompleto = `${data.guest} ${data.message_invitation || ''}`.trim();
+    nombreElCover.textContent = textoCompleto;
+    confirmLink.href = `https://bautizo-samantha-sayuri.vercel.app/confirm.html?group_code=${groupCode}`;
+  } catch (err) {
+    console.error(err);
+    nombreElCover.textContent = 'Invitación no válida';
+  }
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  // Observador para el "Fade In" de los componentes
+  const fadeItems = document.querySelectorAll(".fade-in-item");
+  const fadeInObserver = new IntersectionObserver((entries, observer) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add("visible");
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.15, rootMargin: "0px 0px -50px 0px" });
+  fadeItems.forEach(item => fadeInObserver.observe(item));
+
+  // Observador para la flecha de scroll
+  const scrollArrow = document.getElementById('scrollArrow');
+  // ***** CAMBIO IMPORTANTE: Apuntar a la nueva última sección (section7) *****
+  const finalSection = document.getElementById('section7');
+
+  if (scrollArrow && finalSection) {
+    const arrowObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          scrollArrow.classList.remove('visible');
+        } 
+        else if (document.getElementById('mainContent').style.display === 'block') {
+          scrollArrow.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.1 });
+
+    arrowObserver.observe(finalSection);
+  }
+});
+</script>
+</body>
+</html>
