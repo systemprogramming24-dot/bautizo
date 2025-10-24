@@ -9,10 +9,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
-
 <link href="style.css" rel="stylesheet">
-
-
 
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Parisienne&family=Playfair+Display:wght@400;600&family=Poppins:wght@400;600&display=swap');
@@ -21,7 +18,6 @@ html, body { margin: 0; padding: 0; scroll-behavior: smooth; height: 100%; overf
 body {
   background-color: #fffdfa;
   font-family: 'Playfair Display', serif;
-
 }
 body::before {
   content: "";
@@ -55,13 +51,12 @@ body::before {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: flex-start; /* antes era space-evenly */
+  justify-content: flex-start;
   text-align: center;
   box-sizing: border-box;
   padding: 15px 0;
-  min-height: auto; /* quitar o anular el 100svh */
+  min-height: auto;
 }
-
 
 /* ===== Sobre ===== */
 .envelope {
@@ -153,14 +148,12 @@ body::before {
   margin:0; color:#b25f67; font-size:clamp(2.5rem,5vw,3rem);
 }
 .quote { 
-//width:80%; 
-//margin:1.5em auto 0; 
-font-style:italic; 
-font-size:1.5rem; 
-color:#7a5d68; 
-text-align:center; 
-line-height:1.6;   
-font-family: 'Great Vibes', cursive;
+  font-style:italic; 
+  font-size:1.5rem; 
+  color:#7a5d68; 
+  text-align:center; 
+  line-height:1.6;   
+  font-family: 'Great Vibes', cursive;
 }
 .countdown {
   display:flex; justify-content:center; gap:12px; background:rgba(255,255,255,0.25);
@@ -186,7 +179,6 @@ font-family: 'Great Vibes', cursive;
   .save-text text{font-size:clamp(8rem,14vw,9rem);stroke-width:3px;}
 }
 
-/* Estilos para la flecha de scroll fija */
 #scrollArrow {
   position: fixed;
   bottom: 25px;
@@ -218,7 +210,7 @@ font-family: 'Great Vibes', cursive;
   100% { opacity: 0.2; transform: translateY(0) rotate(-45deg); }
 }
 
-/* Animación Fade-in más lenta */
+/* ===== ESTILOS PARA EL FADE IN ===== */
 .fade-in-item {
   opacity: 0;
   transform: translateY(30px);
@@ -228,9 +220,8 @@ font-family: 'Great Vibes', cursive;
   opacity: 1;
   transform: translateY(0);
 }
-.fade-in-item.delay-1 { transition-delay: 0.3s; }
-.fade-in-item.delay-2 { transition-delay: 0.6s; }
-.fade-in-item.delay-3 { transition-delay: 0.9s; }
+/* No necesitas las clases de delay si animas el contenedor principal */
+
 </style>
 </head>
 <body>
@@ -249,7 +240,8 @@ font-family: 'Great Vibes', cursive;
 
 <div id="mainContent" style="display:none; position:absolute; top:0; left:0; width:100%;">
   <section class="section active" id="section2">
-    <div class="card-wrapper">
+    <!-- AÑADIDA CLASE .fade-in-item -->
+    <div class="card-wrapper fade-in-item">
       <div class="save-text">
         <svg viewBox="0 0 600 230">
           <defs>
@@ -271,52 +263,47 @@ font-family: 'Great Vibes', cursive;
       <div class="countdown" id="countdown2"></div>
     </div>
   </section>
+  
   <section class="section active" id="section3">
-  <div class="card-wrapper"
+  <!-- AÑADIDA CLASE .fade-in-item -->
+  <div class="card-wrapper fade-in-item"
        style="
          font-family: 'Parisienne', cursive;
          font-size: 1.2rem;
          line-height: 1.9;
          color: #4a3212;
          text-align: justify;
-         display: flex;
-         flex-direction: column;
-         align-items: center;
-         justify-content: flex-start;
          padding: 25px 25px 50px 25px;
          border-radius: 22px;
-         //background-color: #fffdfa;
          max-width: 600px;
          margin: 0 auto;
          box-shadow: 0 6px 25px rgba(0,0,0,0.15);
        ">
 
-    <!-- Imágenes decorativas centradas y pegadas -->
-    <div class="fade-in-item" style="
+    <div style="
           display: flex;
           align-items: center;
           justify-content: center;
-          gap: 0; /* Sin espacio entre ellas */
+          gap: 0;
           margin-bottom: 10px;
           margin-top: -10px;
         ">
-      <img class="fade-in-item" src="./img/cruz.png" alt="Cruz izquierda"
-           style="width: 100px; opacity: 0.95; transform: translateX(8px);">
-      <img class="fade-in-item" src="./img/girl.png" alt="Niña central"
-           style="width: 170px; opacity: 1; z-index: 2;">
-      <img class="fade-in-item" src="./img/bendi.png" alt="Bendición derecha"
-           style="width: 100px; opacity: 0.95; transform: translateX(-8px);">
+      <img src="./img/cruz.png" alt="Cruz izquierda" style="width: 100px; opacity: 0.95; transform: translateX(8px);">
+      <img src="./img/girl.png" alt="Niña central" style="width: 170px; opacity: 1; z-index: 2;">
+      <img src="./img/bendi.png" alt="Bendición derecha" style="width: 100px; opacity: 0.95; transform: translateX(-8px);">
     </div>
 
-    <!-- Texto -->
-    <div class="sombra-brillante quote fade-in-item delay-1" style="max-width: 90%;">
-      <p style="
-            margin: 0;
-	    font-family:'Parisienne', cursive;
+    <div style="max-width: 90%;">
+      <p class="sombra-brillante"
+          style="
+            color: #6b3fa0;
+            font-family: 'Parisienne', cursive;
             font-size: 1.8rem;
-            color: #b48a1f;
-            text-align: justify;
-            text-align-last: center;
+            font-weight: 600;
+            line-height: 1.5;
+            margin: 0;
+            text-align: center;
+            text-shadow: 0 1px 3px rgba(255, 255, 255, 0.7);
           ">
         “Con alegría y fe en mi corazón, hoy recibo el Bautismo, un regalo de amor y esperanza que me unirá para siempre con Dios y me guiará en cada paso de mi vida.”
       </p>
@@ -325,180 +312,66 @@ font-family: 'Great Vibes', cursive;
 </section>
 
 <section class="section active" id="section4">
-  <div class="card-wrapper"
+  <!-- AÑADIDA CLASE .fade-in-item -->
+  <div class="card-wrapper fade-in-item"
        style="
          font-family: 'Parisienne', cursive;
          color: #4a3212;
-         display: flex;
-         flex-direction: column;
-         align-items: center;
-         justify-content: flex-start;
-         //padding: 30px 25px 50px 25px;
          border-radius: 22px;
          max-width: 600px;
          margin: 0 auto;
          box-shadow: 0 6px 25px rgba(0,0,0,0.15);
        ">
 
-      <!-- 🔹 BLOQUE 1: MIS PADRES -->
-    <h1 class="texto-blanco-sombra-fuerte fade-in-item">
-      Mis padres
+    <h1 class="texto-blanco-sombra-fuerte" style="font-family: 'Great Vibes', cursive; font-size: 3rem; color: #d4af37; text-align: center; text-decoration: underline; text-decoration-color: #e6c76f; text-underline-offset: 8px; text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.3); margin-bottom: 15px; margin-top: 30px;">
+      Mis padres 
+      
+      
     </h1>
-    <div style="
-          width: 120%;
-          height: 200px;
-          background: url('./img/cinta.png') center / cover no-repeat;
-          margin-top: -80px;
-          margin-bottom: -15px;
-        "></div>
-    <p style="
-          color: #b48a1f;
-          font-size: 2rem;
-          line-height: 1.4;
-          margin: 0 0 40px 0;
-          text-align: center;
-          text-shadow: 0 1px 3px rgba(255,255,255,0.7);
-        ">
-      Adrián Bernardo<br>
-      <span style="font-size: 1.8rem;">Adanaqué Santos</span><br><br>
-      <span style="font-size: 1.9rem;">Tania Elizabeth Maza Moscol</span>
-    </p>
-
-
-    <!-- 🔹 BLOQUE 2: MIS PADRINOS DE BAUTIZO -->
-    <h1 class="texto-blanco-sombra-fuerte fade-in-item">
-  Mis padrinos de bautizo
-</h1>
-
-    <div style="
-          width: 150%;
-          height: 200px;
-          background: url('./img/cinta.png') center / cover no-repeat;
-          margin-top: -90px;
-          margin-bottom: -15px;
-        "></div>
-    <p style="
-          color: #b48a1f;
-          font-size: 2rem;
-          line-height: 1.4;
-          margin: 0 0 40px 0;
-          text-align: center;
-          text-shadow: 0 1px 3px rgba(255,255,255,0.7);
-        ">
-      Danny William<br>
-      <span style="font-size: 1.8rem;">Adanaqué Santos</span><br><br>
-      <span style="font-size: 1.9rem;">Rosa Elena Maza Moscol</span>
-    </p>
-
-    <!-- 🔹 BLOQUE 3: MIS PADRINOS DE CORTE DE PELO -->
-    <h1 class="texto-blanco-sombra-fuerte fade-in-item">
-
-      Mis padrinos<br>de corte de pelo
-    </h1>
-    <div style="
-          width: 150%;
-          height: 200px;
-          background: url('./img/cinta.png') center / cover no-repeat;
-          margin-top: -90px;
-          margin-bottom: -15px;
-        "></div>
-    <p style="
-          color: #b48a1f;
-          font-size: 2rem;
-          line-height: 1.4;
-          margin: 0;
-          text-align: center;
-          text-shadow: 0 1px 3px rgba(255,255,255,0.7);
-        ">
-      Luis Miguel<br>
-      <span style="font-size: 1.8rem;">Maza Moscol</span><br><br>
-      <span style="font-size: 1.9rem;">Jessica Efio Sosa</span>
-    </p>
-
-  </div>
-</section>
-
-
-
- <section class="section active" id="section5">
-  <div class="card-wrapper" 
-       style="
-         position: relative;
-         overflow: hidden;
-         background-image: url('https://i.pinimg.com/1200x/0c/61/1a/0c611ab0e09772ae18b78f26e77a708b.jpg');
-         background-repeat: no-repeat;
-         background-size: cover;
-         background-position: center;
-         border-radius: 22px;
-         box-shadow: 0 6px 25px rgba(0,0,0,0.35);
-         display: flex;
-         flex-direction: column;
-         align-items: center;
-         text-align: center;
-         background-color: #fffdfa;
-         margin: 20px;
-         padding: 0;
-       ">
     
-    <!-- Cinta decorativa superior -->
-    <div class="fade-in-item" style="
-         position: relative;
-         width: 100%;
-         height: 130px;
-         background-color: #ffffff;
-         background-image: url('https://i.pinimg.com/1200x/ea/01/10/ea0110ca32089338f6671390e62c9f08.jpg');
-         background-repeat: no-repeat;
-         background-size: cover;
-         background-position: center;
-         border-top-left-radius: 22px;
-         border-top-right-radius: 22px;
-         display: flex;
-         align-items: center;
-         justify-content: center;
-       ">
-       <h1 class="fade-in-item" style="
-            color: #ffffff;
-            font-family: 'Great Vibes', cursive;
-            font-size: 2.8rem;
-            text-shadow: 0 2px 6px rgba(0,0,0,0.4);
-            margin: 0;
-            letter-spacing: 2px;
-          ">
-         Mis padrinos
-       </h1>
+    <div style="width: 100px; height: 100px; margin: 0 auto 20px; border-radius: 50%; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.2);">
+        <img src="https://i.ibb.co/S0w24fL/parents.png" alt="Padres" style="width: 100%; height: 100%; object-fit: cover;">
     </div>
+    <p class="sombra-brillante" style="color: #6b3fa0; font-family: 'Parisienne', cursive; font-size: 1.8rem; font-weight: 600; line-height: 1.5; margin: 0; text-align: center; text-shadow: 0 1px 3px rgba(255, 255, 255, 0.7);">
+      Adrián Bernardo<br />
+      <span style="font-size: 1.8rem;">Adanaqué Santos</span><br /><br />
+      Tania Elizabeth<br />
+      <span style="font-size: 1.9rem;">Maza Moscol</span>
+    </p>
 
-    <!-- Contenido del card debajo del título -->
-    <div class="fade-in-item" style="
-         padding: 40px 20px 60px;
-         flex: 1;
-         display: flex;
-         flex-direction: column;
-         justify-content: center;
-         align-items: center;
-       ">
-       <p style="
-            color: #b48a1f;
-            font-family: 'Parisienne', cursive;
-            font-size: 2.2rem;
-            line-height: 1.3;
-            margin: 0;
-            text-shadow: 0 1px 3px rgba(255,255,255,0.8);
-          ">
-         Danny William<br>
-         <span style="font-size: 2rem;">Adanaqué Santos</span><br>
-         &amp;<br>
-         <span style="font-size: 2.2rem;">Elena Maza Moscol</span>
-       </p>
+    <h1 class="texto-blanco-sombra-fuerte" style="font-family: 'Great Vibes', cursive; font-size: 3rem; color: #d4af37; text-align: center; text-decoration: underline; text-decoration-color: #e6c76f; text-underline-offset: 8px; text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.3); margin-bottom: 15px; margin-top: 30px;">
+      Mis padrinos <br /> de bautizo
+      
+    </h1>
+    <div style="width: 100px; height: 100px; margin: 0 auto 20px; border-radius: 50%; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.2);">
+        <img src="https://i.ibb.co/gDqg1f1/godparents.png" alt="Padrinos de Bautizo" style="width: 100%; height: 100%; object-fit: cover;">
     </div>
+    <p class="sombra-brillante" style="color: #6b3fa0; font-family: 'Parisienne', cursive; font-size: 1.8rem; font-weight: 600; line-height: 1.5; margin: 0; text-align: center; text-shadow: 0 1px 3px rgba(255, 255, 255, 0.7);">
+      Danny William<br />
+      <span style="font-size: 1.8rem;">Adanaqué Santos</span><br /><br />
+      Rosa Elena<br />
+      <span style="font-size: 1.9rem;">Maza Moscol</span>
+    </p>
 
+    <h1 class="texto-blanco-sombra-fuerte" style="font-family: 'Great Vibes', cursive; font-size: 3rem; color: #d4af37; text-align: center; text-decoration: underline; text-decoration-color: #e6c76f; text-underline-offset: 8px; text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.3); margin-bottom: 15px; margin-top: 30px; line-height: 1.2;">
+      Mis padrinos de<br />corte de pelo
+      
+    </h1>
+    <div style="width: 100px; height: 100px; margin: 0 auto 20px; border-radius: 50%; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.2);">
+        <img src="https://i.ibb.co/C07B88X/haircut-godparents.png" alt="Padrinos de Corte de Pelo" style="width: 100%; height: 100%; object-fit: cover;">
+    </div>
+    <p class="sombra-brillante" style="color: #6b3fa0; font-family: 'Parisienne', cursive; font-size: 1.8rem; font-weight: 600; line-height: 1.5; margin: 0; text-align: center; text-shadow: 0 1px 3px rgba(255, 255, 255, 0.7);">
+      Luis Miguel<br />
+      <span style="font-size: 1.8rem;">Maza Moscol</span><br /><br />
+      Patricia Paola <br>
+      <span style="font-size: 1.9rem;">Adanaqué Santos</span>
+    </p>
   </div>
 </section>
-
-
 
  <section class="section active" id="section6">
-  <div class="card-wrapper" 
+  <!-- AÑADIDA CLASE .fade-in-item -->
+  <div class="card-wrapper fade-in-item" 
        style="
          position: relative;
          overflow: hidden;
@@ -508,17 +381,13 @@ font-family: 'Great Vibes', cursive;
          background-position: center;
          border-radius: 22px;
          box-shadow: 0 6px 25px rgba(0,0,0,0.35);
-         display: flex;
-         flex-direction: column;
-         align-items: center;
          text-align: center;
          background-color: #fffdfa;
          margin: 20px;
          padding: 0;
        ">
     
-    <!-- Cinta decorativa superior -->
-    <div class="fade-in-item" style="
+    <div style="
          position: relative;
          width: 100%;
          height: 130px;
@@ -533,7 +402,7 @@ font-family: 'Great Vibes', cursive;
          align-items: center;
          justify-content: center;
        ">
-       <h1 class="fade-in-item" style="
+       <h1 style="
             color: #ffffff;
             font-family: 'Great Vibes', cursive;
             font-size: 2.8rem;
@@ -545,8 +414,7 @@ font-family: 'Great Vibes', cursive;
        </h1>
     </div>
 
-    <!-- Contenido del card debajo del título -->
-    <div class="fade-in-item" style="
+    <div style="
          padding: 40px 20px 60px;
          flex: 1;
          display: flex;
@@ -555,8 +423,7 @@ font-family: 'Great Vibes', cursive;
          align-items: center;
        ">
         
-
-      <p class="quote fade-in-item delay-1" style="
+      <p class="quote" style="
             color: #b48a1f;
             font-family: 'Parisienne', cursive;
             font-size: 2.2rem;
@@ -564,15 +431,10 @@ font-family: 'Great Vibes', cursive;
             margin: 0;
             text-shadow: 0 1px 3px rgba(255,255,255,0.8);
           ">Tu presencia es muy importante para nosotros 💖</p>
-      <a id="confirmLink" class="start-button fade-in-item delay-2" target="_blank" href="#">Confirmar asistencia</a>
-
+      <a id="confirmLink" class="start-button" target="_blank" href="#">Confirmar asistencia</a>
     </div>
-
   </div>
 </section>
-
-
-  
 
   <div id="scrollArrow">
     <div class="double-arrow">
@@ -672,7 +534,7 @@ async function cargarGrupo(){
 }
 
 document.addEventListener("DOMContentLoaded", () => {
-  // --- Observador para el "Fade In" de los componentes ---
+  // Observador para el "Fade In" de los componentes
   const fadeItems = document.querySelectorAll(".fade-in-item");
   const fadeInObserver = new IntersectionObserver((entries, observer) => {
     entries.forEach(entry => {
@@ -684,23 +546,21 @@ document.addEventListener("DOMContentLoaded", () => {
   }, { threshold: 0.15, rootMargin: "0px 0px -50px 0px" });
   fadeItems.forEach(item => fadeInObserver.observe(item));
 
-  // --- NUEVO Y MEJORADO: Observador para la flecha de scroll ---
+  // Observador para la flecha de scroll
   const scrollArrow = document.getElementById('scrollArrow');
   const finalSection = document.getElementById('section6');
 
   if (scrollArrow && finalSection) {
     const arrowObserver = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
-        // Si la sección final está en pantalla, oculta la flecha.
         if (entry.isIntersecting) {
           scrollArrow.classList.remove('visible');
         } 
-        // Si no está en pantalla Y el contenido principal es visible, muestra la flecha.
         else if (document.getElementById('mainContent').style.display === 'block') {
           scrollArrow.classList.add('visible');
         }
       });
-    }, { threshold: 0.1 }); // Se activa cuando el 10% de la sección final es visible
+    }, { threshold: 0.1 });
 
     arrowObserver.observe(finalSection);
   }
@@ -708,5 +568,3 @@ document.addEventListener("DOMContentLoaded", () => {
 </script>
 </body>
 </html>
-
-
