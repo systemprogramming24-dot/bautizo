@@ -59,14 +59,9 @@
 
 
 .sombra-brillante {
-  color: #fff8dc; /* blanco cálido */
-  text-shadow:
-    0 0 5px #fff6b0,
-    0 0 10px #ffe066,
-    0 0 20px #ffd700;
+color: #C8A2C8; /* morado claro pastel */
+text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3); /* sombra gris
 }
-
-
 
 .texto-blanco-sombra-fuerte {
  
