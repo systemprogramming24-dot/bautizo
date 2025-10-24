@@ -369,10 +369,7 @@ body::before {
   </div>
 </section>
 <section class="section active" id="section5"
-  style="
-    margin-top: 80px;
-    margin-bottom: 80px;
-  "
+  style="margin-top: 80px; margin-bottom: 80px;"
 >
   <!-- 💒 SECCIÓN CEREMONIA -->
   <div class="card-wrapper fade-in-item"
@@ -403,8 +400,7 @@ body::before {
     <div style="position: relative; z-index: 2; padding: 40px 25px 50px 25px;">
 
       <!-- 🔹 TÍTULO -->
-      <h1 class="texto-blanco-sombra-fuerte"
-          style="
+      <h1 style="
             font-family: 'Great Vibes', cursive;
             font-size: 3rem;
             color: #d4af37;
@@ -428,80 +424,37 @@ body::before {
         text-align: center;
       ">
 
-        <!-- Fecha -->
+        <!-- 📅 Fecha -->
         <div style="display: flex; flex-direction: column; align-items: center; gap: 10px;">
-          <div style="
-            width: 60px;
-            height: 60px;
-            border: 3px solid #d4af37;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #d4af37;
-            background: rgba(255,255,255,0.85);
-            font-size: 1.8rem;
-          ">
-            📅
+          <div class="calendar-icon">
+            <div class="calendar-top">NOV</div>
+            <div class="calendar-date">22</div>
           </div>
-          <span style="
-            font-size: 1.8rem;
-            color: #6b3fa0;
-            font-weight: 600;
-            text-shadow: 0 1px 3px rgba(255,255,255,0.7);
-          ">
+          <span class="info-text">
             Sábado, 22 de Noviembre de 2025
           </span>
         </div>
 
-        <!-- Hora -->
+        <!-- ⏰ Hora -->
         <div style="display: flex; flex-direction: column; align-items: center; gap: 10px;">
-          <div style="
-            width: 60px;
-            height: 60px;
-            border: 3px solid #d4af37;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #d4af37;
-            background: rgba(255,255,255,0.85);
-            font-size: 1.8rem;
-          ">
-            ⏰
+          <div class="clock-icon">
+            <div class="clock-hand hour"></div>
+            <div class="clock-hand minute"></div>
           </div>
-          <span style="
-            font-size: 1.8rem;
-            color: #6b3fa0;
-            font-weight: 600;
-            text-shadow: 0 1px 3px rgba(255,255,255,0.7);
-          ">
-            07:00 p.m.
+          <span class="info-text">
+            10:00 a.m.
           </span>
         </div>
 
-        <!-- Lugar -->
+        <!-- ⛪ Lugar -->
         <div style="display: flex; flex-direction: column; align-items: center; gap: 10px;">
-          <div style="
-            width: 60px;
-            height: 60px;
-            border: 3px solid #d4af37;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #d4af37;
-            background: rgba(255,255,255,0.85);
-            font-size: 1.8rem;
-          ">
-            ⛪
+          <div class="church-icon">
+            <div class="roof"></div>
+            <div class="body"></div>
+            <div class="door"></div>
+            <div class="cross"></div>
           </div>
-          <span style="
-            font-size: 1.8rem;
-            color: #6b3fa0;
-            font-weight: 600;
-            text-shadow: 0 1px 3px rgba(255,255,255,0.7);
-          ">
+          <span class="info-text">
             Iglesia Virgen de Fátima de Calupe
           </span>
         </div>
@@ -515,31 +468,156 @@ body::before {
           gap: 20px;
           margin-top: 45px;
         ">
-        <div style="
-          width: 60px;
-          height: 2px;
-          background: linear-gradient(to right, transparent, #d4af37);
-          border-radius: 2px;
-        "></div>
-
-        <div style="
-          font-size: 2rem;
-          color: #d4af37;
-          text-shadow: 0 0 5px rgba(255, 223, 128, 0.6);
-        ">
-          ✝
-        </div>
-
-        <div style="
-          width: 60px;
-          height: 2px;
-          background: linear-gradient(to left, transparent, #d4af37);
-          border-radius: 2px;
-        "></div>
+        <div style="width: 60px; height: 2px; background: linear-gradient(to right, transparent, #d4af37); border-radius: 2px;"></div>
+        <div style="font-size: 2rem; color: #d4af37; text-shadow: 0 0 5px rgba(255, 223, 128, 0.6);">✝</div>
+        <div style="width: 60px; height: 2px; background: linear-gradient(to left, transparent, #d4af37); border-radius: 2px;"></div>
       </div>
     </div>
   </div>
 </section>
+
+<style>
+/* 🔹 Estilos comunes */
+.info-text {
+  font-size: 1.8rem;
+  color: #6b3fa0;
+  font-weight: 600;
+  text-shadow: 0 1px 3px rgba(255,255,255,0.7);
+  font-family: 'Poppins', sans-serif;
+}
+
+/* 🗓️ Icono calendario */
+.calendar-icon {
+  width: 70px;
+  height: 70px;
+  background-color: #fff;
+  border: 3px solid #d4af37;
+  border-radius: 10px;
+  box-shadow: 0 3px 8px rgba(0,0,0,0.15);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  position: relative;
+}
+.calendar-top {
+  width: 100%;
+  background-color: #d4af37;
+  color: white;
+  text-align: center;
+  font-size: 0.9rem;
+  font-weight: 600;
+  padding: 2px 0;
+  letter-spacing: 1px;
+}
+.calendar-date {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #6b3fa0;
+  font-weight: 700;
+  font-size: 1.7rem;
+}
+.calendar-icon::before,
+.calendar-icon::after {
+  content: "";
+  position: absolute;
+  top: -6px;
+  width: 14px;
+  height: 14px;
+  background: #fff;
+  border: 3px solid #d4af37;
+  border-radius: 50%;
+}
+.calendar-icon::before { left: 12px; }
+.calendar-icon::after { right: 12px; }
+
+/* ⏰ Icono reloj */
+.clock-icon {
+  width: 70px;
+  height: 70px;
+  background-color: #fff;
+  border: 3px solid #d4af37;
+  border-radius: 50%;
+  position: relative;
+  box-shadow: 0 3px 8px rgba(0,0,0,0.15);
+}
+.clock-icon::after {
+  content: "";
+  position: absolute;
+  top: 50%; left: 50%;
+  width: 8px; height: 8px;
+  background-color: #d4af37;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+}
+.clock-hand {
+  position: absolute;
+  background-color: #6b3fa0;
+  top: 50%; left: 50%;
+  transform-origin: bottom center;
+}
+.clock-hand.hour {
+  width: 3px; height: 18px;
+  transform: translate(-50%, -100%) rotate(150deg);
+}
+.clock-hand.minute {
+  width: 2px; height: 25px;
+  transform: translate(-50%, -100%) rotate(0deg);
+}
+
+/* ⛪ Icono iglesia */
+.church-icon {
+  width: 70px;
+  height: 70px;
+  position: relative;
+  background: #fff;
+  border: 3px solid #d4af37;
+  border-radius: 10px;
+  box-shadow: 0 3px 8px rgba(0,0,0,0.15);
+}
+.church-icon .roof {
+  position: absolute;
+  top: 10px; left: 50%;
+  width: 0; height: 0;
+  border-left: 20px solid transparent;
+  border-right: 20px solid transparent;
+  border-bottom: 15px solid #d4af37;
+  transform: translateX(-50%);
+}
+.church-icon .body {
+  position: absolute;
+  bottom: 10px; left: 50%;
+  width: 35px; height: 30px;
+  background: #6b3fa0;
+  border-radius: 3px;
+  transform: translateX(-50%);
+}
+.church-icon .door {
+  position: absolute;
+  bottom: 10px; left: 50%;
+  width: 10px; height: 15px;
+  background: #fff;
+  border-radius: 2px;
+  transform: translateX(-50%);
+}
+.church-icon .cross {
+  position: absolute;
+  top: 4px; left: 50%;
+  width: 2px; height: 10px;
+  background: #d4af37;
+  transform: translateX(-50%);
+}
+.church-icon .cross::after {
+  content: "";
+  position: absolute;
+  top: 4px; left: -4px;
+  width: 10px; height: 2px;
+  background: #d4af37;
+}
+</style>
 
 
 
