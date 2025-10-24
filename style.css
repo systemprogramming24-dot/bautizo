@@ -23,12 +23,12 @@
   color: #4a3212;
   border: 2px solid #d4af37;
   border-radius: 12px;
-  padding: 12px 30px;
-  font-size: 1.1rem;
+  padding: 5px 14px;
+  font-size: 0.95rem;
   font-weight: bold;
   font-family: 'Parisienne', cursive;
   cursor: pointer;
-  box-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+  box-shadow: 0 0 8px rgba(255, 215, 0, 0.5);
   transition: transform 0.3s ease;
 }
 
@@ -279,6 +279,7 @@ margin: 0;
   background: #d4af37;
   border-radius: 2px;
 }
+
 
 
 
