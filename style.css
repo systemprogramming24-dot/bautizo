@@ -305,7 +305,7 @@ margin: 0;
 
 .titulo-dorado-sombra-lila {
   color: #D4AF37; /* Color dorado para el texto */
-  font-size: 3rem; /* Un tamaño de letra grande para que se vea bien */
+  font-size: 2rem; /* Un tamaño de letra grande para que se vea bien */
   font-weight: bold; /* Texto en negrita */
   text-shadow: 2px 2px 5px #; /* Sombra lila pastel */
   /* Explicación de text-shadow:
