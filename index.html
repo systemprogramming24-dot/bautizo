@@ -117,25 +117,36 @@ body::before {
   left: 50%;
   transform: translate(-50%, -50%);
   text-align: center;
-  color: #3d2c56; /* Color de texto oscuro para legibilidad */
+  /* HEX */
+color: #FFC0CB;
+
+/* RGB */
+color: rgb(255, 192, 203);
+
+/* HSL */
+color: hsl(350, 100%, 88%);
+
   font-family: 'Parisienne', cursive; /* Fuente Parisienne */
   width: 90%;
   z-index: 16;
-  text-shadow: 1px 1px 3px rgba(255, 255, 255, 0.5); /* Sombra de texto clara */
+ text-shadow: 2px 2px 5px #000;/* Sombra de texto clara */
 }
 
+/* === ESTILOS MODIFICADOS PARA EL TEXTO DEL SOBRE === */
 .envelope .message div:nth-child(1) {
-  font-size: 1.7rem; /* Tamaño de letra más grande */
-  font-weight: 600; /* Letra más gruesa */
+  font-size: 2.0rem;      /* Tamaño de letra más grande */
+  font-weight: 700;     /* Letra más gruesa */
 }
 
 .envelope .message div:nth-child(2) {
-  font-size: 2.1rem; /* Tamaño de letra más grande */
+  font-size: 2.9rem;    /* Tamaño de letra más grande */
   margin-top: 12px;
-  color: #4b2570; /* Color distintivo */
+         /* Color dorado oscuro para el invitado */
   font-family: 'Parisienne', cursive;
-  font-weight: 600; /* Letra más gruesa */
+  font-weight: 600;     /* Letra más gruesa */
+  text-shadow: 1px 1px 3px rgba(255, 255, 255, 0.4);
 }
+/* === FIN DE ESTILOS MODIFICADOS === */
 
 .envelope .seal {
   position: absolute;
@@ -222,12 +233,12 @@ body::before {
   animation: fadeInUp 2s ease forwards;
   margin:0; color:#b25f67; font-size:clamp(2.5rem,5vw,3rem);
 }
-.quote { 
-  font-style:italic; 
-  font-size:1.5rem; 
-  color:#7a5d68; 
-  text-align:center; 
-  line-height:1.6;   
+.quote {
+  font-style:italic;
+  font-size:1.5rem;
+  color:#7a5d68;
+  text-align:center;
+  line-height:1.6;
   font-family: 'Great Vibes', cursive;
 }
 .countdown {
@@ -317,7 +328,7 @@ body::before {
     <div class="boton-brillante seal"></div>
     <div class="message">
       <div>Toca para abrir la invitación</div>
-      <div><span class="sombra-brillante cover-title"></span></div>
+      <div><span class="titulo-dorado-sombra-lila cover-title"></span></div>
     </div>
   </div>
 </section>
@@ -349,7 +360,7 @@ body::before {
       <div class="countdown" id="countdown2"></div>
     </div>
   </section>
-  
+
   <section class="section active" id="section3">
   <!-- AÑADIDA CLASE .fade-in-item -->
   <div class="card-wrapper fade-in-item"
@@ -533,17 +544,17 @@ body::before {
 
       <div class="decoracion">
         <div class="ramita"></div>
-       <div class="cruz" style="background-image: url('./img/misa.png');"></div> 
+       <div class="cruz" style="background-image: url('./img/misa.png');"></div>
         <div class="ramita"></div>
       </div>
-      
+
         <div class="decoracion">
         <div class="ramita"></div>
-        <div class="copas" style="background-image: url('./img/misa.png');"></div> <!-- Opcional: cambiar ícono --> 
+        <div class="copas" style="background-image: url('./img/misa.png');"></div> <!-- Opcional: cambiar ícono -->
         <div class="ramita"></div>
       </div>
-      
-      
+
+
     </div>
   </div>
 </section>
@@ -776,7 +787,7 @@ body::before {
 
       <div class="decoracion">
         <div class="ramita"></div>
-        <div class="copas" style="background-image: url('./img/copas.png');"></div> <!-- Opcional: cambiar ícono --> 
+        <div class="copas" style="background-image: url('./img/copas.png');"></div> <!-- Opcional: cambiar ícono -->
         <div class="ramita"></div>
       </div>
     </div>
@@ -786,7 +797,7 @@ body::before {
 
  <section class="section active" id="section7">
   <!-- AÑADIDA CLASE .fade-in-item -->
-  <div class="card-wrapper fade-in-item" 
+  <div class="card-wrapper fade-in-item"
        style="
          position: relative;
          overflow: hidden;
@@ -801,7 +812,7 @@ body::before {
          margin: 20px;
          padding: 0;
        ">
-    
+
     <div style="
          position: relative;
          width: 100%;
@@ -837,7 +848,7 @@ body::before {
          justify-content: center;
          align-items: center;
        ">
-        
+
       <p class="quote" style="
             color: #b48a1f;
             font-family: 'Parisienne', cursive;
@@ -888,11 +899,11 @@ function activarPantallaCompleta() {
       document.getElementById('section1').style.display='none';
       mainContent.style.display='block';
       mainContent.style.position='relative';
-      sec2.scrollIntoView({behavior:'smooth'}); 
+      sec2.scrollIntoView({behavior:'smooth'});
       activarPantallaCompleta();
-      
+
       // Reproducir música
-      music.volume=0.8; 
+      music.volume=0.8;
       music.play().then(() => {
         // La música comenzó a reproducirse
         playIcon.style.display = 'none';
@@ -910,7 +921,7 @@ function activarPantallaCompleta() {
 
     },900);
   });
-  
+
   // Lógica del botón de música
   musicControl.addEventListener('click', () => {
     if (music.paused) {
@@ -966,7 +977,7 @@ async function cargarGrupo(){
       .select('guest, message_invitation')
       .eq('group_code', groupCode)
       .eq('is_leader', true)
-      .maybeSingle(); 
+      .maybeSingle();
     if (error || !data) {
       nombreElCover.textContent = 'Invitación no encontrada 😕';
       return;
@@ -1003,7 +1014,7 @@ document.addEventListener("DOMContentLoaded", () => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
           scrollArrow.classList.remove('visible');
-        } 
+        }
         else if (document.getElementById('mainContent').style.display === 'block') {
           scrollArrow.classList.add('visible');
         }
