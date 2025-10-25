@@ -307,7 +307,7 @@ margin: 0;
   color: #D4AF37; /* Color dorado para el texto */
   font-size: 2rem; /* Un tamaño de letra grande para que se vea bien */
   font-weight: bold; /* Texto en negrita */
-  text-shadow: 2px 2px 5px #; /* Sombra lila pastel */
+  text-shadow: 2px 2px 5px #000; /* Sombra lila pastel */
   /* Explicación de text-shadow:
      - 2px: Desplazamiento de la sombra 2 píxeles a la derecha.
      - 2px: Desplazamiento de la sombra 2 píxeles hacia abajo.
