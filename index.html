@@ -527,54 +527,13 @@ body::before {
 
   </div>
 </section>
-<section class="section active" id="section5">
-  <div class="card-wrapper fade-in-item">
-    <div class="overlay"></div>
 
-    <div class="contenido">
-      <h1 class="titulo-seccion">Ceremonia</h1>
-
-      <div class="info-ceremonia">
-        <!-- Icono de calendario -->
-        <div class="item">
-          <div class="icono-calendario">
-            <div class="calendario-cabecera">NOV</div>
-            <div class="calendario-numero">22</div>
-          </div>
-          <span>Sábado, 22 de Noviembre de 2025</span>
-        </div>
-
-        <!-- Icono de reloj -->
-        <div class="item">
-          <div class="icono-reloj">
-            <div class="manecilla-hora"></div>
-            <div class="manecilla-minuto"></div>
-          </div>
-          <span>10:00 a.m.</span>
-        </div>
-
-        <!-- Icono de iglesia -->
-        <div class="item">
-          <div class="icono-iglesia">
-            <div class="torre"></div>
-            <div class="puerta"></div>
-          </div>
-          <span>Iglesia Virgen de Fátima de Calupe</span>
-        </div>
-      </div>
-
-      <div class="decoracion">
-        <div class="ramita"></div>
-       <div class="cruz" style="background-image: url('./img/misa.png');"></div>
-        <div class="ramita"></div>
-      </div>
-
-    </div>
-  </div>
-</section>
+<!-- ==================================================================== -->
+<!-- INICIO DE SECCIONES MODIFICADAS -->
+<!-- ==================================================================== -->
 
 <style>
-/* 🔹 Estilos comunes */
+/* 🔹 Estilos comunes para los íconos */
 .info-text {
   font-size: 1.8rem;
   color: #6b3fa0;
@@ -583,87 +542,30 @@ body::before {
   font-family: 'Poppins', sans-serif;
 }
 
-/* 🗓️ Icono calendario */
-.calendar-icon {
+/* 🖼️ Marcador de posición para imágenes */
+.image-placeholder {
   width: 70px;
   height: 70px;
-  background-color: #fff;
+  background-color: #fff; /* Fondo blanco */
   border: 3px solid #d4af37;
-  border-radius: 10px;
+  border-radius: 10px; /* Bordes redondeados */
   box-shadow: 0 3px 8px rgba(0,0,0,0.15);
   display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
   overflow: hidden;
   position: relative;
 }
-.calendar-top {
-  width: 100%;
-  background-color: #d4af37;
-  color: white;
-  text-align: center;
-  font-size: 0.9rem;
-  font-weight: 600;
-  padding: 2px 0;
-  letter-spacing: 1px;
+/* Para que el placeholder sea circular, puedes agregar esta clase al div: */
+.image-placeholder.circular {
+    border-radius: 50%;
 }
-.calendar-date {
-  flex: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #6b3fa0;
-  font-weight: 700;
-  font-size: 1.7rem;
-}
-.calendar-icon::before,
-.calendar-icon::after {
-  content: "";
-  position: absolute;
-  top: -6px;
-  width: 14px;
-  height: 14px;
-  background: #fff;
-  border: 3px solid #d4af37;
-  border-radius: 50%;
-}
-.calendar-icon::before { left: 12px; }
-.calendar-icon::after { right: 12px; }
+/* Dentro de este div, puedes colocar tu etiqueta <img>, por ejemplo:
+   <div class="image-placeholder">
+     <img src="tu-imagen.png" alt="icono" style="width:100%; height:100%; object-fit:cover;">
+   </div>
+*/
 
-/* ⏰ Icono reloj */
-.clock-icon {
-  width: 70px;
-  height: 70px;
-  background-color: #fff;
-  border: 3px solid #d4af37;
-  border-radius: 50%;
-  position: relative;
-  box-shadow: 0 3px 8px rgba(0,0,0,0.15);
-}
-.clock-icon::after {
-  content: "";
-  position: absolute;
-  top: 50%; left: 50%;
-  width: 8px; height: 8px;
-  background-color: #d4af37;
-  border-radius: 50%;
-  transform: translate(-50%, -50%);
-}
-.clock-hand {
-  position: absolute;
-  background-color: #6b3fa0;
-  top: 50%; left: 50%;
-  transform-origin: bottom center;
-}
-.clock-hand.hour {
-  width: 3px; height: 18px;
-  transform: translate(-50%, -100%) rotate(150deg);
-}
-.clock-hand.minute {
-  width: 2px; height: 25px;
-  transform: translate(-50%, -100%) rotate(0deg);
-}
 
 /* ⛪ Icono iglesia */
 .church-icon {
@@ -758,6 +660,52 @@ body::before {
 }
 </style>
 
+<section class="section active" id="section5">
+  <div class="card-wrapper fade-in-item">
+    <div class="overlay"></div>
+
+    <div class="contenido">
+      <h1 class="titulo-seccion">Ceremonia</h1>
+
+      <div class="info-ceremonia">
+        <!-- Espacio para imagen de fecha -->
+        <div class="item">
+          <div class="image-placeholder">
+            <!-- Coloca aquí tu etiqueta <img> para la fecha -->
+               <img src="img/iconobaut.png" alt="icono" style="width:100%; height:100%; object-fit:cover;">
+          </div>
+          <span>Sábado, 22 de Noviembre de 2025</span>
+        </div>
+
+        <!-- Espacio para imagen de hora -->
+        <div class="item">
+          <div class="image-placeholder circular"> <!-- Agregué la clase 'circular' como ejemplo -->
+             <!-- Coloca aquí tu etiqueta <img> para la hora -->
+               <img src="img/bendi.png" alt="icono" style="width:100%; height:100%; object-fit:cover;">
+          </div>
+          <span>10:00 a.m.</span>
+        </div>
+
+        <!-- Icono de iglesia -->
+        <div class="item">
+        <div class="image-placeholder circular"> <!-- Agregué la clase 'circular' como ejemplo -->
+             <!-- Coloca aquí tu etiqueta <img> para la hora -->
+               <img src="church.jpg" alt="icono" style="width:100%; height:100%; object-fit:cover;">
+          </div>
+          <span>Iglesia Virgen de Fátima de Calupe</span>
+        </div>
+      </div>
+
+      <div class="decoracion">
+        <div class="ramita"></div>
+       <div class="copas" style="background-image: url('./img/misa.png');"></div>
+        <div class="ramita"></div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
 <section class="section active" id="section6">
   <div class="card-wrapper fade-in-item">
     <div class="overlay"></div>
@@ -766,31 +714,30 @@ body::before {
       <h1 class="titulo-seccion">Recepción</h1>
 
       <div class="info-ceremonia">
-        <!-- Icono de calendario -->
+        <!-- Espacio para imagen de fecha -->
         <div class="item">
-          <div class="calendar-icon">
-             <div class="calendar-top">NOV</div>
-             <div class="calendar-date">22</div>
+          <div class="image-placeholder">
+             <!-- Coloca aquí tu etiqueta <img> para la fecha -->
+             <img src="img/copas.png" alt="icono" style="width:100%; height:100%; object-fit:cover;">
+             
           </div>
           <span>Sábado, 22 de Noviembre de 2025</span>
         </div>
 
-        <!-- Icono de reloj -->
+        <!-- Espacio para imagen de hora -->
         <div class="item">
-          <div class="clock-icon">
-             <div class="clock-hand hour" style="transform: translate(-50%, -100%) rotate(30deg);"></div>
-             <div class="clock-hand minute" style="transform: translate(-50%, -100%) rotate(0deg);"></div>
+          <div class="image-placeholder circular"> <!-- Agregué la clase 'circular' como ejemplo -->
+             <!-- Coloca aquí tu etiqueta <img> para la hora -->
+                <img src="img/globos.png" alt="icono" style="width:100%; height:100%; object-fit:cover;">
           </div>
-          <span>01:00 p.m.</span>
+          <span>07:00 p.m.</span>
         </div>
 
         <!-- Icono de casa -->
         <div class="item">
-          <div class="home-icon">
-              <div class="roof"></div>
-              <div class="body">
-                  <div class="door"></div>
-              </div>
+          <div class="image-placeholder circular"> <!-- Agregué la clase 'circular' como ejemplo -->
+             <!-- Coloca aquí tu etiqueta <img> para la hora -->
+                <img src="img/baile.png" alt="icono" style="width:100%; height:100%; object-fit:cover;">
           </div>
           <span>Casa de los abuelos: Urb. Los Geranios Mz. A Lt. 17</span>
         </div>
@@ -798,12 +745,16 @@ body::before {
 
       <div class="decoracion">
         <div class="ramita"></div>
-        <div class="copas" style="background-image: url('./img/copas.png');"></div>
+        <div class="copas" style="background-image: url('./img/music.png');"></div>
         <div class="ramita"></div>
       </div>
     </div>
   </div>
 </section>
+
+<!-- ==================================================================== -->
+<!-- FIN DE SECCIONES MODIFICADAS -->
+<!-- ==================================================================== -->
 
 
  <section class="section active" id="section7">
