@@ -444,3 +444,12 @@ body::before {
 @media (max-width:768px){
   .save-text text{font-size:clamp(8rem,14vw,9rem);stroke-width:3px;}
 }
+
+/* === MODIFICACIÓN FINAL === */
+/* Estilo para las etiquetas de información (Fecha, Hora, Lugar) */
+.item .info-label {
+  font-weight: bold; /* 'bold' (700) es más grueso que el 600 del contenido */
+  color: #4a3212;     /* Un color oscuro (marrón) para que contraste */
+  margin-right: 8px; /* Un pequeño espacio para separar de su valor */
+  text-shadow: 0 0 8px rgba(212, 175, 55, 0.6); /* Sutil sombra/resplandor dorado */
+}
