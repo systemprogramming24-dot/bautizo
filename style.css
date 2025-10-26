@@ -510,6 +510,7 @@ body::before {
 }
 .dress-code-icon {
   width: 70px; height: 70px;
+  margin-left: 20px;
 }
 .dress-code-text {
   font-family: 'Poppins', sans-serif;
