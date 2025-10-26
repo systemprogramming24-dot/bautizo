@@ -384,10 +384,9 @@ body::before {
   font-size: 1.8rem; color: #6b3fa0; font-weight: 600;
   text-shadow: 0 1px 3px rgba(255,255,255,0.7);
 }
+/* Estilo modificado */
 .image-placeholder {
-  width: 70px; height: 70px; background-color: #fff;
-  border: 3px solid #d4af37; border-radius: 10px;
-  box-shadow: 0 3px 8px rgba(0,0,0,0.15);
+  width: 70px; height: 70px;
   display: flex; align-items: center; justify-content: center;
   overflow: hidden; position: relative;
 }
