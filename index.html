@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mi Bautizo - Samantha Sayuri</title>
+  <!-- Supabase client -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Parisienne&family=Playfair+Display:wght@400;600&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <!-- Tu nuevo archivo CSS -->
+  <link href="style.css" rel="stylesheet">
+</head>
+<body>
+  <audio id="bgMusic" src="sake.mp3" preload="auto" loop></audio>
+
+  <div id="musicControl">
+    <svg id="playIcon" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"></path></svg>
+    <svg id="pauseIcon" viewBox="0 0 24 24"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"></path></svg>
+  </div>
+
+  <section class="section active" id="section1">
+    <div class="envelope" id="envelope">
+      <div class="flap"></div>
+      <div class="envelope-back"></div>
+      <div class="boton-brillante seal"></div>
+      <div class="message">
+        <div>Toca para abrir la invitación</div>
+        <div><span class="cover-title elegant-shadow"></span></div>
+      </div>
+    </div>
+  </section>
+
+  <div id="mainContent" style="display:none; position:absolute; top:0; left:0; width:100%;">
+    <section class="section active" id="section2">
+      <div class="card-wrapper fade-in-item">
+        <div class="save-text">
+          <svg viewBox="0 0 600 230">
+            <defs>
+              <linearGradient id="goldGradient" x1="0" x2="0" y1="0" y2="1">
+                <stop offset="0%" stop-color="#fffbe6"/>
+                <stop offset="50%" stop-color="#f8e9a1"/>
+                <stop offset="100%" stop-color="#f4d86c"/>
+              </linearGradient>
+            </defs>
+            <path id="curve2" d="M 60 295 A 260 260 0 0 1 540 295" fill="transparent"/>
+            <text><textPath href="#curve2" startOffset="50%" text-anchor="middle">Mi bautizo</textPath></text>
+          </svg>
+        </div>
+        <div class="photo"><img src="img/sami.jpg"></div>
+        <div class="content">
+          <div class="boton-brillante name-block"><h1>Samantha Sayuri<br>Adanaqué Maza</h1></div>
+          <div class="sombra-brillante quote">“Un día lleno de luz y bendiciones para celebrar el amor y la fe.”</div>
+        </div>
+        <div class="countdown" id="countdown2"></div>
+      </div>
+    </section>
+
+    <section class="section active" id="section3">
+      <div class="card-wrapper fade-in-item card-intro-text">
+        <div class="intro-images">
+          <img src="./img/cruz.png" alt="Cruz izquierda" class="intro-image-cruz">
+          <img src="./img/girl.png" alt="Niña central" class="intro-image-nina">
+          <img src="./img/bendi.png" alt="Bendición derecha" class="intro-image-bendi">
+        </div>
+        <div class="intro-quote-wrapper">
+          <p class="sombra-brillante intro-quote-text">
+            “Con alegría y fe en mi corazón, hoy recibo el Bautismo, un regalo de amor y esperanza que me unirá para siempre con Dios y me guiará en cada paso de mi vida.”
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section active" id="section4">
+      <div class="card-wrapper fade-in-item family-card">
+        <h1 class="family-title">Mis padres</h1>
+        <div class="family-photo-wrapper">
+          <img src="img/padres.png" alt="Padres" class="family-photo-img">
+        </div>
+        <p class="sombra-brillante family-names">
+          Adrián Bernardo<br />
+          <span class="family-lastname">Adanaqué Santos</span><br /><br />
+          Tania Elizabeth<br />
+          <span class="family-lastname-large">Maza Moscol</span>
+        </p>
+
+        <h1 class="family-title">Mis padrinos <br /> de bautizo</h1>
+        <div class="godparents-photos">
+          <div class="family-photo-wrapper"><img src="img/danny.png" alt="Padrino de Bautizo" class="family-photo-img"></div>
+          <div class="family-photo-wrapper"><img src="img/elena.png" alt="Madrina de Bautizo" class="family-photo-img"></div>
+        </div>
+        <p class="sombra-brillante family-names">
+          Danny William<br />
+          <span class="family-lastname">Adanaqué Santos</span><br /><br />
+          Rosa Elena<br />
+          <span class="family-lastname-large">Maza Moscol</span>
+        </p>
+
+        <h1 class="family-title hair-cut-title">Mis padrinos de<br />corte de pelo</h1>
+        <div class="godparents-photos">
+          <div class="family-photo-wrapper"><img src="img/micky.png" alt="Padrino de Corte" class="family-photo-img"></div>
+          <div class="family-photo-wrapper"><img src="img/patty.png" alt="Madrina de Corte" class="family-photo-img"></div>
+        </div>
+        <p class="sombra-brillante family-names last-names">
+          Luis Miguel<br />
+          <span class="family-lastname">Maza Moscol</span><br /><br />
+          Patricia Paola<br />
+          <span class="family-lastname-large">Adanaqué Santos</span>
+        </p>
+      </div>
+    </section>
+
+    <section class="section active" id="section5">
+      <div class="card-wrapper fade-in-item">
+        <div class="overlay"></div>
+        <div class="contenido">
+          <h1 class="titulo-seccion">Ceremonia</h1>
+          <div class="info-ceremonia">
+            <div class="item">
+              <div class="image-placeholder"><img src="img/iconobaut.png" alt="Icono bautizo" class="ceremony-icon"></div>
+              <span>Sábado, 22 de Noviembre de 2025</span>
+            </div>
+            <div class="item">
+              <div class="image-placeholder circular"><img src="img/bendi.png" alt="Icono bendición" class="ceremony-icon"></div>
+              <span>10:00 a.m.</span>
+            </div>
+            <div class="item">
+              <div class="image-placeholder circular"><img src="img/church.jpg" alt="Iglesia" class="ceremony-icon"></div>
+              <span>Iglesia Virgen de Fátima de Calupe</span>
+            </div>
+          </div>
+          <div class="decoracion">
+            <div class="ramita"></div>
+            <div class="copas" style="background-image: url('./img/misa.png');"></div>
+            <div class="ramita"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section active" id="section6">
+      <div class="card-wrapper fade-in-item">
+        <div class="overlay"></div>
+        <div class="contenido">
+          <h1 class="titulo-seccion">Recepción</h1>
+          <div class="info-ceremonia">
+            <div class="item">
+              <div class="image-placeholder"><img src="img/copas.png" alt="Icono copas" class="ceremony-icon"></div>
+              <span>Sábado, 22 de Noviembre de 2025</span>
+            </div>
+            <div class="item">
+              <div class="image-placeholder circular"><img src="img/globos.png" alt="Icono globos" class="ceremony-icon"></div>
+              <span>07:00 p.m.</span>
+            </div>
+            <div class="item">
+              <div class="image-placeholder circular"><img src="img/baile.png" alt="Icono baile" class="ceremony-icon"></div>
+              <span>Casa de los abuelos: Urb. Los Geranios Mz. A Lt. 17</span>
+            </div>
+          </div>
+          <div class="decoracion">
+            <div class="ramita"></div>
+            <div class="copas" style="background-image: url('./img/music.png');"></div>
+            <div class="ramita"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section active" id="section7">
+      <div class="card-wrapper fade-in-item confirmation-card">
+        <div class="confirmation-header">
+          <h1 class="confirmation-title">Confirmar asistencia</h1>
+        </div>
+        <div class="confirmation-body">
+          <p class="quote confirmation-quote">Tu presencia es muy importante para nosotros 💖</p>
+          <a id="confirmLink" class="start-button" target="_blank" href="#">Confirmar asistencia</a>
+        </div>
+      </div>
+    </section>
+
+    <div id="scrollArrow">
+      <div class="double-arrow">
+        <span></span>
+        <span></span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Tu nuevo archivo JavaScript -->
+  <script src="script.js"></script>
+</body>
+</html>
