@@ -64,7 +64,7 @@ body::before {
   position: absolute;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%) rotate(-5deg); /* Inclinación inicial */
   width: 300px;
   height: 200px;
   background: linear-gradient(135deg, #dcd0ff, #c8b6f2); /* Color lila degradado */
@@ -74,10 +74,24 @@ body::before {
   z-index: 10;
   transition: transform 0.4s ease, box-shadow 0.4s ease;
   perspective: 1000px;
+  animation: latido 2.5s infinite ease-in-out; /* Animación de latido */
+  border: 4px solid transparent;
+  border-image: linear-gradient(45deg, #ffd700, #f0e68c, #ffd700) 1;
+}
+
+/* Keyframes para el efecto de latido */
+@keyframes latido {
+  0%, 100% {
+    transform: translate(-50%, -50%) rotate(-5deg) scale(1);
+  }
+  50% {
+    transform: translate(-50%, -50%) rotate(-5deg) scale(1.05);
+  }
 }
 
 .envelope:hover {
-  transform: translate(-50%, -52%) scale(1.05);
+  transform: translate(-50%, -52%) scale(1.05) rotate(0deg); /* Se endereza al pasar el mouse */
+  animation-play-state: paused; /* Pausamos el latido en hover */
 }
 
 .envelope .flap {
@@ -98,6 +112,12 @@ body::before {
   transform: rotateX(-180deg);
 }
 
+.envelope.open {
+  animation: none; /* Detenemos la animación al abrir */
+  transform: translate(-50%, -50%) rotate(0deg); /* Se endereza al abrir */
+}
+
+
 .envelope-back {
     position: absolute;
     top: 50%;
@@ -117,36 +137,33 @@ body::before {
   left: 50%;
   transform: translate(-50%, -50%);
   text-align: center;
-  /* HEX */
-color: #FFC0CB;
-
-/* RGB */
-color: rgb(255, 192, 203);
-
-/* HSL */
-color: hsl(350, 100%, 88%);
-
   font-family: 'Parisienne', cursive; /* Fuente Parisienne */
   width: 90%;
   z-index: 16;
- text-shadow: 2px 2px 5px #000;/* Sombra de texto clara */
 }
 
 /* === ESTILOS MODIFICADOS PARA EL TEXTO DEL SOBRE === */
 .envelope .message div:nth-child(1) {
-  font-size: 2.0rem;      /* Tamaño de letra más grande */
-  font-weight: 700;     /* Letra más gruesa */
+  font-size: 2.0rem;
+  font-weight: 700;
+  color: #4b2570; /* Color azul oscuro */
+  text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.5); /* Sombra clara para texto oscuro */
 }
 
 .envelope .message div:nth-child(2) {
-  font-size: 2.9rem;    /* Tamaño de letra más grande */
+  font-size: 2.9rem;
   margin-top: 12px;
-         /* Color dorado oscuro para el invitado */
+  color: #b48a1f; /* Color dorado oscuro para el invitado */
   font-family: 'Parisienne', cursive;
-  font-weight: 600;     /* Letra más gruesa */
-  text-shadow: 1px 1px 3px rgba(255, 255, 255, 0.4);
+  font-weight: 600;
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.4); /* Sombra oscura sutil para el dorado */
 }
 /* === FIN DE ESTILOS MODIFICADOS === */
+
+/* Clase para el sombreado elegante (se mantiene por si se usa en JS) */
+.elegant-shadow {
+  /* Los estilos principales ahora están en la regla de arriba */
+}
 
 .envelope .seal {
   position: absolute;
@@ -311,9 +328,7 @@ color: hsl(350, 100%, 88%);
 <body>
 <audio id="bgMusic" src="sake.mp3" preload="auto" loop></audio> <!-- Añadido loop -->
 
-<!-- Contenido HTML sin cambios... -->
-
-<!-- Botón de música (NUEVO) -->
+<!-- Botón de música -->
 <div id="musicControl">
   <!-- Icono de Play -->
   <svg id="playIcon" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"></path></svg>
@@ -328,16 +343,13 @@ color: hsl(350, 100%, 88%);
     <div class="boton-brillante seal"></div>
     <div class="message">
       <div>Toca para abrir la invitación</div>
-      <div><span class="titulo-dorado-sombra-lila cover-title"></span></div>
+      <div><span class="cover-title elegant-shadow"></span></div>
     </div>
   </div>
 </section>
 
-<!-- El resto de tu contenido HTML permanece igual -->
-
 <div id="mainContent" style="display:none; position:absolute; top:0; left:0; width:100%;">
   <section class="section active" id="section2">
-    <!-- AÑADIDA CLASE .fade-in-item -->
     <div class="card-wrapper fade-in-item">
       <div class="save-text">
         <svg viewBox="0 0 600 230">
@@ -362,7 +374,6 @@ color: hsl(350, 100%, 88%);
   </section>
 
   <section class="section active" id="section3">
-  <!-- AÑADIDA CLASE .fade-in-item -->
   <div class="card-wrapper fade-in-item"
        style="
          font-family: 'Parisienne', cursive;
@@ -490,14 +501,14 @@ color: hsl(350, 100%, 88%);
       </div>
       <div style="width: 100px; height: 100px; border-radius: 50%; overflow: hidden;
                   box-shadow: 0 4px 15px rgba(0,0,0,0.2);">
-        <img src="img/paty.png" alt="Madrina de Corte"
+        <img src="img/patty.png" alt="Madrina de Corte"
              style="width: 100%; height: 100%; object-fit: cover;">
       </div>
     </div>
 
     <p class="sombra-brillante" style="color: #6b3fa0; font-family: 'Parisienne', cursive;
         font-size: 1.8rem; font-weight: 600; line-height: 1.5; margin: 0; text-align: center;
-        text-shadow: 0 1px 3px rgba(255, 255, 255, 0.7);">
+        text-shadow: 0 1px 3px rgba(255, 255, 255, 0.7); margin-bottom: 30px;">
       Luis Miguel<br />
       <span style="font-size: 1.8rem;">Maza Moscol</span><br /><br />
       Patricia Paola<br />
@@ -547,13 +558,6 @@ color: hsl(350, 100%, 88%);
        <div class="cruz" style="background-image: url('./img/misa.png');"></div>
         <div class="ramita"></div>
       </div>
-
-        <div class="decoracion">
-        <div class="ramita"></div>
-        <div class="copas" style="background-image: url('./img/misa.png');"></div> <!-- Opcional: cambiar ícono -->
-        <div class="ramita"></div>
-      </div>
-
 
     </div>
   </div>
@@ -701,7 +705,7 @@ color: hsl(350, 100%, 88%);
   background: #d4af37;
 }
 
-/* 🏠 Icono Casa (NUEVO) */
+/* 🏠 Icono Casa */
 .home-icon {
     width: 70px;
     height: 70px;
@@ -744,9 +748,6 @@ color: hsl(350, 100%, 88%);
 }
 </style>
 
-<!-- ================================================== -->
-<!-- ============= NUEVA SECCIÓN 6 (RECEPCIÓN) ============= -->
-<!-- ================================================== -->
 <section class="section active" id="section6">
   <div class="card-wrapper fade-in-item">
     <div class="overlay"></div>
@@ -757,9 +758,9 @@ color: hsl(350, 100%, 88%);
       <div class="info-ceremonia">
         <!-- Icono de calendario -->
         <div class="item">
-          <div class="icono-calendario">
-            <div class="calendario-cabecera">NOV</div>
-            <div class="calendario-numero">22</div>
+          <div class="calendar-icon">
+             <div class="calendar-top">NOV</div>
+             <div class="calendar-date">22</div>
           </div>
           <span>Sábado, 22 de Noviembre de 2025</span>
         </div>
@@ -787,7 +788,7 @@ color: hsl(350, 100%, 88%);
 
       <div class="decoracion">
         <div class="ramita"></div>
-        <div class="copas" style="background-image: url('./img/copas.png');"></div> <!-- Opcional: cambiar ícono -->
+        <div class="copas" style="background-image: url('./img/copas.png');"></div>
         <div class="ramita"></div>
       </div>
     </div>
@@ -796,7 +797,6 @@ color: hsl(350, 100%, 88%);
 
 
  <section class="section active" id="section7">
-  <!-- AÑADIDA CLASE .fade-in-item -->
   <div class="card-wrapper fade-in-item"
        style="
          position: relative;
@@ -889,7 +889,7 @@ function activarPantallaCompleta() {
   const music = document.getElementById('bgMusic');
   const sec2 = document.getElementById('section2');
   const scrollArrow = document.getElementById('scrollArrow');
-  const musicControl = document.getElementById('musicControl'); // <-- Control música
+  const musicControl = document.getElementById('musicControl');
   const playIcon = document.getElementById('playIcon');
   const pauseIcon = document.getElementById('pauseIcon');
 
@@ -905,18 +905,16 @@ function activarPantallaCompleta() {
       // Reproducir música
       music.volume=0.8;
       music.play().then(() => {
-        // La música comenzó a reproducirse
         playIcon.style.display = 'none';
         pauseIcon.style.display = 'block';
       }).catch(()=>{
-        // El navegador bloqueó la reproducción automática
         playIcon.style.display = 'block';
         pauseIcon.style.display = 'none';
       });
 
       setTimeout(() => {
         scrollArrow.classList.add('visible');
-        musicControl.classList.add('visible'); // <-- Hacer visible el control
+        musicControl.classList.add('visible');
       }, 500);
 
     },900);
@@ -1006,7 +1004,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Observador para la flecha de scroll
   const scrollArrow = document.getElementById('scrollArrow');
-  // ***** CAMBIO IMPORTANTE: Apuntar a la nueva última sección (section7) *****
   const finalSection = document.getElementById('section7');
 
   if (scrollArrow && finalSection) {
