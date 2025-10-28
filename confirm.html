@@ -25,8 +25,6 @@ h1 {
   margin-bottom: 0.3em;
 }
 
-
-
 .card {
   border-radius: 20px;
   box-shadow: 0 4px 20px rgba(120, 87, 159, 0.2);
@@ -50,6 +48,13 @@ h1 {
   color: #59337a;
 }
 
+.deadline-info {
+  font-size: 0.85em;
+  color: #6a5a8a;
+  margin-top: 8px;
+  margin-bottom: 0;
+}
+
 .button-group {
   display: flex;
   justify-content: center;
@@ -70,9 +75,14 @@ button {
 }
 
 button:hover { transform: scale(1.05); }
+button:disabled {
+  background-color: #cccccc;
+  cursor: not-allowed;
+  transform: none;
+}
 
 .confirm { background-color: #6fcf97; } /* verde */
-.decline { background-color: #5773eb; } /* azul - CAMBIO REALIZADO AQUÍ */
+.decline { background-color: #5773eb; } /* azul */
 .change { background-color: #6c63ff; } /* lila intenso */
 
 .loading { opacity: 0.7; pointer-events: none; }
@@ -89,9 +99,9 @@ button:hover { transform: scale(1.05); }
 
 <h1>Confirmación de Asistencia</h1>
 
-<p>Nos encantaría contar contigo 💕<br>
-Por favor confirma o cambia tu respuesta antes del <strong id="fecha-limite-global"></strong>,<br>
-para poder preparar con tiempo tu lugar, tu mesa y todo con el cariño que mereces 💜 , ya que únicamente el ingreso será para las personas confirmadas en lista.</p>
+<p id="parrafo-global">Nos encantaría contar contigo 💕<br>
+<span id="texto-fecha-limite"></span><br>
+para poder preparar con tiempo tu lugar, tu mesa y todo con el cariño que mereces 💜 , ya que únicamente serán consideradas las personas que indicaron que asistirán</p>
 
 <div id="guest-list"></div>
 <div id="summary"></div>
@@ -112,128 +122,185 @@ async function loadGuests() {
     .eq("group_code", groupCode)
     .order("id");
 
-  if (error || !data) { guestList.innerHTML = "<p>Error al cargar los datos.</p>"; return; }
+  if (error || !data || data.length === 0) { 
+    guestList.innerHTML = "<p>Error al cargar los datos o grupo no encontrado.</p>"; 
+    return; 
+  }
 
-  // fecha límite global si todos iguales
   const deadlines = [...new Set(data.map(g => g.confirmation_deadline).filter(Boolean))];
-  document.getElementById("fecha-limite-global").textContent = deadlines[0] ? new Date(deadlines[0]).toLocaleDateString() : "—";
+  const isGlobalDeadline = deadlines.length === 1 && data.length > 1;
+  const deadlineTextContainer = document.getElementById('texto-fecha-limite');
+
+  if (isGlobalDeadline) {
+    const options = { year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit' };
+    const formattedDeadline = new Date(deadlines[0]).toLocaleString('es-ES', options) + ' hrs';
+    deadlineTextContainer.innerHTML = `Por favor confirma o cambia tu respuesta antes del <strong>${formattedDeadline}</strong>,`;
+  } else {
+    deadlineTextContainer.innerHTML = 'Por favor confirma tu respuesta antes de la fecha límite indicada para cada invitado,';
+  }
 
   guestList.innerHTML = "";
 
   data.forEach(guest => {
     const card = document.createElement("div");
     card.className = "card";
+    card.dataset.guestId = guest.id; 
+    
+    const now = new Date();
+    const deadline = guest.confirmation_deadline ? new Date(guest.confirmation_deadline) : null;
+    const hasDeadlinePassed = deadline && now > deadline;
+    
+    // CAMBIO 1: Determinar si el invitado es auto-rechazado
+    const isAutoDeclined = guest.confirm === null && hasDeadlinePassed;
 
+    // Asignar color de fondo basado en el estado final (incluyendo auto-rechazo)
     if (guest.confirm === true) card.style.backgroundColor = "#d4f3e4";
-    else if (guest.confirm === false) card.style.backgroundColor = "#f8d6d6";
+    else if (guest.confirm === false || isAutoDeclined) card.style.backgroundColor = "#f8d6d6";
     else card.style.backgroundColor = "#ffffff";
-
+    
     const name = document.createElement("div");
     name.className = "guest-name";
     name.textContent = guest.guest;
 
     const status = document.createElement("div");
     status.className = "status-message";
-    if (guest.confirm === true) status.textContent = "Asistirá ❤️";
-    else if (guest.confirm === false) status.textContent = "No asistirá 💔";
-    else status.textContent = "Pendiente de confirmación";
-
-    const buttonGroup = document.createElement("div");
-    buttonGroup.className = "button-group";
-
-    const confirmBtn = document.createElement("button");
-    confirmBtn.className = "confirm";
-    confirmBtn.textContent = "❤️ Asistirá";
-
-    const declineBtn = document.createElement("button");
-    declineBtn.className = "decline";
-    declineBtn.textContent = "💔 No asistirá";
-
-    const changeBtn = document.createElement("button");
-    changeBtn.className = "change";
-    changeBtn.textContent = "Cambiar respuesta";
-
-    if (guest.confirm === null) {
-      confirmBtn.style.display = "inline-block";
-      declineBtn.style.display = "inline-block";
-      changeBtn.style.display = "none";
+    
+    // Asignar mensaje de estado basado en la lógica completa
+    if (guest.confirm === true) {
+        status.textContent = "Asistirá ❤️";
+    } else if (guest.confirm === false) {
+        status.textContent = "No asistirá 💔";
+    } else if (isAutoDeclined) {
+        // Mensaje específico para los que no confirmaron a tiempo
+        status.textContent = "Como no confirmó a tiempo, se considera que no asistirá 😔";
     } else {
-      confirmBtn.style.display = "none";
-      declineBtn.style.display = "none";
-      changeBtn.style.display = "inline-block";
+        status.textContent = "Pendiente de confirmación";
     }
 
-    confirmBtn.onclick = async () => await updateResponse(true, guest, status, confirmBtn, declineBtn, changeBtn, card);
-    declineBtn.onclick = async () => await updateResponse(false, guest, status, confirmBtn, declineBtn, changeBtn, card);
-    changeBtn.onclick = async () => await resetResponse(guest, status, confirmBtn, declineBtn, changeBtn, card);
+    card.append(name, status);
 
-    buttonGroup.append(confirmBtn, declineBtn, changeBtn);
-    card.append(name, status, buttonGroup);
+    if (!isGlobalDeadline && deadline) {
+        const deadlineInfo = document.createElement("p");
+        deadlineInfo.className = "deadline-info";
+        const options = { year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit' };
+        deadlineInfo.textContent = 'Fecha límite: ' + deadline.toLocaleString('es-ES', options) + ' hrs';
+        card.appendChild(deadlineInfo);
+    }
+    
+    // Los botones solo se muestran si el plazo NO ha pasado
+    if (!hasDeadlinePassed) {
+        const buttonGroup = document.createElement("div");
+        buttonGroup.className = "button-group";
+
+        const confirmBtn = document.createElement("button");
+        confirmBtn.className = "confirm";
+        confirmBtn.textContent = "❤️ Asistirá";
+
+        const declineBtn = document.createElement("button");
+        declineBtn.className = "decline";
+        declineBtn.textContent = "💔 No asistirá";
+
+        const changeBtn = document.createElement("button");
+        changeBtn.className = "change";
+        changeBtn.textContent = "Cambiar respuesta";
+
+        if (guest.confirm === null) {
+            confirmBtn.style.display = "inline-block";
+            declineBtn.style.display = "inline-block";
+            changeBtn.style.display = "none";
+        } else {
+            confirmBtn.style.display = "none";
+            declineBtn.style.display = "none";
+            changeBtn.style.display = "inline-block";
+        }
+
+        confirmBtn.onclick = async () => await updateResponse(true, guest);
+        declineBtn.onclick = async () => await updateResponse(false, guest);
+        changeBtn.onclick = async () => await resetResponse(guest);
+
+        buttonGroup.append(confirmBtn, declineBtn, changeBtn);
+        card.appendChild(buttonGroup);
+    }
+    
     guestList.appendChild(card);
   });
 
   renderSummary(data);
 }
 
-async function updateResponse(value, guest, status, confirmBtn, declineBtn, changeBtn, card){
-  status.textContent = "Enviando respuesta...";
-  confirmBtn.classList.add("loading");
-  declineBtn.classList.add("loading");
+async function updateResponse(value, guest){
+  const now = new Date();
+  const deadline = guest.confirmation_deadline ? new Date(guest.confirmation_deadline) : null;
+  if (deadline && now > deadline) {
+    alert("El plazo para confirmar tu asistencia ha finalizado. Ya no es posible realizar cambios.");
+    loadGuests();
+    return; 
+  }
+  
+  const statusMessage = document.querySelector(`.card[data-guest-id="${guest.id}"] .status-message`);
+  if(statusMessage) statusMessage.textContent = "Enviando respuesta...";
 
-  // actualizar tabla principal
-  await supabase.from("guests_baptism").update({ confirm: value, confirmed_at: new Date().toISOString() }).eq("id", guest.id);
+  const { error } = await supabase.from("guests_baptism").update({ confirm: value, confirmed_at: new Date().toISOString() }).eq("id", guest.id);
 
-  // agregar registro a la tabla de historial
+  if (error) {
+    alert("Hubo un error al enviar tu respuesta. Es posible que el plazo haya finalizado.");
+    loadGuests();
+    return;
+  }
+  
   await supabase.from("guests_baptism_history").insert({ guest_id: guest.id, status: value });
-
-  guest.confirm = value;
-  status.textContent = value ? "Asistirá ❤️" : "No asistirá 💔";
-  card.style.backgroundColor = value ? "#d4f3e4" : "#f8d6d6";
-  confirmBtn.style.display = "none";
-  declineBtn.style.display = "none";
-  changeBtn.style.display = "inline-block";
-
-  confirmBtn.classList.remove("loading");
-  declineBtn.classList.remove("loading");
-
-  renderSummary(await getUpdatedGuests());
+  loadGuests();
 }
 
-async function resetResponse(guest, status, confirmBtn, declineBtn, changeBtn, card){
-  status.textContent = "Pendiente de confirmación";
-  card.style.backgroundColor = "#ffffff";
+async function resetResponse(guest){
+  const now = new Date();
+  const deadline = guest.confirmation_deadline ? new Date(guest.confirmation_deadline) : null;
+  if (deadline && now > deadline) {
+    alert("El plazo para cambiar tu respuesta ha finalizado.");
+    loadGuests();
+    return;
+  }
 
-  // Actualizar tabla principal
-  await supabase.from("guests_baptism").update({ confirm: null }).eq("id", guest.id);
+  const { error } = await supabase.from("guests_baptism").update({ confirm: null }).eq("id", guest.id);
 
-  // Registrar en la tabla de historial como pendiente
+  if (error) {
+    alert("Hubo un error al cambiar tu respuesta. Es posible que el plazo haya finalizado.");
+    loadGuests();
+    return;
+  }
+  
   await supabase.from("guests_baptism_history").insert({ guest_id: guest.id, status: null });
-
-  confirmBtn.style.display = "inline-block";
-  declineBtn.style.display = "inline-block";
-  changeBtn.style.display = "none";
-
-  renderSummary(await getUpdatedGuests());
+  loadGuests();
 }
 
-async function getUpdatedGuests() {
-  const { data } = await supabase.from("guests_baptism").select("*").eq("group_code", groupCode);
-  return data || [];
-}
-
+// CAMBIO 2: Lógica del resumen actualizada para contar correctamente a los pendientes vencidos
 function renderSummary(data){
-  const confirmed = data.filter(g => g.confirm === true).length;
-  const declined = data.filter(g => g.confirm === false).length;
-  const pending = data.filter(g => g.confirm === null).length;
+  const now = new Date();
 
-  if (pending === data.length)
+  const confirmed = data.filter(g => g.confirm === true).length;
+  
+  const declined = data.filter(g => 
+    g.confirm === false || 
+    (g.confirm === null && g.confirmation_deadline && new Date(g.confirmation_deadline) < now)
+  ).length;
+  
+  const pending = data.filter(g => 
+    g.confirm === null && 
+    (!g.confirmation_deadline || new Date(g.confirmation_deadline) >= now)
+  ).length;
+
+  if (pending > 0 && confirmed === 0 && declined === 0)
     summary.textContent = "Esperamos con ilusión tu confirmación 💜";
+  else if (confirmed > 0 && declined === 0 && pending === 0)
+    summary.textContent = `¡Gracias a todos por confirmar! Nos encantará compartir este día con ustedes (${confirmed} asistirán).`;
   else if (confirmed > 0 && declined === 0)
     summary.textContent = `Gracias por tu respuesta, ¡nos encantará compartir este día contigo! (${confirmed} asistirán)`;
   else if (confirmed > 0 && declined > 0)
     summary.textContent = `Algunos asistirán (${confirmed}) y otros no (${declined}). ¡Gracias por confirmar!`;
   else if (confirmed === 0 && declined > 0)
-    summary.textContent = "Lamentamos que no puedas acompañarnos, pero te agradecemos de corazón 💜";
+    summary.textContent = `Lamentamos que no puedan acompañarnos (${declined}), pero les agradecemos de corazón 💜`;
+  else 
+    summary.textContent = "Gracias por tus respuestas.";
 }
 
 loadGuests();
