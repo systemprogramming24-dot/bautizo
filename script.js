@@ -1,6 +1,8 @@
 /* ---------------- Supabase config ---------------- */
-const SUPABASE_URL = "https://rsjyfchiynskjddpjupt.supabase.co";
-const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJzanlmY2hpeW5za2pkZHBqdXB0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTk3MTkzMzEsImV4cCI6MjA3NTI5NTMzMX0.pxnbFP03pSWra1zOrCsR8ADyWF3wpGN88BQlameVRWM";
+//const SUPABASE_URL = "https://rsjyfchiynskjddpjupt.supabase.co";
+const SUPABASE_URL = "https://ubyvqwwkklsrimfxnuye.supabase.co";
+//const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJzanlmY2hpeW5za2pkZHBqdXB0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTk3MTkzMzEsImV4cCI6MjA3NTI5NTMzMX0.pxnbFP03pSWra1zOrCsR8ADyWF3wpGN88BQlameVRWM";
+const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVieXZxd3dra2xzcmltZnhudXllIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjE2MTIxMTYsImV4cCI6MjA3NzE4ODExNn0.OExoTR1zJobgv-c0ynFdNmZDiXrcbFl5uNP7SfexBp0";
 const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 const urlParams = new URLSearchParams(window.location.search);
 const groupCode = urlParams.get("group_code");
