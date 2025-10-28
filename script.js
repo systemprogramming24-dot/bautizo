@@ -136,7 +136,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Observador para la flecha de scroll
   const scrollArrow = document.getElementById('scrollArrow');
-  // MODIFICADO: Se actualiza el ID a la nueva sección final
   const finalSection = document.getElementById('section8');
 
   if (scrollArrow && finalSection) {
