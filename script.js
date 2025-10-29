@@ -74,26 +74,43 @@ function activarPantallaCompleta() {
   }
   cargarGrupo();
 })();
-
 function iniciarCountdown(id) {
-  const el = document.getElementById(id);
-  const target = new Date('October 28, 2025 22:15:00').getTime();
+  const countdownEl = document.getElementById(id);
+  const finalMessageEl = document.getElementById('finalMessageContainer');
+  const target = new Date('November 22, 2025 10:00:00').getTime();
+  let countdownInterval;
 
   function update() {
-    const d = target - Date.now();
-    if (d <= 0) {
-      el.innerHTML = '<strong>¡Hoy es el gran día!</strong>';
+    const now = Date.now();
+    const diff = target - now;
+
+    if (diff <= 0) {
+      // --- NUEVA LÓGICA ---
+      // 1. Ocultamos el contador.
+      countdownEl.style.display = 'none';
+
+      // 2. Creamos el mensaje final y lo mostramos.
+      finalMessageEl.innerHTML = '¡Hoy es el gran día!';
+      finalMessageEl.className = 'final-countdown-message'; // Aplicamos la clase CSS
+      finalMessageEl.style.display = 'block'; // Lo hacemos visible
+
+      // 3. Detenemos el intervalo para no gastar recursos.
+      if (countdownInterval) clearInterval(countdownInterval);
       return;
+      // --- FIN DE LA LÓGICA ---
     }
-    const days = Math.floor(d / 86400000);
-    const hrs = Math.floor((d % 86400000) / 3600000);
-    const mins = Math.floor((d % 3600000) / 60000);
-    const secs = Math.floor((d % 60000) / 1000);
-    el.innerHTML = `<span><strong>${days}</strong><small>Días</small></span><span><strong>${hrs}</strong><small>Horas</small></span><span><strong>${mins}</strong><small>Min</small></span><span><strong>${secs}</strong><small>Seg</small></span>`;
+    
+    const days = Math.floor(diff / 86400000);
+    const hrs = Math.floor((diff % 86400000) / 3600000);
+    const mins = Math.floor((diff % 3600000) / 60000);
+    const secs = Math.floor((diff % 60000) / 1000);
+    countdownEl.innerHTML = `<span><strong>${days}</strong><small>Días</small></span><span><strong>${hrs}</strong><small>Horas</small></span><span><strong>${mins}</strong><small>Min</small></span><span><strong>${secs}</strong><small>Seg</small></span>`;
   }
+  
   update();
-  setInterval(update, 1000);
+  countdownInterval = setInterval(update, 1000);
 }
+
 
 async function cargarGrupo() {
   const nombreElCover = document.querySelector('.cover-title');
