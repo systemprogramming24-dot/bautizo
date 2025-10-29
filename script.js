@@ -21,6 +21,7 @@ function activarPantallaCompleta() {
   const musicControl = document.getElementById('musicControl');
   const playIcon = document.getElementById('playIcon');
   const pauseIcon = document.getElementById('pauseIcon');
+  const tooltip = document.getElementById('tooltip');
 
   envelope.addEventListener('click', () => {
     envelope.classList.add('open');
@@ -44,6 +45,12 @@ function activarPantallaCompleta() {
       setTimeout(() => {
         scrollArrow.classList.add('visible');
         musicControl.classList.add('visible');
+        tooltip.classList.add('visible'); // Show the tooltip
+
+        // Hide the tooltip after 5 seconds
+        setTimeout(() => {
+          tooltip.classList.remove('visible');
+        }, 5000);
       }, 500);
 
     }, 900);
@@ -139,9 +146,8 @@ async function cargarGrupo() {
     nombreElCover.textContent = 'Invitación no válida';
   }
 }
-
 document.addEventListener("DOMContentLoaded", () => {
-  // Observador para el "Fade In" de los componentes
+  // Observador para el "Fade In" de los componentes (esto no cambia)
   const fadeItems = document.querySelectorAll(".fade-in-item");
   const fadeInObserver = new IntersectionObserver((entries, observer) => {
     entries.forEach(entry => {
@@ -153,12 +159,44 @@ document.addEventListener("DOMContentLoaded", () => {
   }, { threshold: 0.15, rootMargin: "0px 0px -50px 0px" });
   fadeItems.forEach(item => fadeInObserver.observe(item));
 
-  // Observador para la flecha de scroll
+  // --- INICIO DEL CÓDIGO FINAL Y CORRECTO ---
+
   const scrollArrow = document.getElementById('scrollArrow');
   const finalSection = document.getElementById('section8');
 
+  // 1. Lógica de clic para la flecha de scroll
+  if (scrollArrow) {
+    scrollArrow.addEventListener('click', () => {
+      // Definimos todos los elementos que pueden ser un "punto de parada" lógico.
+      const anchors = Array.from(document.querySelectorAll('#mainContent h1, #mainContent .family-photo-wrapper, #mainContent .item, #mainContent .dress-code-section'));
+      
+      // Obtenemos la posición actual del scroll + un pequeño margen para asegurar que no nos quedemos en el mismo sitio.
+      const currentPosition = window.scrollY + 20;
+
+      // Buscamos el primer "punto de parada" que esté más abajo de nuestra posición actual.
+      let nextAnchor = null;
+      for (const anchor of anchors) {
+        if (anchor.offsetTop > currentPosition) {
+          nextAnchor = anchor;
+          break; // Encontramos el siguiente, así que detenemos la búsqueda.
+        }
+      }
+
+      // Si encontramos un siguiente punto, nos desplazamos a él.
+      if (nextAnchor) {
+        // 'block: "start"' asegura que el elemento se alinee con la parte superior de la pantalla.
+        nextAnchor.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      } else {
+        // Si no hay más puntos de parada, significa que estamos al final.
+        // Como fallback, nos desplazamos al final del documento.
+        window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+      }
+    });
+  }
+
+  // 2. Observador para ocultar la flecha en la última sección (esto no cambia)
   if (scrollArrow && finalSection) {
-    const arrowObserver = new IntersectionObserver((entries) => {
+    const arrowVisibilityObserver = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
           scrollArrow.classList.remove('visible');
@@ -168,6 +206,7 @@ document.addEventListener("DOMContentLoaded", () => {
       });
     }, { threshold: 0.1 });
 
-    arrowObserver.observe(finalSection);
+    arrowVisibilityObserver.observe(finalSection);
   }
+  // --- FIN DEL CÓDIGO FINAL Y CORRECTO ---
 });
