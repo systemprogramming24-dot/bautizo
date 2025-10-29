@@ -29,7 +29,7 @@ function activarPantallaCompleta() {
       mainContent.style.display = 'block';
       mainContent.style.position = 'relative';
       sec2.scrollIntoView({ behavior: 'smooth' });
-      activarPantallaCompleta();
+      //activarPantallaCompleta();
 
       // Reproducir música
       music.volume = 0.8;
