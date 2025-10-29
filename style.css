@@ -239,10 +239,10 @@ body::before {
   transition: opacity 0.5s ease, visibility 0.5s ease;
 }
 #scrollArrow.visible { opacity: 1; visibility: visible; }
-.double-arrow { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; opacity: 0.6; }
+.double-arrow { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; opacity: 0.9; }
 .double-arrow span {
   display: block; width: 18px; height: 18px;
-  border-left: 3px solid #000; border-bottom: 3px solid #000;
+  border-left: 8px solid #FFD700; border-bottom: 8px solid #FFD700;
   transform: rotate(-45deg); border-radius: 2px;
   animation: arrowDown 1.4s infinite ease-in-out;
 }
