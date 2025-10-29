@@ -77,7 +77,7 @@ function activarPantallaCompleta() {
 
 function iniciarCountdown(id) {
   const el = document.getElementById(id);
-  const target = new Date('November 22, 2025 20:00:00').getTime();
+  const target = new Date('October 28, 2025 22:15:00').getTime();
 
   function update() {
     const d = target - Date.now();
