@@ -179,7 +179,45 @@
       </div>
     </section>
     
-    
+<section class="section active" id="section7">
+      <div class="card-wrapper fade-in-item">
+         <div class="overlay"></div>
+        <div class="contenido">
+        
+          <h2 class="titulo-seccion">Sugerencia de Regalo</h2>
+
+          <!-- Texto de introducción actualizado -->
+          <div class="gift-intro-new">
+            <p>Samantha ya tiene 10 añitos 🌸</p>
+            <p>Como toda niña grande, tiene sus propios gustos y necesidades 💕</p>
+            <p>Si deseas tener un detalle con ella, puedes hacerlo como prefieras:</p>
+          </div>
+
+          <!-- Nueva lista de opciones de regalo -->
+          <ul class="gift-options-list">
+            <li>🎁 Regalo físico (práctico o útil)</li>
+            <li>💌 Efectivo en sobre</li> <!-- Texto actualizado aquí -->
+            <!-- El enlace abre la ventana modal con el id #qr-modal -->
+            <li>💜 Por Yape (<a href="#qr-modal" class="link-qr">ver QR</a>)</li>
+          </ul>
+
+          <p class="gift-thanks">¡Gracias por acompañarnos en este día tan especial!</p>
+          
+        </div>
+      </div>
+</section>
+<!-- ========= INICIO: Modal para QR de Yape ========= -->
+<div class="modal-overlay" id="qr-modal">
+  <!-- Fondo oscuro (al hacer clic se cierra) -->
+  <a href="#" class="modal-close-background"></a>
+  <div class="modal-content">
+    <!-- Imagen del QR -->
+    <img src="https://cdn.jsdelivr.net/gh/legado24/bautizo-files@main/img/yape_qr.jpg" alt="QR Code Yape">
+    <!-- Botón para cerrar -->
+    <a href="#" class="modal-close-button">&times;</a>
+  </div>
+</div>
+<!-- ========= FIN: Modal para QR de Yape ========= -->
 
 <section class="section active" id="section8">
   <div class="card-wrapper fade-in-item">
@@ -195,11 +233,13 @@
 </section>
 
     <div id="scrollArrow">
+      <div id="tooltip" class="tooltip">Sigue bajando para ver mas </div>
       <div class="double-arrow">
         <span></span>
         <span></span>
       </div>
     </div>
+    
   </div>
 
   <!-- Tu nuevo archivo JavaScript -->
