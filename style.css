@@ -468,7 +468,7 @@ body::before {
 }
 .qr-code-img {
   width: 100%;
-  max-width: 250px; /* <-- CAMBIO AQUÍ: Tamaño para pantallas grandes */
+  max-width: 250px;
   height: auto;
   border: 2px solid #ddd;
   padding: 6px;
@@ -476,7 +476,7 @@ body::before {
   background-color: #fff;
 }
 .envelope-icon {
-  width: 150px; /* <-- CAMBIO AQUÍ: Tamaño para pantallas grandes */
+  width: 150px;
   height: auto;
   margin-top: 10px;
 }
@@ -520,6 +520,33 @@ body::before {
   text-shadow: 0 0 8px rgba(212, 175, 55, 0.6);
 }
 
+/* ================================================================ */
+/* ===== ESTILO FINAL DEL COUNTDOWN (VERSIÓN DE ALTA PRIORIDAD) ===== */
+/* ================================================================ */
+
+#finalMessageContainer.final-countdown-message {
+  display: block !important;
+  font-family: 'Great Vibes', cursive;
+  font-size: 2.2rem;
+  font-weight: bold;
+  color: #d4af37;
+  width: 100%;
+  text-align: center;
+  padding: 20px 0;
+  animation: shine-final-message 2.5s ease-in-out infinite;
+}
+
+@keyframes shine-final-message {
+  0%, 100% {
+    text-shadow: 0 0 8px rgba(255, 223, 111, 0.7), 0 0 12px rgba(212, 175, 55, 0.5);
+    transform: scale(1);
+  }
+  50% {
+    text-shadow: 0 0 16px rgba(255, 223, 111, 1), 0 0 24px rgba(212, 175, 55, 0.8);
+    transform: scale(1.05);
+  }
+}
+
 /* ============================================= */
 /* ===== MEDIA QUERIES (Responsividad) ===== */
 /* ============================================= */
@@ -561,11 +588,12 @@ body::before {
     padding: 12px 25px;
   }
   .qr-code-img {
-    max-width: 100%; /* <-- CAMBIO AQUÍ: Tamaño corregido para móviles */
+    max-width: 100%;
   }
   .envelope-icon {
-    width: 100%; /* <-- AÑADIDO AQUÍ: Tamaño para el sobre en móviles */
+    width: 100%;
   }
-}```
-
-**Consejo profesional:** A veces, el navegador guarda la versión antigua del archivo CSS en su memoria (caché). Si después de pegar el nuevo código aún no ves el cambio, haz una **recarga forzada** en tu navegador presionando `Ctrl + Shift + R` (en Windows/Linux) o `Cmd + Shift + R` (en Mac). Esto obligará al navegador a descargar la última versión de todos los archivos.
+  #finalMessageContainer.final-countdown-message {
+    font-size: 1.8rem;
+  }
+}
