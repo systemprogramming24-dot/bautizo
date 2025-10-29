@@ -675,6 +675,7 @@ body::before {
   /* Hereda la mayoría de los estilos del texto principal */
   text-decoration: underline;
   cursor: pointer;
+  color: red;
 }
 
 
