@@ -120,30 +120,51 @@ function iniciarCountdown(id) {
 
 
 async function cargarGrupo() {
+  // --- Elementos del DOM con los que vamos a interactuar ---
+  const envelope = document.getElementById('envelope');
   const nombreElCover = document.querySelector('.cover-title');
+  const openPrompt = document.querySelector('.message div:first-child'); // El texto "Toca para abrir..."
   const confirmLink = document.getElementById('confirmLink');
-  if (!groupCode) {
-    nombreElCover.textContent = 'Querida Familia'; // Mensaje genérico
-    confirmLink.href = "https://bautizo-samantha-sayuri.vercel.app/confirm.html";
-    return;
-  }
+  
+  // URL base para el link de confirmación
+  const baseURL = "https://bautizo-samantha-sayuri.vercel.app/confirm.html";
+
+  // --- 1. INICIAMOS EL ESTADO DE CARGA ---
+  envelope.classList.add('loading');
+  nombreElCover.textContent = 'Cargando...'; // Mensaje de carga opcional
+
   try {
+    if (!groupCode) {
+      nombreElCover.textContent = 'Querida Familia';
+      confirmLink.href = baseURL;
+      return; // Salimos de la función aquí si no hay código
+    }
+
     const { data, error } = await supabase
       .from('guests_baptism')
       .select('guest, message_invitation')
       .eq('group_code', groupCode)
       .eq('is_leader', true)
       .maybeSingle();
+
     if (error || !data) {
+      console.error('Error o invitado no encontrado:', error);
       nombreElCover.textContent = 'Invitación no encontrada 😕';
-      return;
+      return; // Salimos tras el error
     }
+    
+    // Si todo va bien, construimos el texto final
     const textoCompleto = `${data.guest} ${data.message_invitation || ''}`.trim();
     nombreElCover.textContent = textoCompleto;
-    confirmLink.href = `https://bautizo-samantha-sayuri.vercel.app/confirm.html?group_code=${groupCode}`;
+    confirmLink.href = `${baseURL}?group_code=${groupCode}`;
+
   } catch (err) {
-    console.error(err);
+    console.error('Error inesperado al cargar el grupo:', err);
     nombreElCover.textContent = 'Invitación no válida';
+  } finally {
+    // --- 2. FINALIZAMOS EL ESTADO DE CARGA ---
+    // Este bloque se ejecuta SIEMPRE, después del try o del catch.
+    envelope.classList.remove('loading');
   }
 }
 document.addEventListener("DOMContentLoaded", () => {
