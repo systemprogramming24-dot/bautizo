@@ -752,3 +752,56 @@ body::before {
   border: 1px solid #ccc;
   box-shadow: 0 2px 5px rgba(0,0,0,0.2);
 }
+
+/* ============================================= */
+/* ===== ESTILOS DE CARGA PARA EL SOBRE (NUEVO) ===== */
+/* ============================================= */
+
+/* 
+  Cuando el sobre tiene la clase 'loading', 
+  desactivamos los clics y mostramos el cursor de espera.
+*/
+.envelope.loading {
+  pointer-events: none;
+  cursor: wait;
+  overflow: hidden; /* Necesario para contener el efecto de brillo */
+}
+
+/* Ocultamos el texto del mensaje mientras carga */
+.envelope.loading .message {
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease;
+}
+
+/* 
+  Creamos un pseudo-elemento que será nuestro 'brillo' animado.
+  Este solo aparecerá cuando la clase 'loading' esté activa.
+*/
+.envelope.loading::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%; /* Empieza fuera de la pantalla a la izquierda */
+  width: 100%;
+  height: 100%;
+  z-index: 13; /* Asegura que esté por encima del cuerpo del sobre */
+  
+  /* El gradiente que crea el efecto de barrido de luz */
+  background: linear-gradient(
+    90deg, 
+    transparent, 
+    rgba(255, 255, 255, 0.5), 
+    transparent
+  );
+
+  /* La animación que lo mueve de izquierda a derecha */
+  animation: shimmer 2s infinite;
+}
+
+/* Animación del 'brillo' */
+@keyframes shimmer {
+  100% {
+    left: 100%; /* Termina fuera de la pantalla a la derecha */
+  }
+}
